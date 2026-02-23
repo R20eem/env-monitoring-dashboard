@@ -6,8 +6,18 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 class BackendApplicationTests {
 
-	@Test
-	fun contextLoads() {
-	}
+    @Test
+    fun contextLoads() = Unit
+
+}package com.envdashboard.backend
+
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+
+@SpringBootTest
+class BackendApplicationTests {
+
+    @Test
+    fun contextLoads() = Unit
 
 }
