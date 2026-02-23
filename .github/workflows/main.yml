@@ -28,9 +28,10 @@ jobs:
         uses: gradle/actions/wrapper-validation@v3
 
       - name: Make Gradle executable
-        run: chmod +x ./gradlew
-
+        run: chmod +x backend/gradlew
+      
       - name: Build + Test
+        working-directory: backend
         run: ./gradlew clean build
 
       # Upload test results (shows in Actions even if tests fail)
@@ -40,5 +41,5 @@ jobs:
         with:
           name: test-reports
           path: |
-            **/build/reports/tests/test/
-            **/build/test-results/test/
+            backend/**/build/reports/tests/test/
+            backend/**/build/test-results/test/
