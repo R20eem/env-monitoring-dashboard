@@ -1,0 +1,39 @@
+# virtual env
+venv/
+.venv/
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# env variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# database (local SQLite for dev)
+*.db
+*.sqlite3
+
+# macOS
+.DS_Store
+
+# distro
+dist/
+build/
+*.egg-info/
+
+# IDE
+.idea/

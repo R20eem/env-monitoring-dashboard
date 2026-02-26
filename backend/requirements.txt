@@ -1,0 +1,32 @@
+# web framework
+fastapi==0.115.0
+# server
+uvicorn[standard]==0.30.0
+
+# db
+sqlalchemy==2.0.35
+# db migrations
+alembic==1.13.3
+# driver(will need with PostgreSQL)
+psycopg2-binary>=2.9.10
+
+# data val
+pydantic[email-validator]==2.9.0
+
+# auth
+python-jose[cryptography]==3.3.0
+# pwd hashing
+passlib[bcrypt]==1.7.4
+
+# env variables
+python-dotenv==1.0.1
+
+# form data parsing (in case FastAPI detects form-capable endpoints)
+python-multipart==0.0.12
+
+# CORS
+starlette==0.38.6
+
+# test
+pytest==8.3.0
+httpx==0.27.0
