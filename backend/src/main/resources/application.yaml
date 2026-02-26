@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: backend
-
-security:
-  jwt:
-    secret: "CHANGE_ME_TO_A_LONG_RANDOM_SECRET_KEY_32CHARS_MIN_123456"
