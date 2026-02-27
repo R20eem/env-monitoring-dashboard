@@ -1,40 +1,39 @@
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+# virtual env
+venv/
+.venv/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+# env variables
+.env
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
+# IDE
 .vscode/
+.idea/
+*.swp
+*.swo
 
-### Kotlin ###
-.kotlin
+# testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# database (local SQLite for dev)
+*.db
+*.sqlite3
+
+# macOS
+.DS_Store
+
+# distro
+dist/
+build/
+*.egg-info/
+
+# IDE
+.idea/
