@@ -16,6 +16,11 @@ class Base(DeclarativeBase):
     pass
 
 def get_db():
+    """
+    this function is used by FastAPI to get a database session for each request
+    routers can use it with Depends(get_db)
+    FastAPI will automatically open a session and close it when the request finishes
+    """
     db = SessionLocal()
     try:
         yield db
