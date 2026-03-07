@@ -36,8 +36,7 @@ def verify_password(password: str, hashed_password: str) -> bool:
     return pwd_context.verify(password, hashed_password)
 
 
-
-def create_access_token(subject: str) -> str:
+def create_access_token(subject: str, role: str) -> str:
     """
     This function creates a JWT token after the user logs in successfully.
 
@@ -56,9 +55,8 @@ def create_access_token(subject: str) -> str:
     with every request to prove they are authenticated.
     """
     expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    payload = {"sub": subject, "exp": expire}
+    payload = {"sub": subject, "role": role, "exp": expire}
     return jwt.encode(payload, JWT_SECRET, algorithm=ALGORITHM)
-
 
 
 def decode_access_token(token: str) -> str:
@@ -70,9 +68,7 @@ def decode_access_token(token: str) -> str:
     """
     payload = jwt.decode(token, JWT_SECRET, algorithms=[ALGORITHM])
     sub = payload.get("sub")
-    # If the token does not contain a subject,
-    # we raise an error
-    if not sub:
-        raise JWTError("Missing sub")
-    # return the user's id (email)
-    return sub
+    role = payload.get("role")
+    if not sub or not role:
+        raise JWTError("Missing sub/role")
+    return sub, role
