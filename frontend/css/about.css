@@ -1,0 +1,36 @@
+body{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 0;
+    background-color: rgba(107, 163, 104, 10%); /* slightly transparent */;
+    color: #333;
+    background-image: url('../images/steven-weeks-DUPFowqI6oI-unsplash.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    
+}
+
+
+/* Style for the about section */
+.about{
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin: 150px  100px 150px 100px;
+    border: green solid 2px;
+    border-radius: 25px;
+    text-align: center;
+    background: linear-gradient(to top, #ffffff, rgba(107, 163, 104, 0.15));
+}
+
+
+.about h1{
+    color: #291711;
+    font-size: 25px;
+    text-decoration: underline black double;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.about p{
+    font-size: 18px;
+    line-height: 1.6;
+    color: #621B00;
+}
