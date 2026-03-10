@@ -26,6 +26,7 @@ def test_me_valid_token_but_user_deleted_or_not_in_db(client):
     # BUT the email inside it does not exist in our db.
     payload = {
         "sub": "deleteduser@example.com",  # this user is NOT in db
+        "role": "farmer",
         "exp": datetime.now(timezone.utc) + timedelta(minutes=30),
     }
 

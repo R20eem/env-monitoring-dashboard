@@ -1,6 +1,16 @@
+FARMER_JSON_BODY = {
+    "first_name": "Test",
+    "last_name": "User",
+    "email": "user@example.com",
+    "experience": "5+ years",
+    "location": "Test Farm",
+    "password": "Password1!",
+}
+
+
 def _register_and_login(client, email="me@example.com", password="Password1!"):
-    client.post("/auth/register", json={"email": email, "password": password})
-    r = client.post("/auth/login", json={"email": email, "password": password})
+    client.post("/auth/farmers/register", json={**FARMER_JSON_BODY, "email": email, "password": password})
+    r = client.post("/auth/farmers/login", json={"email": email, "password": password})
     assert r.status_code == 200
     return r.json()["access_token"]
 
