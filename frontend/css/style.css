@@ -1,0 +1,147 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+/* Navbar */
+.navbar {
+    background-color: #566E3D;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    z-index: 1000; /* ← fixed, 100% is invalid */
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo img {
+    height: 100px;
+    width: auto;
+    filter: brightness(0.3);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0; /* ← fixes bullet point spacing */
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* Buttons */
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-buttons a::after {
+    display: none;
+}
+
+/* Login button - outlined */
+.login {
+    background-color: transparent;
+    color: white; /* ← fixed, was green (invisible on green navbar) */
+    border: 2px solid white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.login:hover {
+    background-color: white;
+    color: rgba(107, 163, 104, 1);
+}
+
+/* Register button - filled */
+.sign {
+    background-color: white; /* ← fixed, was transparent */
+    color: rgb(106, 177, 103); /* ← fixed, was black */
+    border: 2px solid white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.sign:hover {
+    background-color: transparent;
+    color: white; /* ← fixed, was black */
+}
+
+/* Footer */
+.footer {
+    margin-top: auto; /* ← pushes footer to the bottom */
+    background-color: #566E3D;
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer img {
+    height: 120px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+.footer-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 3px;
+    margin: 0;
+    color: white;
+}
+
+.footer p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+}
