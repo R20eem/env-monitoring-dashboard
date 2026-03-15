@@ -15,3 +15,7 @@ templates = Jinja2Templates(directory="app/templates")
 @router.get("/ui", response_class=HTMLResponse)
 def ui_home(request: Request):
     return templates.TemplateResponse("auth_ui.html", {"request": request})
+
+@router.get("/demo", response_class=HTMLResponse)
+def demo_page(request: Request):
+    return templates.TemplateResponse("demo_social_ui.html", {"request": request})

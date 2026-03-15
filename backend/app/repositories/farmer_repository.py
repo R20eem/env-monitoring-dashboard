@@ -11,6 +11,10 @@ def get_farmer_by_email(db: Session, email: str) -> Farmer | None:
     return db.query(Farmer).filter(Farmer.email == email).first()
 
 
+def get_farmer_by_id(db: Session, farmer_id: int) -> Farmer | None:
+    return db.query(Farmer).filter(Farmer.id == farmer_id).first()
+
+
 """creates a new farmer in the database
  it takes all the registration information and saves it
 """

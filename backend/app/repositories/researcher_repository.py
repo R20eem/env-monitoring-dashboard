@@ -10,6 +10,9 @@ def get_researcher_by_email(db: Session, email: str) -> Researcher | None:
     """
     return db.query(Researcher).filter(Researcher.email == email).first()
 
+def get_researcher_by_id(db: Session, researcher_id: int) -> Researcher | None:
+    return db.query(Researcher).filter(Researcher.id == researcher_id).first()
+
 
 def create_researcher(
     db: Session,
