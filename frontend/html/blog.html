@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Blog – EcoWatch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="logo">
+      <a href="index.html"><span class="logo-text">🌿 EcoWatch</span></a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-buttons">
+      <a href="#" class="sign" id="nav-register">Register</a>
+      <a href="#" class="login" id="nav-signin">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE HEADER ===== -->
+  <header class="page-header blog-header">
+    <div class="blog-header-inner">
+      <h1>Community Blog</h1>
+      <p>Farmers and researchers sharing knowledge from the field.</p>
+      <!-- Filter pills -->
+      <div class="filter-pills">
+        <button class="pill active" data-filter="all">All Posts</button>
+        <button class="pill" data-filter="farmer">🌾 Farmers</button>
+        <button class="pill" data-filter="researcher">🔬 Researchers</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN LAYOUT ===== -->
+  <div class="blog-layout">
+
+    <!-- LEFT: Feed -->
+    <main class="feed-col" id="feed-col">
+
+      <!-- Create Post Box (visible only when logged in) -->
+      <div class="create-post-box hidden" id="create-post-box">
+        <h3>Share something with the community</h3>
+        <input type="text" id="post-title" placeholder="Title" maxlength="200" />
+        <textarea id="post-content" rows="4" placeholder="What's on your mind?"></textarea>
+        <div class="create-post-actions">
+          <span id="post-error" class="form-error"></span>
+          <button class="btn-primary" id="submit-post">Post</button>
+        </div>
+      </div>
+
+      <!-- Loading state -->
+      <div class="feed-loading" id="feed-loading">
+        <div class="spinner"></div>
+        <p>Loading posts…</p>
+      </div>
+
+      <!-- Empty state -->
+      <div class="feed-empty hidden" id="feed-empty">
+        <span>🌱</span>
+        <p>No posts yet. Be the first to share something!</p>
+      </div>
+
+      <!-- Posts list -->
+      <div id="posts-list"></div>
+
+    </main>
+
+    <!-- RIGHT: Sidebar -->
+    <aside class="sidebar-col">
+
+      <!-- Login / status card -->
+      <div class="sidebar-card" id="auth-card">
+        <h3 id="auth-card-title">Sign in to post</h3>
+        <div id="auth-form">
+          <select id="login-role">
+            <option value="farmer">🌾 Farmer</option>
+            <option value="researcher">🔬 Researcher</option>
+          </select>
+          <input type="email" id="login-email" placeholder="Email" />
+          <input type="password" id="login-password" placeholder="Password" />
+          <input type="text" id="login-orgcode" placeholder="Org code (researchers only)" class="hidden" />
+          <span id="login-error" class="form-error"></span>
+          <button class="btn-primary full-w" id="login-btn">Sign In</button>
+          <p class="sidebar-small">Don't have an account? <a href="#">Register</a></p>
+        </div>
+        <!-- Shown after login -->
+        <div id="logged-in-info" class="hidden">
+          <div class="user-badge" id="user-badge"></div>
+          <button class="btn-outline full-w" id="logout-btn">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- Community stats card -->
+      <div class="sidebar-card">
+        <h3>Community</h3>
+        <ul class="stats-list">
+          <li><span class="stat-dot farmer-dot"></span> Farmers sharing field experience</li>
+          <li><span class="stat-dot researcher-dot"></span> Researchers sharing findings</li>
+        </ul>
+        <p class="sidebar-small" style="margin-top:10px;">
+          Posts are sorted by most liked, then newest first.
+        </p>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- ===== COMMENT MODAL ===== -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="comment-modal">
+      <div class="modal-header">
+        <h2 id="modal-post-title">Post Title</h2>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-post-content" class="modal-post-content"></p>
+        <p class="modal-meta" id="modal-post-meta"></p>
+        <hr class="modal-divider" />
+        <h4>Comments</h4>
+        <div id="modal-comments-list">
+          <div class="spinner small"></div>
+        </div>
+        <!-- Add comment – only when logged in -->
+        <div id="modal-add-comment" class="hidden">
+          <textarea id="modal-comment-input" rows="3" placeholder="Write a comment…"></textarea>
+          <div class="modal-comment-actions">
+            <span id="comment-error" class="form-error"></span>
+            <button class="btn-primary" id="submit-comment">Add Comment</button>
+          </div>
+        </div>
+        <p id="modal-login-prompt" class="sidebar-small" style="margin-top:12px;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-content">
+      <span class="footer-logo">🌿 EcoWatch</span>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="#">Dashboard</a>
+        <a href="blog.html">Blog</a>
+        <a href="#">Contact</a>
+      </nav>
+      <p>&copy; 2024 Environmental Monitoring Dashboard. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/blog.js"></script>
+  <script>
+    // Hamburger menu
+    document.getElementById('hamburger').addEventListener('click', function () {
+      document.getElementById('nav-links').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

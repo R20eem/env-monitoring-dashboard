@@ -1,33 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Environmental Monitoring Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
-<nav class="navbar">
+ 
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
     <div class="logo">
-        <a href="#">
-            <img src="../images/logo_transparent.png" alt="Logo">
-        </a>
+      <a href="index.html">
+     <img src="../images/logo_transparent.png" alt="Logo">
+        <!-- <span class="logo-text">🌿 EcoWatch</span> -->
+      </a>
     </div>
-    <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Contact</a></li>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="#">Contact</a></li>
     </ul>
     <div class="nav-buttons">
-        <a href="#" class="sign">Register</a>
-        <a href="#" class="login">Sign In</a>
+      <a href="#" class="sign">Register</a>
+      <a href="#" class="login">Sign In</a>
     </div>
-</nav>
+  </nav>
 
-<footer class="footer">
+ 
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
     <div class="footer-content">
-        <img src="../images/logo_transparent.png" alt="Eco Leaf Logo">
-        <p>&copy; 2024 Environmental Monitoring Dashboard. All rights reserved.</p>
+      <span class="footer-logo"> EcoWatch</span>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Contact</a>
+      </nav>
+      <p>&copy; 2024 Environmental Monitoring Dashboard. All rights reserved.</p>
     </div>
-</footer>
-
+  </footer>
+ 
+  <script>
+    // Mobile hamburger menu toggle
+    document.getElementById('hamburger').addEventListener('click', function () {
+      document.getElementById('nav-links').classList.toggle('open');
+    });
+  </script>
+ 
 </body>
+</html>
