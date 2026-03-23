@@ -47,7 +47,7 @@ function updateAuthUI() {
     const icon = user.role === 'farmer' ? '🌾' : '🔬';
     userBadge.textContent = `${icon} Signed in as ${user.role}`;
   } else {
-    // Logged out
+    // Log out
     authForm.classList.remove('hidden');
     loggedInInfo.classList.add('hidden');
     createBox.classList.add('hidden');
@@ -328,7 +328,7 @@ function openModal(post) {
   });
   document.getElementById('modal-post-meta').textContent =
     `By ${post.author_name} (${post.author_role}) · ${dateStr}`;
-    
+
 
   // Show/hide add comment form
   const addCommentDiv   = document.getElementById('modal-add-comment');
