@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us – Environmental Monitoring Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+ 
+  <!-- ===== NAVBAR (same on every page) ===== -->
+  <nav class="navbar">
+    <div class="logo">
+      <a href="index.html">
+        <img src="../images/logo_transparent.png" alt="Logo">
+        <!-- <span class="logo-text">🌿 EcoWatch</span> -->
+      </a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-buttons">
+      <a href="#" class="sign">Register</a>
+      <a href="#" class="login">Sign In</a>
+    </div>
+  </nav>
+ 
+  <!-- ===== PAGE HEADER ===== -->
+  <header class="page-header">
+    <h1>About Us</h1>
+    <p>Building technology that helps farmers make better decisions.</p>
+  </header>
+ 
+  <!-- ===== ABOUT CONTENT ===== -->
+  <main class="about-main">
+ 
+    <section class="about-card">
+      <div class="about-icon">🌍</div>
+      <div class="about-text">
+        <h2>What Is This?</h2>
+        <p>
+          The Environmental Monitoring Dashboard is a web application designed to help
+          farmers — including those new to the field — monitor their crops and make
+          informed decisions based on real-time environmental data.
+        </p>
+      </div>
+    </section>
+ 
+    <section class="about-card">
+      <div class="about-icon">🎯</div>
+      <div class="about-text">
+        <h2>Our Goal</h2>
+        <p>
+          Our goal is to empower farmers with the knowledge and tools they need to make
+          informed decisions about their crops — from soil moisture and temperature
+          to air quality and flood risk.
+        </p>
+      </div>
+    </section>
+ 
+    <section class="about-card">
+      <div class="about-icon">👩‍💻</div>
+      <div class="about-text">
+        <h2>Our Team</h2>
+        <p>
+          We are a team of Level 2 undergraduate students from the University of Leeds,
+          passionate about using technology to solve real-world problems in agriculture.
+          This project is part of a funded research initiative on community-centred
+          environmental monitoring and international collaboration.
+        </p>
+      </div>
+    </section>
+ 
+    <div class="about-cta">
+      <a href="index.html" class="btn-primary">← Back to Home</a>
+      <a href="#" class="btn-outline">View Dashboard</a>
+    </div>
+ 
+  </main>
+ 
+  <!-- ===== FOOTER (same on every page) ===== -->
+  <footer class="footer">
+    <div class="footer-content">
+      <span class="footer-logo">🌿 EcoWatch</span>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Contact</a>
+      </nav>
+      <p>&copy; 2024 Environmental Monitoring Dashboard. All rights reserved.</p>
+    </div>
+  </footer>
+ 
+  <script>
+    document.getElementById('hamburger').addEventListener('click', function () {
+      document.getElementById('nav-links').classList.toggle('open');
+    });
+  </script>
+ 
+</body>
+</html>
