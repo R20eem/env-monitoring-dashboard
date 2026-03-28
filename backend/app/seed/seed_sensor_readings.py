@@ -2,7 +2,7 @@
 Seed script: loads pest_monitoring.csv into the sensor_readings table.
 
 Run from the backend/ directory using:
-    python3 -m app.seed.seed_temperatures or python -m app.seed.seed_temperatures
+    ppython3 -m app.seed.seed_sensor_readings
 
 The CSV has hundreds of thousands of rows so this uses batch inserts.
 Safe to rerun since it clears the table first.
@@ -48,16 +48,34 @@ def run():
             reader = csv.DictReader(f)
             for row in reader:
                 raw_temp = row.get("air_temperature_c", "").strip()
+                raw_humidity = row.get("relative_humidity_pct", "").strip()
+                raw_leaf_wetness = row.get("leaf_wetness_0_1", "").strip()
+                raw_pest_count = row.get("pest_trap_count", "").strip()
+                raw_rainfall = row.get("wx_rain_mm_hr", "").strip()
+                raw_status = row.get("status", "").strip()
+                raw_alert_triggered = row.get("alert_triggered", "").strip()
+                raw_alert_pest_action = row.get("alert_pest_action", "").strip()
+                raw_alert_pest_outbreak = row.get("alert_pest_outbreak", "").strip()
+                raw_alert_disease_moderate = row.get("alert_disease_moderate", "").strip()
+                raw_alert_disease_high = row.get("alert_disease_high", "").strip()
 
-                # skip any rows with missing temp
-                if not raw_temp:
-                    skipped += 1
-                    continue
+
 
                 batch.append({
                     "site_id": row["site_id"],
                     "timestamp": row["timestamp"],
-                    "air_temperature_c": float(raw_temp),
+                    "air_temperature_c": float(raw_temp) if raw_temp else None,
+                    "relative_humidity_pct": float(raw_humidity) if raw_humidity else None,
+                    "leaf_wetness_0_1": float(raw_leaf_wetness) if raw_leaf_wetness else None,
+                    "pest_trap_count": float(raw_pest_count) if raw_pest_count else None,
+                    "wx_rain_mm_hr": float(raw_rainfall) if raw_rainfall else None,
+                    "status": raw_status if raw_status else None,
+                    "alert_triggered": float(raw_alert_triggered) if raw_alert_triggered else None,
+                    "alert_pest_action": float(raw_alert_pest_action) if raw_alert_pest_action else None,
+                    "alert_pest_outbreak": float(raw_alert_pest_outbreak) if raw_alert_pest_outbreak else None,
+                    "alert_disease_moderate": float(raw_alert_disease_moderate) if raw_alert_disease_moderate else None,
+                    "alert_disease_high": float(raw_alert_disease_high) if raw_alert_disease_high else None,
+
                 })
 
                 # flush to db in batches to help avoid holding everything in memory!

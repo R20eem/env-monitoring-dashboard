@@ -40,7 +40,7 @@ def login_researcher(db: Session, email: str, org_code: str, password: str) -> s
     if not verify_password(password, r.hashed_password):
         raise AuthError("Invalid researcher credentials")
 
-    # check if the researcher's organization connection has expired
+    # check if the researcher's organisation connection has expired
     # if today's date is after the connection_end date we block the login
     end_date = datetime.strptime(r.connection_end, "%Y-%m-%d").date()
     if end_date < datetime.utcnow().date():
