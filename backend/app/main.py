@@ -18,11 +18,19 @@ from app.models.post_comment import PostComment
 
 from app.routers.post_router import router as post_router
 from app.routers.profile_router import router as profile_router
-
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 app = FastAPI(title="Env Monitoring API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 
