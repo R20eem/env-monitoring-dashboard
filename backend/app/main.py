@@ -20,6 +20,7 @@ from app.models.post_comment import PostComment
 from app.routers.post_router import router as post_router
 from app.routers.profile_router import router as profile_router
 from app.routers.dashboard_router import router as dashboard_router
+from app.routers.researcher_dashboard_router import router as researcher_dashboard_router
 
 
 load_dotenv()
@@ -36,6 +37,7 @@ app.include_router(researcher_auth_router)
 app.include_router(ui_router)
 app.include_router(me_router)
 
+app.include_router(researcher_dashboard_router)
 app.include_router(post_router)
 app.include_router(profile_router)
 app.include_router(dashboard_router)

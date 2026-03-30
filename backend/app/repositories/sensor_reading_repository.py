@@ -305,3 +305,91 @@ def get_latest_alert_disease_high_per_site(db: Session) -> list[SensorReading]:
     )
 
     return results
+
+
+def get_status_counts(db: Session):
+    """
+    counts how many readings are normal, warning, critical
+    """
+
+    normal = db.query(SensorReading).filter(SensorReading.status == "normal").count()
+    warning = db.query(SensorReading).filter(SensorReading.status == "warning").count()
+    critical = db.query(SensorReading).filter(SensorReading.status == "critical").count()
+
+    return {
+        "normal": normal,
+        "warning": warning,
+        "critical": critical,
+    }
+
+
+def get_dashboard_summary(db: Session):
+    """
+    returns latest reading per site and calculates averages
+    """
+
+    latest_subq = (
+        db.query(
+            SensorReading.site_id,
+            func.max(SensorReading.timestamp).label("max_ts"),
+        )
+        .group_by(SensorReading.site_id)
+        .subquery()
+    )
+
+    readings = (
+        db.query(SensorReading)
+        .join(
+            latest_subq,
+            (SensorReading.site_id == latest_subq.c.site_id)
+            & (SensorReading.timestamp == latest_subq.c.max_ts),
+        )
+        .all()
+    )
+
+    temps = [r.air_temperature_c for r in readings if r.air_temperature_c is not None]
+    humidity = [r.relative_humidity_pct for r in readings if r.relative_humidity_pct is not None]
+    leaf = [r.leaf_wetness_0_1 for r in readings if r.leaf_wetness_0_1 is not None]
+
+    return {
+        "avg_temperature": sum(temps)/len(temps) if temps else None,
+        "avg_humidity": sum(humidity)/len(humidity) if humidity else None,
+        "avg_leaf_wetness": sum(leaf)/len(leaf) if leaf else None,
+        "status": readings[0].status if readings else None
+    }
+
+
+def get_trend_data(
+    db: Session,
+    site_id: str | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+    limit: int = 200,
+):
+    query = db.query(SensorReading)
+
+    if site_id:
+        query = query.filter(SensorReading.site_id == site_id)
+
+    if start_date:
+        query = query.filter(SensorReading.timestamp >= start_date)
+
+    if end_date:
+        query = query.filter(SensorReading.timestamp <= end_date)
+
+    readings = query.order_by(SensorReading.timestamp.desc()).limit(limit).all()
+    readings.reverse()
+
+    return [
+        {
+            "timestamp": r.timestamp,
+            "air_temperature_c": r.air_temperature_c,
+            "relative_humidity_pct": r.relative_humidity_pct,
+            "leaf_wetness_0_1": r.leaf_wetness_0_1,
+            "pest_trap_count": r.pest_trap_count,
+            "wx_rain_mm_hr": r.wx_rain_mm_hr,
+            "status": r.status,
+        }
+        for r in readings
+    ]
+
