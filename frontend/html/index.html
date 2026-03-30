@@ -7,51 +7,44 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
- 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar">
-    <div class="logo">
-      <a href="index.html">
-     <img src="../images/logo_transparent.png" alt="Logo">
-        <!-- <span class="logo-text">🌿 EcoWatch</span> -->
-      </a>
-    </div>
-    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="#">Dashboard</a></li>
-      <li><a href="#">Blog</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-    <div class="nav-buttons">
-      <a href="#" class="sign">Register</a>
-      <a href="#" class="login">Sign In</a>
-    </div>
-  </nav>
-
- 
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="footer-content">
-      <span class="footer-logo"> EcoWatch</span>
-      <nav class="footer-nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="#">Dashboard</a>
-        <a href="#">Contact</a>
+<body class="dashboard-layout">
+  <div class="app-layout">
+    
+    <aside class="app-sidebar">
+      <div class="sidebar-logo">
+         <img src="../images/logo_transparent.png" alt="Eco Leaf Logo">
+      </div>
+      
+      <nav class="sidebar-nav">
+         <a href="index.html" class="active">🏠 Home</a>
+         <a href="blog.html">💬 Blog</a>
+         <a href="#">📊 Dashboard</a>
+         <a href="about.html">ℹ️ About Us</a>
       </nav>
-      <p>&copy; 2024 Environmental Monitoring Dashboard. All rights reserved.</p>
+
+      <div class="sidebar-bottom">
+         </div>
+    </aside>
+
+    <div class="app-main">
+      
+      <header class="app-topbar">
+         <h2>Welcome to Eco Leaf</h2>
+         <div class="topbar-actions">
+           <a href="login.html" class="btn-outline">Sign In</a>
+           <a href="register.html" class="btn-primary">Register</a>
+         </div>
+      </header>
+
+      <main class="app-content">
+         
+         <!-- The original content of the index page (Hero, Features, etc.) would go here. -->
+         <h1>Welcome to the Homepage</h1>
+         <p>This is where the main landing page content will be displayed.</p>
+
+      </main>
+
     </div>
-  </footer>
- 
-  <script>
-    // Mobile hamburger menu toggle
-    document.getElementById('hamburger').addEventListener('click', function () {
-      document.getElementById('nav-links').classList.toggle('open');
-    });
-  </script>
- 
+  </div>
 </body>
 </html>
