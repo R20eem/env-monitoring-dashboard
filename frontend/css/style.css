@@ -397,3 +397,106 @@ body.dashboard-layout {
   .about-main { padding: 40px 20px; }
   .page-header { padding: 50px 24px 40px; }
 }
+
+/* =========================================
+   ULTIMATE RESPONSIVENESS (Phone, iPad, Laptop)
+   ========================================= */
+
+/* 1. Ensure the main container NEVER causes horizontal scrolling */
+.app-main {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.app-content {
+    overflow-x: hidden;
+}
+
+/* 2. IPAD & MOBILE VIEW (Screens smaller than 850px) */
+@media (max-width: 850px) {
+    .app-layout {
+        flex-direction: column;
+    }
+
+    /* Transform Sidebar into Bottom Navigation */
+    .app-sidebar {
+        width: 100%;
+        height: 70px;
+        flex-direction: row;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+        z-index: 999;
+        padding: 0;
+    }
+
+    /* Hide logo and bottom profile area on small screens */
+    .sidebar-logo, .sidebar-bottom {
+        display: none;
+    }
+
+    /* Spread links evenly across the bottom */
+    .sidebar-nav {
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0;
+    }
+
+    /* Style the bottom nav buttons to stack icon and text */
+    .sidebar-nav a {
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px 4px;
+        font-size: 11px;
+        border-radius: 8px;
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Adjust Main Area to not be hidden behind the bottom nav */
+    .app-main {
+        padding-bottom: 70px; 
+    }
+
+    /* Shrink Topbar for iPads/Phones */
+    .app-topbar {
+        padding: 0 20px;
+        height: 65px;
+    }
+
+    .app-topbar h2 {
+        font-size: 18px;
+    }
+
+    /* Shrink the Topbar buttons so they fit */
+    .topbar-actions .btn-primary, 
+    .topbar-actions .btn-outline {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    /* Shrink Content Padding */
+    .app-content {
+        padding: 20px;
+    }
+}
+
+/* 3. EXTRA SMALL PHONES (Screens smaller than 450px) */
+@media (max-width: 450px) {
+    /* Hide the "Welcome to Eco Leaf" text to make room for buttons */
+    .app-topbar h2 {
+        display: none; 
+    }
+    
+    /* Center the Register/Sign in buttons */
+    .topbar-actions {
+        width: 100%;
+        justify-content: center;
+    }
+}
