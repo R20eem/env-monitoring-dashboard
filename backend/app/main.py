@@ -21,8 +21,8 @@ from app.routers.post_router import router as post_router
 from app.routers.profile_router import router as profile_router
 from app.routers.dashboard_router import router as dashboard_router
 from app.routers.researcher_dashboard_router import router as researcher_dashboard_router
-
-
+from app.models.site_metadata import SiteMetadata
+from app.models.alert_log import AlertLog
 load_dotenv()
 
 app = FastAPI(title="Env Monitoring API")
