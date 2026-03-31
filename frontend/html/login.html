@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - EcoLeaf</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link to the main stylesheet for variables and buttons -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Link to a new, dedicated auth stylesheet -->
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <a href="index.html">
+                    <img src="../images/logo_transparent.png" alt="EcoLeaf Logo">
+                </a>
+            </div>
+            <h2>Sign In</h2>
+            <p class="auth-subtext">to continue to your dashboard</p>
+
+            <div class="auth-form">
+                <label for="role">I am a...</label>
+                <select id="role">
+                    <option value="farmer">🌾 Farmer</option>
+                    <option value="researcher">🔬 Researcher</option>
+                </select>
+
+                <label for="email">Email Address</label>
+                <input id="email" type="email" placeholder="you@example.com">
+
+                <div id="org_code_wrapper" class="hidden">
+                    <label for="org_code">Organization Code</label>
+                    <input id="org_code" placeholder="e.g. ECO1">
+                </div>
+
+                <label for="password">Password</label>
+                <input id="password" type="password" placeholder="••••••••">
+                
+                <span id="login-error" class="form-error"></span>
+
+                <!-- This is the resolved button from the merge conflict -->
+                <button id="login-btn" class="btn-primary full-w">Sign In</button>
+
+                <p class="auth-switch">
+                    Don't have an account? <a href="register.html">Register Now</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://192.168.0.22:8000'; // Using the IP from blog.js
+        const TOKEN_KEY = 'jwt_token';
+
+        const roleSelect = document.getElementById("role");
+        const orgCodeWrapper = document.getElementById("org_code_wrapper");
+        const loginBtn = document.getElementById("login-btn");
+        const errorEl = document.getElementById('login-error');
+
+        function updateLoginFields() {
+            if (roleSelect.value === "researcher") {
+                orgCodeWrapper.classList.remove("hidden");
+            } else {
+                orgCodeWrapper.classList.add("hidden");
+            }
+        }
+
+        updateLoginFields();
+        roleSelect.addEventListener("change", updateLoginFields);
+
+        async function login() {
+            const role = document.getElementById("role").value;
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const org = document.getElementById("org_code").value.trim();
+
+            errorEl.textContent = '';
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing In...';
+
+            if (!email || !password) {
+                errorEl.textContent = 'Email and password are required.';
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+                return;
+            }
+
+            let url = "";
+            let payload = {};
+
+            if (role === "farmer") {
+                url = `${API_BASE}/auth/farmers/login`;
+                payload = { email, password };
+            } else { // researcher
+                if (!org) {
+                    errorEl.textContent = 'Organization code is required for researchers.';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                    return;
+                }
+                url = `${API_BASE}/auth/researchers/login`;
+                payload = { email, org_code: org, password };
+            }
+
+            try {
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.access_token) {
+                    localStorage.setItem(TOKEN_KEY, data.access_token);
+                    // Redirect to the blog or a dashboard page after successful login
+                    window.location.href = 'blog.html';
+                } else {
+                    errorEl.textContent = data.detail || "Login failed. Please check your credentials.";
+                }
+
+            } catch (error) {
+                console.error(error);
+                errorEl.textContent = "Server error. Please try again later.";
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+            }
+        }
+
+        loginBtn.addEventListener("click", login);
+        
+        // Allow pressing Enter to log in
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
+</body>
+</html>
