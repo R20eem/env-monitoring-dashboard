@@ -143,3 +143,41 @@ class LatestAlertDiseaseHighResponse(BaseModel):
     timestamp: str
 
     model_config = {"from_attributes": True}
+
+class ResearcherDataResponse(BaseModel):
+    """
+    shape of each item returned by get /api/researcher/data
+    """
+
+    site_id: str
+    timestamp: str
+    air_temperature_c: float | None
+    relative_humidity_pct: float | None
+    leaf_wetness_0_1: float | None
+    pest_trap_count: float | None
+    wx_rain_mm_hr: float | None
+    status: str | None
+    alert_triggered: float | None
+    alert_pest_action: float | None
+    alert_pest_outbreak: float | None
+    alert_disease_moderate: float | None
+    alert_disease_high: float | None
+
+    model_config = {"from_attributes": True}
+
+
+class AlertHistoryResponse(BaseModel):
+    """
+    shape of each item returned by get /api/researcher/alerts/history
+    """
+
+    site_id: str
+    timestamp: str
+    status: str | None
+    alert_triggered: float | None
+    alert_pest_action: float | None
+    alert_pest_outbreak: float | None
+    alert_disease_moderate: float | None
+    alert_disease_high: float | None
+
+    model_config = {"from_attributes": True}

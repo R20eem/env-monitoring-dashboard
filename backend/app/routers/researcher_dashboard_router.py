@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -8,8 +8,49 @@ from app.repositories.sensor_reading_repository import (
     get_status_counts,
 )
 
+from app.repositories.sensor_reading_repository import (
+    get_dashboard_summary,
+    get_trend_data,
+    get_status_counts,
+    get_researcher_data,
+    get_researcher_data_for_export,
+    get_alert_history,
+)
+
+from app.schemas.sensor_reading import ResearcherDataResponse, AlertHistoryResponse
+
+from fastapi.responses import StreamingResponse
+import csv
+import io
+from datetime import datetime
+
 router = APIRouter(prefix="/api/researcher/dashboard", tags=["researcher-dashboard"])
 
+def validate_filters(
+    start_date: str | None,
+    end_date: str | None,
+    status: str | None,
+):
+    # allowed status values for filtering
+    allowed_statuses = {"normal", "warning", "critical"}
+
+    if status and status not in allowed_statuses:
+        raise HTTPException(
+            status_code=400,
+            detail="invalid status. allowed values: normal, warning, critical",
+        )
+
+    # check if dates are valid strings in datetime format
+    try:
+        if start_date:
+            datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
+        if end_date:
+            datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail="invalid date format. use YYYY-MM-DD HH:MM:SS",
+        )
 
 @router.get("/summary")
 def summary(db: Session = Depends(get_db)):
@@ -39,3 +80,123 @@ def status_counts(db: Session = Depends(get_db)):
     returns number of normal, warning, critical readings
     """
     return get_status_counts(db)
+
+
+@router.get(
+    "/data",
+    response_model=list[ResearcherDataResponse],
+)
+def researcher_data(
+    site_id: str | None = Query(default=None),
+    start_date: str | None = Query(default=None),
+    end_date: str | None = Query(default=None),
+    status: str | None = Query(default=None),
+    limit: int = Query(default=100),
+    db: Session = Depends(get_db),
+):
+    """
+    returns filtered data for the researcher data page table
+    """
+
+    validate_filters(start_date, end_date, status)
+
+    return get_researcher_data(
+        db=db,
+        site_id=site_id,
+        start_date=start_date,
+        end_date=end_date,
+        status=status,
+        limit=limit,
+    )
+
+@router.get("/data/export")
+def export_researcher_data(
+    site_id: str | None = Query(default=None),
+    start_date: str | None = Query(default=None),
+    end_date: str | None = Query(default=None),
+    status: str | None = Query(default=None),
+    db: Session = Depends(get_db),
+):
+    """
+    exports filtered researcher data as csv
+    """
+    validate_filters(start_date, end_date, status)
+    readings = get_researcher_data_for_export(
+        db=db,
+        site_id=site_id,
+        start_date=start_date,
+        end_date=end_date,
+        status=status,
+    )
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "site_id",
+        "timestamp",
+        "air_temperature_c",
+        "relative_humidity_pct",
+        "leaf_wetness_0_1",
+        "pest_trap_count",
+        "wx_rain_mm_hr",
+        "status",
+        "alert_triggered",
+        "alert_pest_action",
+        "alert_pest_outbreak",
+        "alert_disease_moderate",
+        "alert_disease_high",
+    ])
+    # loop through each database row and write it into csv
+    for r in readings:
+        writer.writerow([
+            r.site_id,
+            r.timestamp,
+            r.air_temperature_c,
+            r.relative_humidity_pct,
+            r.leaf_wetness_0_1,
+            r.pest_trap_count,
+            r.wx_rain_mm_hr,
+            r.status,
+            r.alert_triggered,
+            r.alert_pest_action,
+            r.alert_pest_outbreak,
+            r.alert_disease_moderate,
+            r.alert_disease_high,
+        ])
+    # move cursor back to the beginning of the file before sending it
+    output.seek(0)
+    # return the csv as a downloadable file
+    # streamingresponse is used so the file is sent directly to the user
+    return StreamingResponse(
+        output,
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=researcher_data.csv"},
+    )
+
+@router.get(
+    "/alerts/history",
+    response_model=list[AlertHistoryResponse],
+)
+def alert_history(
+    site_id: str | None = Query(default=None),
+    start_date: str | None = Query(default=None),
+    end_date: str | None = Query(default=None),
+    status: str | None = Query(default=None),
+    limit: int = Query(default=100),
+    db: Session = Depends(get_db),
+):
+    """
+    returns alert history for researchers
+    """
+
+    validate_filters(start_date, end_date, status)
+
+    return get_alert_history(
+        db=db,
+        site_id=site_id,
+        start_date=start_date,
+        end_date=end_date,
+        status=status,
+        limit=limit,
+    )
