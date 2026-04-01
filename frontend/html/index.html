@@ -1,50 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Environmental Monitoring Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Leaf - Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="dashboard-layout">
-  <div class="app-layout">
-    
-    <aside class="app-sidebar">
-      <div class="sidebar-logo">
-         <img src="../images/logo_transparent.png" alt="Eco Leaf Logo">
-      </div>
-      
-      <nav class="sidebar-nav">
-         <a href="index.html" class="active">🏠 Home</a>
-         <a href="blog.html">💬 Blog</a>
-         <a href="#">📊 Dashboard</a>
-         <a href="about.html">ℹ️ About Us</a>
-      </nav>
+<body>
+    <div class="app-layout">
+        
+        <aside class="app-sidebar">
+            <div class="sidebar-logo">
+                <img src="../images/logo_transparent.png" alt="Eco Leaf Logo" style="height: 60px;">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="active">📊 Dashboard</a>
+                <a href="blog.html">💬 Blog</a>
+                <a href="about.html">ℹ️ About Us</a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a href="#" id="logout-btn" style="color: #ff6b6b; text-decoration: none; font-weight: bold;">🚪 Logout</a>
+            </div>
+        </aside>
 
-      <div class="sidebar-bottom">
-         </div>
-    </aside>
+        <div class="app-main">
+            
+            <header class="app-topbar">
+                <h2 id="welcome-message">Loading Dashboard...</h2>
+                <div class="topbar-actions">
+                    <span id="user-profile-badge" class="badge normal">👤 Profile</span>
+                </div>
+            </header>
 
-    <div class="app-main">
-      
-      <header class="app-topbar">
-         <h2>Welcome to Eco Leaf</h2>
-         <div class="topbar-actions">
-           <a href="login.html" class="btn-outline">Sign In</a>
-           <a href="register.html" class="btn-primary">Register</a>
-         </div>
-      </header>
+            <main class="app-content">
+                
+                <div id="farmer-view" style="display: none;">
+                    <div class="dashboard-header">
+                        <div>
+                            <h2>My Farm Overview</h2>
+                            <p>Current field conditions and community alerts.</p>
+                        </div>
+                        <button class="btn-primary">➕ New Field Report</button>
+                    </div>
 
-      <main class="app-content">
-         
-         <!-- The original content of the index page (Hero, Features, etc.) would go here. -->
-         <h1>Welcome to the Homepage</h1>
-         <p>This is where the main landing page content will be displayed.</p>
+                    <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
+                        <div class="stat-card">
+                            <h3>Current Soil Moisture</h3>
+                            <div class="stat-number" style="color: #117a3d;">82% (Optimal)</div>
+                            <p>No irrigation needed today.</p>
+                        </div>
+                        <div class="stat-card alert-card">
+                            <h3>Weather Alert</h3>
+                            <div class="stat-number alert-text">Frost Warning</div>
+                            <p>Temperatures drop below 0°C tonight. Deploy covers.</p>
+                        </div>
+                    </div>
+                </div>
 
-      </main>
+                <div id="researcher-view" style="display: none;">
+                    
+                    <div class="dashboard-header">
+                        <div>
+                            <h2>Researcher Overview</h2>
+                            <p>Monitor global sensor networks and data trends.</p>
+                        </div>
+                        <button class="btn-primary">⬇ Export Data (CSV)</button>
+                    </div>
 
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <h3>Active Sensors</h3>
+                            <div class="stat-number" id="sensor-count">1,204</div>
+                            <span class="trend positive">↑ 12 this week</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Data Points</h3>
+                            <div class="stat-number">84.5k</div>
+                            <span class="trend">Last 30 days</span>
+                        </div>
+                        <div class="stat-card alert-card">
+                            <h3>Critical Alerts</h3>
+                            <div class="stat-number alert-text">3</div>
+                            <span>Needs review</span>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="card-header">
+                                <h3>Nitrogen vs. Moisture Levels (Sector A)</h3>
+                                <select class="filter-dropdown">
+                                    <option>Last 7 Days</option>
+                                    <option>Last 30 Days</option>
+                                </select>
+                            </div>
+                            <div style="height: 250px; width: 100%; margin-top: 15px;">
+                                <canvas id="nitrogenMoistureChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="table-card">
+                            <h3>Live Sensor Feed</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Location</th>
+                                        <th>Sensor</th>
+                                        <th>Reading</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="live-sensor-table">
+                                    <tr><td colspan="5">Loading data...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+            </main>
+        </div>
     </div>
-  </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>

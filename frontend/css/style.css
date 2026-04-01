@@ -500,3 +500,134 @@ body.dashboard-layout {
         justify-content: center;
     }
 }
+
+/* =========================================
+   DASHBOARD UI COMPONENT STYLES
+   ========================================= */
+
+/* The Header Area (Title and Button) */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 25px;
+}
+
+.dashboard-header h2 {
+    margin: 0 0 5px 0;
+    color: var(--green-dark, #117a3d);
+}
+
+.dashboard-header p {
+    margin: 0;
+    color: #666;
+}
+
+/* The Grid System */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Reusable White Cards */
+.stat-card, .chart-card, .table-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+/* Make Chart and Table span all columns so they are wide */
+.chart-card, .table-card {
+    grid-column: span 3;
+}
+
+/* Card Titles */
+.stat-card h3, .chart-card h3, .table-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Big Numbers inside Cards */
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.trend { font-size: 13px; color: #666; }
+.trend.positive { color: #117a3d; font-weight: 600; }
+
+/* Alert Styling */
+.alert-card { border-left: 4px solid #e74c3c; }
+.alert-text { color: #e74c3c; }
+
+/* Chart Area */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chart-placeholder {
+    height: 250px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+}
+
+/* Data Table Styles (Researcher View) */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th, .data-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.data-table th { color: #777; font-weight: 500; }
+
+/* Status Badges */
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.badge.normal { background: #e9f5ec; color: #117a3d; }
+.badge.warning { background: #fdf3e1; color: #d68910; }
+.badge.critical { background: #fee2e2; color: #dc2626; }
+
+/* Mobile Adjustments for Dashboard Grid */
+@media (max-width: 850px) {
+    /* Stack everything into 1 column on phones */
+    .dashboard-grid, 
+    .dashboard-grid[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .chart-card, .table-card {
+        grid-column: span 1;
+    }
+    
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}

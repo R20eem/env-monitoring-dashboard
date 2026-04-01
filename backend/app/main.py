@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 from app.database import Base, engine
@@ -26,6 +27,16 @@ from app.routers.researcher_dashboard_router import router as researcher_dashboa
 load_dotenv()
 
 app = FastAPI(title="Env Monitoring API")
+
+# --- MAKE SURE THIS BLOCK EXACTLY MATCHES ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # This means "Allow any frontend to connect"
+    allow_credentials=False,
+    allow_methods=["*"], # Allow GET, POST, etc.
+    allow_headers=["*"],
+)
+# -------------------------------------------
 
 Base.metadata.create_all(bind=engine)
 
