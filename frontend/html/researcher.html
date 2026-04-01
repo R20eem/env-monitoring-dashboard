@@ -721,9 +721,6 @@ const TOKEN_KEY = 'jwt_token';
 const role = localStorage.getItem('userRole');
 const token = localStorage.getItem('token') || localStorage.getItem(TOKEN_KEY);
 
-if (!role || !token) {
-  window.location.href = 'login.html';
-}
 // if (!role || !token) {
 //   window.location.href = 'login.html';
 // }
@@ -738,7 +735,6 @@ if (role === 'researcher') {
   document.getElementById('researcher-view').style.display = 'block';
   loadDashboard();
 } else {
-  document.getElementById('farmer-view').style.display = 'block';
   // guests AND farmers both see the researcher dashboard publicly
   document.getElementById('researcher-view').style.display = 'block';
   loadDashboard();
