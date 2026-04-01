@@ -1,6 +1,7 @@
 // Change this to your computer's Wi-Fi IP (e.g., 'http://192.168.0.22:8000') if testing on your phone!
 const API_BASE = 'http://127.0.0.1:8000';
 
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // 1. SECURITY CHECK: Are they logged in?
