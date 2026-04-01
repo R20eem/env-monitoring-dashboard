@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
 
     // If they have no token, kick them out to the login page immediately!
-    if (!role || !token) {
-        window.location.href = 'login.html';
-        return; // Stop the rest of the script from running
-    }
+    // if (!role || !token) {
+    //     window.location.href = 'login.html';
+    //     return; // Stop the rest of the script from running
+    // }
 
     // 2. PERSONALIZE THE HEADER
     const welcomeText = role === 'researcher' ? 'Welcome, Dr. Researcher' : 'Welcome, Farmer';
@@ -21,13 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (role === 'researcher') {
         document.getElementById('researcher-view').style.display = 'block';
         loadResearcherData();
-    } else if (role === 'farmer') {
-        document.getElementById('farmer-view').style.display = 'block';
-        // We can add loadFarmerData() here later if you want to fetch specific farm stats!
     } else {
-        // Failsafe: if the role is weird or broken, kick them out
-        localStorage.clear();
-        window.location.href = 'login.html';
+        // guests AND farmers both see the researcher dashboard publicly
+        document.getElementById('researcher-view').style.display = 'block';
+        loadResearcherData();
     }
 
     // 4. LOGOUT BUTTON

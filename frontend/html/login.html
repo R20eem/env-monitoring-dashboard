@@ -115,9 +115,10 @@
                 const data = await res.json();
 
                 if (res.ok && data.access_token) {
-                    localStorage.setItem(TOKEN_KEY, data.access_token);
-                    // Redirect to the blog or a dashboard page after successful login
-                    window.location.href = 'blog.html';
+                    localStorage.setItem('jwt_token', data.access_token);
+                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('userRole', role);
+                    window.location.href = 'index.html';
                 } else {
                     errorEl.textContent = data.detail || "Login failed. Please check your credentials.";
                 }

@@ -1,23 +1,24 @@
-
 // ── CONFIG ───
 const API_BASE = 'http://192.168.0.22:8000';
-// input your local IP address above if you want to test on mobile (find it via `ipconfig` or `ifconfig` in terminal)
 const TOKEN_KEY = 'jwt_token';
 
+// ── BLOG ACCESS GUARD ──
+// Blog requires login — redirect guests to login page
+const _blogToken = localStorage.getItem(TOKEN_KEY) || localStorage.getItem('token');
+if (!_blogToken) {
+  window.location.href = 'login.html';
+}
+
 // ── STATE ──
-let currentFilter = 'all';       // 'all' | 'farmer' | 'researcher'
-let allPosts      = [];           // cached posts from the API
-let openPostId    = null;         // which post the modal is showing
+let currentFilter = 'all';
+let allPosts      = [];
+let openPostId    = null;
 
 // ── TOKEN HELPERS ───
-function getToken()        { return localStorage.getItem(TOKEN_KEY); }
-function saveToken(t)      { localStorage.setItem(TOKEN_KEY, t); }
-function clearToken()      { localStorage.removeItem(TOKEN_KEY); }
+function getToken()   { return localStorage.getItem(TOKEN_KEY) || localStorage.getItem('token'); }
+function saveToken(t) { localStorage.setItem(TOKEN_KEY, t); localStorage.setItem('token', t); }
+function clearToken() { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem('token'); }
 
-/**
- * Decode the JWT payload (no signature check – that's the backend's job).
- * Returns { email, role } or null.
- */
 function decodeToken(token) {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
@@ -39,7 +40,6 @@ function updateAuthUI() {
   const createBox     = document.getElementById('create-post-box');
 
   if (user) {
-    // Logged in
     authForm.classList.add('hidden');
     loggedInInfo.classList.remove('hidden');
     createBox.classList.remove('hidden');
@@ -47,7 +47,6 @@ function updateAuthUI() {
     const icon = user.role === 'farmer' ? '🌾' : '🔬';
     userBadge.textContent = `${icon} Signed in as ${user.role}`;
   } else {
-    // Log out
     authForm.classList.remove('hidden');
     loggedInInfo.classList.add('hidden');
     createBox.classList.add('hidden');
@@ -55,7 +54,6 @@ function updateAuthUI() {
   }
 }
 
-// Show/hide org code field depending on role selection
 document.getElementById('login-role').addEventListener('change', function () {
   const orgField = document.getElementById('login-orgcode');
   if (this.value === 'researcher') {
@@ -81,7 +79,6 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   }
 
   try {
-    // POST /auth/farmers/login  or  POST /auth/researchers/login
     const url  = role === 'farmer'
       ? `${API_BASE}/auth/farmers/login`
       : `${API_BASE}/auth/researchers/login`;
@@ -104,8 +101,9 @@ document.getElementById('login-btn').addEventListener('click', async () => {
     }
 
     saveToken(data.access_token);
+    localStorage.setItem('userRole', role);
     updateAuthUI();
-    loadPosts(); // refresh so like/comment buttons activate
+    loadPosts();
 
   } catch (err) {
     errEl.textContent = 'Could not reach the server. Is the backend running?';
@@ -116,8 +114,8 @@ document.getElementById('login-btn').addEventListener('click', async () => {
 // ── LOGOUT ────
 document.getElementById('logout-btn').addEventListener('click', () => {
   clearToken();
-  updateAuthUI();
-  loadPosts();
+  localStorage.removeItem('userRole');
+  window.location.href = 'login.html';
 });
 
 // ── LOAD POSTS ────
@@ -131,7 +129,6 @@ async function loadPosts() {
   listEl.innerHTML = '';
 
   try {
-    // TODO: GET /posts
     const res  = await fetch(`${API_BASE}/posts`);
     const data = await res.json();
 
@@ -154,7 +151,7 @@ async function loadPosts() {
   }
 }
 
-// ── RENDER POSTS (uses currentFilter) ───
+// ── RENDER POSTS ───
 function renderPosts() {
   const listEl = document.getElementById('posts-list');
   const token  = getToken();
@@ -165,9 +162,7 @@ function renderPosts() {
     : allPosts.filter(p => p.author_role === currentFilter);
 
   if (filtered.length === 0) {
-    listEl.innerHTML = `<p style="color:var(--text-mid);padding:20px 0;">
-      No ${currentFilter} posts yet.
-    </p>`;
+    listEl.innerHTML = `<p style="color:var(--text-mid);padding:20px 0;">No ${currentFilter} posts yet.</p>`;
     return;
   }
 
@@ -178,13 +173,12 @@ function renderPosts() {
     card.className = `post-card ${post.author_role}-post`;
     card.style.animationDelay = `${i * 0.06}s`;
 
-    const badgeClass  = post.author_role === 'farmer' ? 'badge-farmer' : 'badge-researcher';
-    const badgeLabel  = post.author_role === 'farmer' ? '🌾 Farmer' : '🔬 Researcher';
-    const dateStr     = new Date(post.created_at).toLocaleDateString('en-GB', {
+    const badgeClass = post.author_role === 'farmer' ? 'badge-farmer' : 'badge-researcher';
+    const badgeLabel = post.author_role === 'farmer' ? '🌾 Farmer' : '🔬 Researcher';
+    const dateStr    = new Date(post.created_at).toLocaleDateString('en-GB', {
       day: 'numeric', month: 'short', year: 'numeric'
     });
 
-    // Disable like button if not logged in or already liked (simple UI check)
     const likeDisabled = !user ? 'disabled' : '';
 
     card.innerHTML = `
@@ -209,7 +203,6 @@ function renderPosts() {
       </div>
     `;
 
-    // Events
     card.querySelector('.post-title-link').addEventListener('click', () => openModal(post));
     card.querySelector('.read-more-btn').addEventListener('click', () => openModal(post));
     card.querySelector('.like-btn').addEventListener('click', (e) => handleLike(e, post.id));
@@ -221,30 +214,24 @@ function renderPosts() {
 
 // ── LIKE / UNLIKE ──
 async function handleLike(e, postId) {
-  const btn       = e.currentTarget;
-  const countEl   = btn.querySelector('.like-count');
-  const token     = getToken();
-
+  const btn     = e.currentTarget;
+  const countEl = btn.querySelector('.like-count');
+  const token   = getToken();
   if (!token) return;
 
-  // Toggle: if already liked, unlike; otherwise like
   const isLiked = btn.classList.contains('liked');
   const method  = isLiked ? 'DELETE' : 'POST';
-
-  btn.disabled = true;
+  btn.disabled  = true;
 
   try {
-    // TODO: POST /posts/{post_id}/like  or  DELETE /posts/{post_id}/like
     const res  = await fetch(`${API_BASE}/posts/${postId}/like`, {
       method,
       headers: { 'Authorization': `Bearer ${token}` },
     });
     const data = await res.json();
-
     if (res.ok) {
       countEl.textContent = data.likes_count;
       btn.classList.toggle('liked', !isLiked);
-      // Update cached post
       const p = allPosts.find(p => p.id === postId);
       if (p) p.likes_count = data.likes_count;
     }
@@ -273,7 +260,6 @@ document.getElementById('submit-post').addEventListener('click', async () => {
   const token   = getToken();
 
   errEl.textContent = '';
-
   if (!title)   { errEl.textContent = 'Title is required.'; return; }
   if (!content) { errEl.textContent = 'Content is required.'; return; }
   if (!token)   { errEl.textContent = 'Please sign in first.'; return; }
@@ -283,28 +269,16 @@ document.getElementById('submit-post').addEventListener('click', async () => {
   btn.textContent = 'Posting…';
 
   try {
-    // TODO: POST /posts
     const res  = await fetch(`${API_BASE}/posts`, {
       method:  'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ title, content }),
     });
-
     const data = await res.json();
-
-    if (!res.ok) {
-      errEl.textContent = data.detail || 'Could not create post.';
-      return;
-    }
-
-    // Clear the form and reload feed
+    if (!res.ok) { errEl.textContent = data.detail || 'Could not create post.'; return; }
     document.getElementById('post-title').value   = '';
     document.getElementById('post-content').value = '';
     await loadPosts();
-
   } catch (err) {
     errEl.textContent = 'Server error. Please try again.';
     console.error(err);
@@ -329,10 +303,8 @@ function openModal(post) {
   document.getElementById('modal-post-meta').textContent =
     `By ${post.author_name} (${post.author_role}) · ${dateStr}`;
 
-
-  // Show/hide add comment form
-  const addCommentDiv   = document.getElementById('modal-add-comment');
-  const loginPrompt     = document.getElementById('modal-login-prompt');
+  const addCommentDiv = document.getElementById('modal-add-comment');
+  const loginPrompt   = document.getElementById('modal-login-prompt');
   if (user) {
     addCommentDiv.classList.remove('hidden');
     loginPrompt.textContent = '';
@@ -343,7 +315,6 @@ function openModal(post) {
 
   document.getElementById('modal-overlay').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
-
   loadComments(post.id);
 }
 
@@ -359,25 +330,19 @@ document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('modal-overlay').addEventListener('click', (e) => {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 });
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeModal();
-});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
 // ── LOAD COMMENTS ──
 async function loadComments(postId) {
   const listEl = document.getElementById('modal-comments-list');
   listEl.innerHTML = '<div class="spinner small"></div>';
-
   try {
-    // TODO: GET /posts/{post_id}/comments
     const res      = await fetch(`${API_BASE}/posts/${postId}/comments`);
     const comments = await res.json();
-
     if (!Array.isArray(comments) || comments.length === 0) {
       listEl.innerHTML = '<p style="color:#888;font-size:14px;">No comments yet. Be the first!</p>';
       return;
     }
-
     listEl.innerHTML = '';
     comments.forEach(c => {
       const div = document.createElement('div');
@@ -393,7 +358,6 @@ async function loadComments(postId) {
       `;
       listEl.appendChild(div);
     });
-
   } catch (err) {
     listEl.innerHTML = '<p style="color:var(--red-alert);font-size:14px;">Could not load comments.</p>';
     console.error(err);
@@ -407,7 +371,6 @@ document.getElementById('submit-comment').addEventListener('click', async () => 
   const token   = getToken();
 
   errEl.textContent = '';
-
   if (!content) { errEl.textContent = 'Comment cannot be empty.'; return; }
   if (!token)   { errEl.textContent = 'Please sign in first.'; return; }
 
@@ -416,31 +379,18 @@ document.getElementById('submit-comment').addEventListener('click', async () => 
   btn.textContent = 'Posting…';
 
   try {
-    // TODO: POST /posts/{post_id}/comments
     const res  = await fetch(`${API_BASE}/posts/${openPostId}/comments`, {
       method:  'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ content }),
     });
-
     const data = await res.json();
-
-    if (!res.ok) {
-      errEl.textContent = data.detail || 'Could not post comment.';
-      return;
-    }
-
+    if (!res.ok) { errEl.textContent = data.detail || 'Could not post comment.'; return; }
     document.getElementById('modal-comment-input').value = '';
     await loadComments(openPostId);
-
-    // Update comment count in the cached post + re-render cards
     const p = allPosts.find(p => p.id === openPostId);
     if (p) p.comments_count += 1;
     renderPosts();
-
   } catch (err) {
     errEl.textContent = 'Server error.';
     console.error(err);
@@ -450,14 +400,11 @@ document.getElementById('submit-comment').addEventListener('click', async () => 
   }
 });
 
-// ── ESCAPE HTML (prevent XSS) ─
+// ── ESCAPE HTML ─
 function escHtml(str) {
   return String(str)
-    .replace(/&/g,  '&amp;')
-    .replace(/</g,  '&lt;')
-    .replace(/>/g,  '&gt;')
-    .replace(/"/g,  '&quot;')
-    .replace(/'/g,  '&#039;');
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
 
 // ── INIT ─

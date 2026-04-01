@@ -306,9 +306,18 @@ body.dashboard-layout {
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
+/* =========================================
+   UNIVERSAL LOGO LOCK
+   ========================================= */
 .sidebar-logo img {
-    height: 95px;
+    height: 90px;
     filter: brightness(0) invert(1); /* Keeps your logo white */
+    height: 100px !important; /* Forces it to always be exactly 60px tall */
+    width: auto; /* Prevents it from looking stretched or squished */
+    max-width: 100%; /* Keeps it from breaking out of the sidebar */
+    display: block;
+    margin: 0 auto; /* Perfectly centers it in the sidebar */
+    object-fit: contain; /* Ensures the whole logo is always visible */
 }
 
 .sidebar-nav {
