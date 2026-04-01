@@ -1,102 +1,110 @@
-/* Page background */
-
-body{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg,#e9f5ec,#f7f9f8);
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--cream);
 }
 
-
-/* Register container */
-
-.container{
-    background:white;
-    padding:40px;
-    border-radius:12px;
-    width:420px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
 }
 
-
-/* Title */
-
-h2{
-    margin-bottom:15px;
-    font-size:28px;
-    font-weight:600;
+.auth-card {
+    background: var(--white);
+    padding: 40px 36px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
 }
 
+.auth-logo {
+    margin-bottom: 20px;
+}
 
-/* Inputs */
+.auth-logo img {
+    height: 80px;
+    /* The logo is dark on a transparent background, so no filter needed here */
+}
 
-input,select{
-    width:100%;
+.auth-card h2 {
+    font-size: 26px;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+}
+
+.auth-subtext {
+    color: var(--text-mid);
+    margin-bottom: 30px;
+}
+
+.auth-form {
+    text-align: left;
+}
+
+.auth-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-mid);
+    margin-bottom: 6px;
+}
+
+.auth-form input,
+.auth-form select {
+    width: 100%;
     padding: 12px;
-    border-radius:8px;
-    border:1px solid #dcdcdc;
-    font-size:14px;
-    transition:0.2s;
+    border: 1px solid #DDE2D5;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 16px;
+    font-family: var(--font);
 }
 
-
-/* Input focus */
-
-input:focus,select:focus{
-    outline:none;
-    border:1px solid #117a3d;
-    box-shadow:0 0 0 2px rgba(58,143,94,0.15);
+.auth-form input:focus,
+.auth-form select:focus {
+    outline: none;
+    border-color: var(--green-mid);
+    box-shadow: 0 0 0 2px rgba(86, 110, 61, 0.2);
 }
 
-
-/* Register button */
-
-button{
-    margin-top:10px;
-    padding:13px;
-    border:none;
-    border-radius:8px;
-    background:#117a3d;
-    color:white;
-    font-size:16px;
-    font-weight:500;
-    cursor:pointer;
-    transition:0.2s;
-    width: 106%;
+/* For full-width buttons */
+.btn-primary.full-w {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
 }
 
-
-
-#role {
-    width: 106%;
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-mid);
 }
 
-#experience {
-    width: 106%;
+.auth-switch a {
+    color: var(--green-dark);
+    font-weight: 600;
+    text-decoration: none;
 }
 
-/* Button hover */
-
-button:hover{
-    background:#117a3d;
-
+.auth-switch a:hover {
+    text-decoration: underline;
 }
 
-
-/* Responsive (for smaller screens) */
-
-@media (max-width:500px){
-
-.container{
-    width:90%;
-    padding:25px;
+/* Error message styling */
+.form-error {
+    display: block;
+    color: var(--red-alert);
+    font-size: 14px;
+    margin-bottom: 12px;
+    min-height: 1em; /* Prevents layout shift */
+    text-align: center;
 }
 
+/* Utility class for hiding elements */
+.hidden {
+    display: none;
 }

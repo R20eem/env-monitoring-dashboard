@@ -1,7 +1,8 @@
 
 // ── CONFIG ───
 const API_BASE = 'http://127.0.0.1:8000';
-
+const API_BASE = 'http://192.168.0.22:8000';
+// input your local IP address above if you want to test on mobile (find it via `ipconfig` or `ifconfig` in terminal)
 const TOKEN_KEY = 'jwt_token';
 
 // ── STATE ──

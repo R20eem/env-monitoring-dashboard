@@ -32,119 +32,6 @@ body {
   line-height: 1.6;
 }
  
-/* ── NAVBAR ─────────────────────────────────────────── */
-.navbar {
-  background-color: var(--green-dark);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 40px;
-  height: 72px;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 3px 16px rgba(0,0,0,0.25);
-}
- 
-.logo a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
- 
-.logo-text {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: 0.5px;
-}
- 
-
-.logo img {
-  height: 92px;
-  width: auto;
-  filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,0.3))
-}
- 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-}
- 
-.nav-links li a {
-  color: rgba(255,255,255,0.88);
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 600;
-  padding: 8px 14px;
-  border-radius: 8px;
-  transition: background 0.2s, color 0.2s;
-}
- 
-.nav-links li a:hover,
-.nav-links li a.active {
-  background-color: rgba(255,255,255,0.15);
-  color: var(--white);
-}
- 
-.nav-buttons {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
- 
-/* Register – filled white */
-.sign {
-  background-color: var(--white);
-  color: var(--green-dark);
-  border: 2px solid var(--white);
-  padding: 9px 22px;
-  border-radius: 30px;
-  text-decoration: none;
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 700;
-  transition: 0.25s;
-}
-.sign:hover {
-  background-color: transparent;
-  color: var(--white);
-}
- 
-/* Sign In – outlined */
-.login {
-  background-color: transparent;
-  color: var(--white);
-  border: 2px solid var(--white);
-  padding: 9px 22px;
-  border-radius: 30px;
-  text-decoration: none;
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 700;
-  transition: 0.25s;
-}
-.login:hover {
-  background-color: var(--white);
-  color: var(--green-dark);
-}
- 
-/* Hamburger – mobile only */
-.hamburger {
-  display: none;
-  background: none;
-  border: 2px solid white;
-  color: white;
-  font-size: 20px;
-  border-radius: 6px;
-  padding: 4px 10px;
-  cursor: pointer;
-}
- 
 /* ── SHARED BUTTONS ─────────────────────────────────── */
 .btn-primary {
   display: inline-block;
@@ -181,7 +68,6 @@ body {
  
 /* ── HERO (index.html) ───────────────────────────────── */
 .hero {
-  margin-top: 72px; /* offset fixed navbar */
   padding: 70px 60px 60px;
   display: flex;
   flex-wrap: wrap;
@@ -316,7 +202,6 @@ body {
  
 /* ── PAGE HEADER (about.html) ───────────────────────── */
 .page-header {
-  margin-top: 72px;
   background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
   color: var(--white);
   text-align: center;
@@ -385,79 +270,120 @@ body {
   margin-top: 40px;
 }
  
-/* ── FOOTER ─────────────────────────────────────────── */
-.footer {
-  margin-top: auto;
-  background-color: var(--green-dark);
-  color: var(--white);
-  padding: 36px 40px;
+/* =========================================
+   APP SHELL LAYOUT (Sidebar + Main Content)
+   ========================================= */
+
+/* Lock the body so the whole page doesn't scroll, only the content area */
+/* Note: We use a specific class here so it doesn't break scrolling on your public pages */
+body.dashboard-layout {
+    margin: 0;
+    overflow: hidden; 
 }
- 
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  text-align: center;
+
+/* The main container holding everything */
+.app-layout {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
 }
- 
-.footer-logo {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--white);
+
+/* --- SIDEBAR --- */
+.app-sidebar {
+    width: 188px;
+    background-color: var(--green-dark);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    z-index: 20;
 }
- 
-/* If using image logo in footer */
-.footer img {
-  height: 80px;
-  width: auto;
-  filter: brightness(0) invert(1);
+
+.sidebar-logo {
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
- 
-.footer-nav {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-  justify-content: center;
+
+.sidebar-logo img {
+    height: 95px;
+    filter: brightness(0) invert(1); /* Keeps your logo white */
 }
- 
-.footer-nav a {
-  color: rgba(255,255,255,0.78);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  transition: color 0.2s;
+
+.sidebar-nav {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
-.footer-nav a:hover { color: var(--white); }
- 
-.footer p {
-  font-size: 13px;
-  color: rgba(255,255,255,0.55);
-  margin: 0;
+
+.sidebar-nav a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: 0.2s;
 }
- 
+
+.sidebar-nav a:hover, .sidebar-nav a.active {
+    background-color: rgba(255,255,255,0.15);
+    color: var(--white);
+}
+
+/* Push the bottom items (like Logout/Profile) to the bottom of the sidebar */
+.sidebar-bottom {
+    margin-top: auto;
+    padding: 20px;
+}
+
+/* --- MAIN WRAPPER (Right Side) --- */
+.app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--cream); /* Your existing off-white background */
+    overflow: hidden;
+}
+
+/* --- TOP BAR --- */
+.app-topbar {
+    height: 75px;
+    background-color: var(--white);
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    z-index: 10;
+}
+
+.app-topbar h2 {
+    color: var(--green-dark);
+    margin: 0;
+    font-size: 22px;
+}
+
+.topbar-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* --- SCROLLABLE CONTENT AREA --- */
+.app-content {
+    flex: 1;
+    overflow-y: auto; /* This is the ONLY part of the page that scrolls now */
+    padding: 40px;
+}
+
 /* ── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 768px) {
-  .navbar { padding: 0 20px; }
- 
-  .hamburger { display: block; }
- 
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 72px; left: 0;
-    width: 100%;
-    background-color: var(--green-dark);
-    padding: 16px 0;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    gap: 0;
-  }
-  .nav-links.open { display: flex; }
-  .nav-links li a { border-radius: 0; padding: 12px 30px; font-size: 16px; }
- 
-  .nav-buttons { display: none; }
- 
   .hero { padding: 50px 24px 40px; }
   .hero h1 { font-size: 2rem; }
   .hero-sub { font-size: 16px; }
@@ -470,4 +396,107 @@ body {
   .about-card { flex-direction: column; gap: 16px; padding: 28px 24px; }
   .about-main { padding: 40px 20px; }
   .page-header { padding: 50px 24px 40px; }
+}
+
+/* =========================================
+   ULTIMATE RESPONSIVENESS (Phone, iPad, Laptop)
+   ========================================= */
+
+/* 1. Ensure the main container NEVER causes horizontal scrolling */
+.app-main {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.app-content {
+    overflow-x: hidden;
+}
+
+/* 2. IPAD & MOBILE VIEW (Screens smaller than 850px) */
+@media (max-width: 850px) {
+    .app-layout {
+        flex-direction: column;
+    }
+
+    /* Transform Sidebar into Bottom Navigation */
+    .app-sidebar {
+        width: 100%;
+        height: 70px;
+        flex-direction: row;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+        z-index: 999;
+        padding: 0;
+    }
+
+    /* Hide logo and bottom profile area on small screens */
+    .sidebar-logo, .sidebar-bottom {
+        display: none;
+    }
+
+    /* Spread links evenly across the bottom */
+    .sidebar-nav {
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0;
+    }
+
+    /* Style the bottom nav buttons to stack icon and text */
+    .sidebar-nav a {
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px 4px;
+        font-size: 11px;
+        border-radius: 8px;
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Adjust Main Area to not be hidden behind the bottom nav */
+    .app-main {
+        padding-bottom: 70px; 
+    }
+
+    /* Shrink Topbar for iPads/Phones */
+    .app-topbar {
+        padding: 0 20px;
+        height: 65px;
+    }
+
+    .app-topbar h2 {
+        font-size: 18px;
+    }
+
+    /* Shrink the Topbar buttons so they fit */
+    .topbar-actions .btn-primary, 
+    .topbar-actions .btn-outline {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    /* Shrink Content Padding */
+    .app-content {
+        padding: 20px;
+    }
+}
+
+/* 3. EXTRA SMALL PHONES (Screens smaller than 450px) */
+@media (max-width: 450px) {
+    /* Hide the "Welcome to Eco Leaf" text to make room for buttons */
+    .app-topbar h2 {
+        display: none; 
+    }
+    
+    /* Center the Register/Sign in buttons */
+    .topbar-actions {
+        width: 100%;
+        justify-content: center;
+    }
 }
