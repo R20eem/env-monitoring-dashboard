@@ -1,98 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us – Environmental Monitoring Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Eco Leaf</title>
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/shared.css">
 </head>
-<body class="dashboard-layout">
-  <div class="app-layout">
-    
-    <aside class="app-sidebar">
-      <div class="sidebar-logo">
-         <img src="../images/logo_transparent.png" alt="Eco Leaf Logo">
-      </div>
-      
-      <nav class="sidebar-nav">
-         <a href="index.html">📊 Dashboard</a>
-         <a href="blog.html">💬 Blog</a>
-         <a href="about.html" class="active">ℹ️ About Us</a>
-      </nav>
+<body class="sh-page">
 
-      <div class="sidebar-bottom">
-         </div>
-    </aside>
-
-    <div class="app-main">
-      
-      <header class="app-topbar">
-         <h2>About Us</h2>
-         <div class="topbar-actions">
-           <a href="login.html" class="btn-outline">Sign In</a>
-           <a href="register.html" class="btn-primary">Register</a>
-         </div>
-      </header>
-
-      <main class="app-content">
-         
-        <!-- The old page header had a margin to offset the fixed navbar, which we remove here -->
-        <header class="page-header" style="margin-top: 0; padding-top: 0;">
-          <h1>About Us</h1>
-          <p>Building technology that helps farmers make better decisions.</p>
-        </header>
-       
-        <!-- To avoid having a <main> inside a <main>, we change the old one to a div -->
-        <div class="about-main">
-       
-          <section class="about-card">
-            <div class="about-icon">🌍</div>
-            <div class="about-text">
-              <h2>What Is This?</h2>
-              <p>
-                The Environmental Monitoring Dashboard is a web application designed to help
-                farmers — including those new to the field — monitor their crops and make
-                informed decisions based on real-time environmental data.
-              </p>
-            </div>
-          </section>
-       
-          <section class="about-card">
-            <div class="about-icon">🎯</div>
-            <div class="about-text">
-              <h2>Our Goal</h2>
-              <p>
-                Our goal is to empower farmers with the knowledge and tools they need to make
-                informed decisions about their crops — from soil moisture and temperature
-                to air quality and flood risk.
-              </p>
-            </div>
-          </section>
-       
-          <section class="about-card">
-            <div class="about-icon">👩‍💻</div>
-            <div class="about-text">
-              <h2>Our Team</h2>
-              <p>
-                We are a team of Level 2 undergraduate students from the University of Leeds,
-                passionate about using technology to solve real-world problems in agriculture.
-                This project is part of a funded research initiative on community-centred
-                environmental monitoring and international collaboration.
-              </p>
-            </div>
-          </section>
-       
-          <div class="about-cta">
-            <a href="index.html" class="btn-primary">← Back to Home</a>
-            <a href="#" class="btn-outline">View Dashboard</a>
-          </div>
-       
-        </div>
-
-      </main>
-
-    </div>
+<aside class="sh-sidebar">
+  <div class="sh-sidebar-logo">
+    <img src="../images/logo_transparent.png" alt="Eco Leaf">
+    <div class="sh-brand">Eco Leaf<small>Environmental Monitor</small></div>
   </div>
+
+  <nav class="sh-nav">
+    <div class="sh-nav-label">Navigation</div>
+    <a href="#" class="sh-nav-link sh-dash-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+      Dashboard
+    </a>
+    <a href="blog.html" class="sh-nav-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+      Community Blog
+    </a>
+    <a href="profile.html" class="sh-nav-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+      Profile
+    </a>
+  </nav>
+
+  <div class="sh-sidebar-bottom">
+    <div class="sh-user-row sh-hidden" id="sh-user-row">
+      <div class="sh-avatar" id="sh-avatar">?</div>
+      <div class="sh-user-info">
+        <div class="sh-user-name" id="sh-user-name">User</div>
+        <div class="sh-user-role" id="sh-user-role">guest</div>
+      </div>
+    </div>
+    <a href="login.html" class="sh-nav-link" id="sh-login-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h11M10 5l5 5-5 5"/></svg>
+      Sign In
+    </a>
+    <a href="#" class="sh-nav-link" id="sh-logout-btn" style="color:rgba(255,120,120,0.8);">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 15l4-5-4-5M17 10H7M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
+
+<div class="sh-main">
+  <header class="sh-topbar">
+    <div class="sh-topbar-title">About Us</div>
+    <div class="sh-topbar-right">
+      <a href="about.html" class="sh-about-link active">ℹ About Us</a>
+      <div id="sh-nav-actions"></div>
+    </div>
+  </header>
+
+  <main class="sh-content">
+
+    <div class="sh-hero sh-mb-24">
+      <h1>About Eco Leaf 🌱</h1>
+      <p>Building technology that helps farmers and researchers make better decisions through real-time environmental monitoring and data-driven insights.</p>
+    </div>
+
+    <div class="sh-grid-2 sh-mb-16">
+      <div class="sh-card">
+        <div class="sh-card-title">🌍 What Is This?</div>
+        <div class="sh-card-sub" style="margin-top:8px;">
+          The Environmental Monitoring Dashboard is a web application designed to help farmers — including those new to the field — monitor their crops and make informed decisions based on real-time environmental data. Researchers can analyse trends across multiple sites using advanced visualisations and NASA satellite data.
+        </div>
+      </div>
+      <div class="sh-card">
+        <div class="sh-card-title">🎯 Our Mission</div>
+        <div class="sh-card-sub" style="margin-top:8px;">
+          We believe every farmer deserves access to the same quality of environmental intelligence that large agribusinesses use. By combining local sensor networks with satellite data and community knowledge sharing, we level the playing field.
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-grid-3 sh-mb-16">
+      <div class="sh-card">
+        <div style="font-size:28px;margin-bottom:10px;">📡</div>
+        <div class="sh-card-title">Real-Time Sensors</div>
+        <div class="sh-card-sub" style="margin-top:6px;">Temperature, humidity, leaf wetness, pest traps and rainfall — monitored every 15 minutes across all sites.</div>
+      </div>
+      <div class="sh-card">
+        <div style="font-size:28px;margin-bottom:10px;">🛰️</div>
+        <div class="sh-card-title">NASA Integration</div>
+        <div class="sh-card-sub" style="margin-top:6px;">Regional satellite data from NASA POWER provides context beyond what ground sensors can capture — including NDVI and Growing Degree Days.</div>
+      </div>
+      <div class="sh-card">
+        <div style="font-size:28px;margin-bottom:10px;">💬</div>
+        <div class="sh-card-title">Community Knowledge</div>
+        <div class="sh-card-sub" style="margin-top:6px;">Farmers and researchers share field experience through the community blog — combining local knowledge with scientific analysis.</div>
+      </div>
+    </div>
+
+    <div class="sh-card sh-mb-16">
+      <div class="sh-card-title">📊 Monitored Sites</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:14px;">
+        <div style="padding:14px;background:var(--sh-green-50);border-radius:8px;border-left:3px solid var(--sh-green-500);">
+          <div style="font-weight:700;font-size:13px;color:var(--sh-green-700);">Site Maize</div>
+          <div style="font-size:12px;color:var(--sh-text-3);margin-top:3px;">Active · Pest & disease monitoring</div>
+        </div>
+        <div style="padding:14px;background:var(--sh-green-50);border-radius:8px;border-left:3px solid #378add;">
+          <div style="font-weight:700;font-size:13px;color:#185fa5;">Site Orchard</div>
+          <div style="font-size:12px;color:var(--sh-text-3);margin-top:3px;">Active · High outbreak history</div>
+        </div>
+        <div style="padding:14px;background:var(--sh-green-50);border-radius:8px;border-left:3px solid var(--sh-amber);">
+          <div style="font-weight:700;font-size:13px;color:#854f0b;">Site Wheat</div>
+          <div style="font-size:12px;color:var(--sh-text-3);margin-top:3px;">Active · Weather correlation studies</div>
+        </div>
+        <div style="padding:14px;background:var(--sh-green-50);border-radius:8px;border-left:3px solid var(--sh-red);">
+          <div style="font-weight:700;font-size:13px;color:#a32d2d;">Site Brassica</div>
+          <div style="font-size:12px;color:var(--sh-text-3);margin-top:3px;">Active · Disease monitoring focus</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-card">
+      <div class="sh-card-title">🚀 Get Started</div>
+      <div class="sh-card-sub" style="margin-top:8px;margin-bottom:16px;">
+        Register as a farmer to access the community blog and public dashboard. Researchers with an organisation code get full access to advanced analytics, NASA integration and raw data exports.
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="register.html" class="sh-btn sh-btn-primary">Register Now</a>
+        <a href="login.html"    class="sh-btn sh-btn-outline">Sign In</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../js/shared-nav.js"></script>
 </body>
 </html>

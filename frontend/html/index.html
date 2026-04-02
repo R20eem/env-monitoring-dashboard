@@ -1,127 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco Leaf - Dashboard</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eco Leaf - Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/shared.css">
 </head>
-<body>
-    <div class="app-layout">
-        
-        <aside class="app-sidebar">
-            <div class="sidebar-logo">
-                <img src="../images/logo_transparent.png" alt="Eco Leaf Logo" style="height: 60px;">
-            </div>
-            <nav class="sidebar-nav">
-                <a href="index.html" class="active">📊 Dashboard</a>
-                <a href="blog.html">💬 Blog</a>
-                <a href="about.html">ℹ️ About Us</a>
-            </nav>
-            <div class="sidebar-bottom">
-                <a href="#" id="logout-btn" style="color: #ff6b6b; text-decoration: none; font-weight: bold;">🚪 Logout</a>
-            </div>
-        </aside>
+<body class="sh-page">
 
-        <div class="app-main">
-            
-            <header class="app-topbar">
-                <h2 id="welcome-message">Loading Dashboard...</h2>
-                <div class="topbar-actions">
-                    <span id="user-profile-badge" class="badge normal">👤 Profile</span>
-                </div>
-            </header>
+<aside class="sh-sidebar">
+  <div class="sh-sidebar-logo">
+    <img src="../images/logo_transparent.png" alt="Eco Leaf">
+    <div class="sh-brand">Eco Leaf<small>Environmental Monitor</small></div>
+  </div>
+  <nav class="sh-nav">
+    <div class="sh-nav-label">Navigation</div>
+    <a href="index.html" class="sh-nav-link active">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+      Dashboard
+    </a>
+    <a href="blog.html" class="sh-nav-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+      Community Blog
+    </a>
+    <a href="profile.html" class="sh-nav-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+      Profile
+    </a>
+  </nav>
+  <div class="sh-sidebar-bottom">
+    <div class="sh-user-row sh-hidden" id="sh-user-row">
+      <div class="sh-avatar" id="sh-avatar">?</div>
+      <div class="sh-user-info">
+        <div class="sh-user-name" id="sh-user-name">User</div>
+        <div class="sh-user-role" id="sh-user-role">guest</div>
+      </div>
+    </div>
+    <a href="login.html" class="sh-nav-link" id="sh-login-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h11M10 5l5 5-5 5"/></svg>
+      Sign In
+    </a>
+    <a href="#" class="sh-nav-link" id="sh-logout-btn" style="color:rgba(255,120,120,0.8);">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 15l4-5-4-5M17 10H7M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3"/></svg>
+      Logout
+    </a>
+  </div>
+</aside>
 
-            <main class="app-content">
-                
-                <div id="farmer-view" style="display: none;">
-                    <div class="dashboard-header">
-                        <div>
-                            <h2>My Farm Overview</h2>
-                            <p>Current field conditions and community alerts.</p>
-                        </div>
-                        <button class="btn-primary">➕ New Field Report</button>
-                    </div>
-
-                    <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
-                        <div class="stat-card">
-                            <h3>Current Soil Moisture</h3>
-                            <div class="stat-number" style="color: #117a3d;">82% (Optimal)</div>
-                            <p>No irrigation needed today.</p>
-                        </div>
-                        <div class="stat-card alert-card">
-                            <h3>Weather Alert</h3>
-                            <div class="stat-number alert-text">Frost Warning</div>
-                            <p>Temperatures drop below 0°C tonight. Deploy covers.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="researcher-view" style="display: none;">
-                    
-                    <div class="dashboard-header">
-                        <div>
-                            <h2>Researcher Overview</h2>
-                            <p>Monitor global sensor networks and data trends.</p>
-                        </div>
-                        <button class="btn-primary">⬇ Export Data (CSV)</button>
-                    </div>
-
-                    <div class="dashboard-grid">
-                        <div class="stat-card">
-                            <h3>Active Sensors</h3>
-                            <div class="stat-number" id="sensor-count">1,204</div>
-                            <span class="trend positive">↑ 12 this week</span>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Total Data Points</h3>
-                            <div class="stat-number">84.5k</div>
-                            <span class="trend">Last 30 days</span>
-                        </div>
-                        <div class="stat-card alert-card">
-                            <h3>Critical Alerts</h3>
-                            <div class="stat-number alert-text">3</div>
-                            <span>Needs review</span>
-                        </div>
-                        
-                        <div class="chart-card">
-                            <div class="card-header">
-                                <h3>Nitrogen vs. Moisture Levels (Sector A)</h3>
-                                <select class="filter-dropdown">
-                                    <option>Last 7 Days</option>
-                                    <option>Last 30 Days</option>
-                                </select>
-                            </div>
-                            <div style="height: 250px; width: 100%; margin-top: 15px;">
-                                <canvas id="nitrogenMoistureChart"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="table-card">
-                            <h3>Live Sensor Feed</h3>
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Time</th>
-                                        <th>Location</th>
-                                        <th>Sensor</th>
-                                        <th>Reading</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="live-sensor-table">
-                                    <tr><td colspan="5">Loading data...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    </div>
-            </main>
-        </div>
+<div class="sh-main">
+  <header class="sh-topbar">
+    <div class="sh-topbar-title">Eco Leaf Dashboard</div>
+    <div class="sh-topbar-right">
+      <a href="about.html" class="sh-about-link">ℹ About Us</a>
+      <div id="sh-nav-actions"></div>
+    </div>
+  </header>
+  <main class="sh-content">
+    <div class="sh-hero sh-mb-24">
+      <h1>Welcome to Eco Leaf 🌱</h1>
+      <p>A platform connecting farmers and researchers to monitor environmental conditions, share knowledge, and protect crops through data-driven insights.</p>
+      <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+        <a href="login.html"    class="sh-btn" style="background:#fff;color:var(--sh-green-800);font-weight:700;padding:9px 20px;border-radius:8px;text-decoration:none;">Sign In</a>
+        <a href="register.html" class="sh-btn" style="border:1.5px solid rgba(255,255,255,0.5);color:#fff;background:transparent;font-weight:600;padding:9px 20px;border-radius:8px;text-decoration:none;">Register Free</a>
+      </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../js/dash.js"></script>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px;">
+      <div class="sh-card" style="border-top:3px solid var(--sh-green-500);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--sh-text-3);margin-bottom:8px;">Monitoring Sites</div>
+        <div style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--sh-text-1);">4</div>
+        <div style="font-size:12px;color:var(--sh-green-500);margin-top:4px;">Active sensor networks</div>
+      </div>
+      <div class="sh-card" style="border-top:3px solid #378add;">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--sh-text-3);margin-bottom:8px;">Total Data Points</div>
+        <div style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--sh-text-1);">210k+</div>
+        <div style="font-size:12px;color:var(--sh-text-3);margin-top:4px;">Collected since Jan 2022</div>
+      </div>
+      <div class="sh-card" style="border-top:3px solid var(--sh-amber);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--sh-text-3);margin-bottom:8px;">Community Members</div>
+        <div style="font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--sh-text-1);" id="public-member-count">—</div>
+        <div style="font-size:12px;color:var(--sh-text-3);margin-top:4px;">Farmers &amp; researchers</div>
+      </div>
+    </div>
+
+    <div class="sh-grid-2">
+      <div class="sh-card">
+        <div class="sh-card-title">🌍 Monitored Sites</div>
+        <div style="display:flex;flex-direction:column;gap:0;margin-top:12px;">
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--sh-border);font-size:13px;"><span style="color:var(--sh-text-2);">Site Maize</span><span style="background:var(--sh-green-100);color:var(--sh-green-700);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Active</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--sh-border);font-size:13px;"><span style="color:var(--sh-text-2);">Site Orchard</span><span style="background:var(--sh-green-100);color:var(--sh-green-700);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Active</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--sh-border);font-size:13px;"><span style="color:var(--sh-text-2);">Site Wheat</span><span style="background:#faeeda;color:#ba7517;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Monitoring</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;font-size:13px;"><span style="color:var(--sh-text-2);">Site Brassica</span><span style="background:var(--sh-green-100);color:var(--sh-green-700);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">Active</span></div>
+        </div>
+      </div>
+      <div class="sh-card">
+        <div class="sh-card-title">📋 What We Monitor</div>
+        <div style="display:flex;flex-direction:column;gap:0;margin-top:12px;">
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--sh-border);font-size:13px;"><span style="color:var(--sh-text-2);">Air Temperature</span><span style="font-weight:600;">°C</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--sh-border);font-size:13px;"><span style="color:var(--sh-text-2);">Relative Humidity</span><span style="font-weight:600;">%</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--sh-border);font-size:13px;"><span style="color:var(--sh-text-2);">Pest Trap Count</span><span style="font-weight:600;">per reading</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;font-size:13px;"><span style="color:var(--sh-text-2);">Rainfall</span><span style="font-weight:600;">mm/hr</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const _role  = localStorage.getItem('userRole');
+  const _token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
+  if (_role === 'researcher' && _token) {
+    window.location.href = 'researcher.html';
+  }
+  (async () => {
+    try {
+      const res = await fetch('http://192.168.0.22:8000/posts');
+      if (res.ok) {
+        const posts = await res.json();
+        const authors = new Set(posts.map(p => p.author_id));
+        document.getElementById('public-member-count').textContent = authors.size || '—';
+      }
+    } catch(e) {}
+  })();
+</script>
+<script src="../js/shared-nav.js"></script>
 </body>
 </html>

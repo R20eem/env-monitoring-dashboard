@@ -814,11 +814,11 @@ function initNasa() {
 }
 
 async function fetchNasaData() {
-  // Use site_maize coordinates as primary
   const coords = SITE_COORDS['site_maize'] || { lat:-17.8, lon:31.0 };
   const today  = new Date();
   const end    = fmtNasaDate(today);
   const start  = fmtNasaDate(new Date(today - 30 * 86400000));
+  const clean  = v => (v == null || v <= -990) ? null : v;
 
   const params = new URLSearchParams({
     parameters: 'T2M,ALLSKY_SFC_SW_DWN,PRECTOTCORR,WS10M,RH2M',
@@ -836,37 +836,31 @@ async function fetchNasaData() {
     const json = await res.json();
     const props = json.properties?.parameter || {};
 
-    // Get latest day values
-    const dates = Object.keys(props.T2M || {}).sort();
+    const dates  = Object.keys(props.T2M || {}).sort();
     const latest = dates[dates.length - 1];
 
-    const t2m    = props.T2M?.[latest]    ?? null;
-    const allsky = props.ALLSKY_SFC_SW_DWN?.[latest] ?? null;
-    const prec   = props.PRECTOTCORR?.[latest] ?? null;
-    const ws10m  = props.WS10M?.[latest]  ?? null;
-    const rh2m   = props.RH2M?.[latest]   ?? null;
+    const t2m    = clean(props.T2M?.[latest]);
+    const allsky = clean(props.ALLSKY_SFC_SW_DWN?.[latest]);
+    const prec   = clean(props.PRECTOTCORR?.[latest]);
+    const ws10m  = clean(props.WS10M?.[latest]);
+    const rh2m   = clean(props.RH2M?.[latest]);
+    const gdd    = t2m != null ? Math.max(0, t2m - 10).toFixed(1) : null;
+    const ndvi   = allsky != null ? Math.min(0.95, Math.max(0.1, 0.3 + allsky/1000 * 0.5 - (prec||0)/50)).toFixed(2) : null;
 
-    // Growing Degree Days (base 10°C)
-    const gdd = t2m != null ? Math.max(0, t2m - 10).toFixed(1) : null;
+    // If all values are null, fall back to illustrative
+    if (!t2m && !allsky && !prec) throw new Error('all null');
 
-    // Estimated NDVI from solar + precip proxy (simplified)
-    const ndvi = allsky != null ? Math.min(0.95, Math.max(0.1, 0.3 + allsky/1000 * 0.5 - (prec||0)/50)).toFixed(2) : null;
-
-    setText('nasa-t2m',    t2m    != null ? t2m.toFixed(1)    : '—');
-    setText('nasa-allsky', allsky != null ? allsky.toFixed(0)  : '—');
-    setText('nasa-prectot',prec   != null ? prec.toFixed(2)   : '—');
+    setText('nasa-t2m',    t2m    != null ? t2m.toFixed(1)   : '—');
+    setText('nasa-allsky', allsky != null ? allsky.toFixed(0) : '—');
+    setText('nasa-prectot',prec   != null ? prec.toFixed(2)  : '—');
     setText('nasa-gdd',    gdd    ?? '—');
-    setText('nasa-wind',   ws10m  != null ? ws10m.toFixed(1)  : '—');
-    setText('nasa-rh2m',   rh2m   != null ? rh2m.toFixed(1)   : '—');
+    setText('nasa-wind',   ws10m  != null ? ws10m.toFixed(1) : '—');
+    setText('nasa-rh2m',   rh2m   != null ? rh2m.toFixed(1)  : '—');
     setText('nasa-ndvi',   ndvi   ?? '—');
 
-    // Truth vs Trend chart
-    renderNasaTempOverlay(props.T2M||{}, dates);
-
-    // GDD chart
-    renderNasaGdd(props.T2M||{}, dates);
-
-    // Multi-source risk table
+    const cleanArr = arr => arr.map(v => clean(v));
+    renderNasaTempOverlay(props.T2M||{}, dates, clean);
+    renderNasaGdd(props.T2M||{}, dates, clean);
     renderNasaRiskTable(t2m, prec, ndvi);
 
   } catch(e) {
@@ -875,7 +869,7 @@ async function fetchNasaData() {
   }
 }
 
-function renderNasaTempOverlay(t2mData, dates) {
+function renderNasaTempOverlay(t2mData, dates, clean = v => v) {
   const last30 = dates.slice(-30);
 
   // Get local sensor avg temp per day
@@ -898,7 +892,7 @@ function renderNasaTempOverlay(t2mData, dates) {
         },
         {
           label: 'NASA T2M (regional)',
-          data: last30.map(d => t2mData[d] ?? null),
+          data: last30.map(d => clean(t2mData[d])),
           borderColor: '#378add', backgroundColor:'transparent',
           borderWidth:2, pointRadius:3, tension:0.3, spanGaps:true,
           borderDash: [4,3],
@@ -919,11 +913,11 @@ function renderNasaTempOverlay(t2mData, dates) {
   });
 }
 
-function renderNasaGdd(t2mData, dates) {
+function renderNasaGdd(t2mData, dates, clean = v => v) {
   const last30 = dates.slice(-30);
   let cumulative = 0;
   const gddVals = last30.map(d => {
-    const t = t2mData[d];
+    const t = clean(t2mData[d]);
     cumulative += t != null ? Math.max(0, t - 10) : 0;
     return parseFloat(cumulative.toFixed(1));
   });

@@ -17,7 +17,7 @@
       </div>
       
       <nav class="sidebar-nav">
-         <a href="index.html">📊 Dashboard</a>
+         <a href="register.html" id="dash-link">📊 Dashboard</a>
          <a href="blog.html" class="active">💬 Blog</a>
          <a href="about.html">ℹ️ About Us</a>
       </nav>
@@ -30,10 +30,24 @@
       
       <header class="app-topbar">
          <h2>Community Blog</h2>
-         <div class="topbar-actions">
-           <a href="login.html" class="btn-outline">Sign In</a>
-           <a href="register.html" class="btn-primary">Register</a>
-         </div>
+         <div class="topbar-actions" id="nav-actions"></div>
+         <script>
+         const _t = localStorage.getItem('jwt_token') || localStorage.getItem('token');
+         const _r = localStorage.getItem('userRole');
+         const nav = document.getElementById('nav-actions');
+         if (_t && nav) {
+           const dashUrl = _r === 'researcher' ? 'researcher.html' : 'index.html';
+           nav.innerHTML = `
+             <a href="${dashUrl}" class="btn-outline">Dashboard</a>
+             <a href="#" onclick="localStorage.clear();window.location.href='login.html';" class="btn-primary">Sign Out</a>
+           `;
+         } else if (nav) {
+           nav.innerHTML = `
+             <a href="login.html" class="btn-outline">Sign In</a>
+             <a href="register.html" class="btn-primary">Register</a>
+           `;
+         }
+         </script>
       </header>
 
       <main class="app-content">
@@ -158,6 +172,13 @@
     </div>
   </div>
 
+  <script>
+    const _role = localStorage.getItem('userRole');
+    const _dashLink = document.getElementById('dash-link');
+    if (_dashLink) {
+      _dashLink.href = _role === 'researcher' ? 'researcher.html' : 'index.html';
+    }
+  </script>
   <script src="../js/blog.js"></script>
 </body>
 </html>

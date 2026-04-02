@@ -91,6 +91,7 @@ window.onload = () => {
 
         if(res.ok){
             alert("Registration successful")
+            window.location.href = 'login.html'
 
             // Clear form
             document.querySelectorAll("input").forEach(input => input.value = "")

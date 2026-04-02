@@ -1,11 +1,22 @@
-// ── CONFIG ───
 const API_BASE = 'http://192.168.0.22:8000';
 const TOKEN_KEY = 'jwt_token';
 
-// ── BLOG ACCESS GUARD ──
-// Blog requires login — redirect guests to login page
-const _blogToken = localStorage.getItem(TOKEN_KEY) || localStorage.getItem('token');
-if (!_blogToken) {
+// ── STAY LOGGED IN — check all possible token keys
+function getToken() {
+  return localStorage.getItem('jwt_token') || localStorage.getItem('token');
+}
+function saveToken(t) {
+  localStorage.setItem('jwt_token', t);
+  localStorage.setItem('token', t);
+}
+function clearToken() {
+  localStorage.removeItem('jwt_token');
+  localStorage.removeItem('token');
+  localStorage.removeItem('userRole');
+}
+
+// ── BLOG ACCESS GUARD — only redirect if truly no token
+if (!getToken()) {
   window.location.href = 'login.html';
 }
 
@@ -13,11 +24,6 @@ if (!_blogToken) {
 let currentFilter = 'all';
 let allPosts      = [];
 let openPostId    = null;
-
-// ── TOKEN HELPERS ───
-function getToken()   { return localStorage.getItem(TOKEN_KEY) || localStorage.getItem('token'); }
-function saveToken(t) { localStorage.setItem(TOKEN_KEY, t); localStorage.setItem('token', t); }
-function clearToken() { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem('token'); }
 
 function decodeToken(token) {
   try {
