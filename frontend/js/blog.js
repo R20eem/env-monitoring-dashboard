@@ -108,6 +108,14 @@ document.getElementById('login-btn').addEventListener('click', async () => {
 
     saveToken(data.access_token);
     localStorage.setItem('userRole', role);
+    localStorage.setItem('userEmail', email);
+
+    // Researchers go straight to their dashboard — farmers stay on the blog
+    if (role === 'researcher') {
+      window.location.href = 'researcher.html';
+      return;
+    }
+
     updateAuthUI();
     loadPosts();
 

@@ -269,6 +269,17 @@ body.researcher-page {
   gap: 10px;
 }
 
+.r-about-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--r-text-3);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.r-about-link:hover { background: var(--r-green-50); color: var(--r-green-700); }
+
 .r-status-pill {
   display: flex;
   align-items: center;

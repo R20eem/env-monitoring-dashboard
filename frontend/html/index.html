@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eco Leaf - Dashboard</title>
+  <!-- Role guard: fires BEFORE body renders so researchers never see the farmer page -->
+  <script>
+    (function() {
+      var role  = localStorage.getItem('userRole');
+      var token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
+      if (role === 'researcher' && token) {
+        window.location.replace('researcher.html');
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/shared.css">
 </head>
@@ -108,11 +118,6 @@
 </div>
 
 <script>
-  const _role  = localStorage.getItem('userRole');
-  const _token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
-  if (_role === 'researcher' && _token) {
-    window.location.href = 'researcher.html';
-  }
   (async () => {
     try {
       const res = await fetch('http://192.168.0.22:8000/posts');
