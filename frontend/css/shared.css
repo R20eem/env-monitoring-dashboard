@@ -1,0 +1,314 @@
+/* ============================================================
+   SHARED SHELL — shared.css
+   Used by: index.html, blog.html, about.html, profile.html
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --sh-green-900: #173404;
+  --sh-green-800: #27500a;
+  --sh-green-700: #3b6d11;
+  --sh-green-500: #639922;
+  --sh-green-400: #97c459;
+  --sh-green-200: #c0dd97;
+  --sh-green-100: #eaf3de;
+  --sh-green-50:  #f4f9ed;
+  --sh-surface:   #f2efe8;
+  --sh-card:      #ffffff;
+  --sh-border:    rgba(0,0,0,0.07);
+  --sh-border-md: rgba(0,0,0,0.12);
+  --sh-text-1:    #111a08;
+  --sh-text-2:    #3d4a2a;
+  --sh-text-3:    #7a8a65;
+  --sh-text-4:    #a8b89a;
+  --sh-red:       #e24b4a;
+  --sh-amber:     #ef9f27;
+  --sh-sidebar-w: 220px;
+  --sh-topbar-h:  60px;
+  --sh-font-display: 'Syne', sans-serif;
+  --sh-font-body:    'DM Sans', sans-serif;
+  --sh-font-mono:    'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body.sh-page {
+  font-family: var(--sh-font-body);
+  background: var(--sh-surface);
+  color: var(--sh-text-1);
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
+}
+
+/* ── SIDEBAR ── */
+.sh-sidebar {
+  width: var(--sh-sidebar-w);
+  min-height: 100vh;
+  background: var(--sh-green-900);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.sh-sidebar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(99,153,34,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.sh-sidebar-logo {
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sh-sidebar-logo img {
+  height: 40px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  object-fit: contain;
+}
+
+.sh-brand {
+  font-family: var(--sh-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sh-green-200);
+  line-height: 1.2;
+}
+
+.sh-brand small {
+  display: block;
+  font-size: 9px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.sh-nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sh-nav-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  padding: 8px 10px 4px;
+}
+
+.sh-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+
+.sh-nav-link svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.75; }
+.sh-nav-link:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+.sh-nav-link.active {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+.sh-nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 60%;
+  background: var(--sh-green-400);
+  border-radius: 0 3px 3px 0;
+}
+
+.sh-sidebar-bottom {
+  padding: 14px 12px 18px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.sh-user-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.sh-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--sh-green-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sh-font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sh-green-200);
+  flex-shrink: 0;
+}
+
+.sh-user-info { flex: 1; min-width: 0; }
+.sh-user-name { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-user-role { font-size: 9px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── MAIN AREA ── */
+.sh-main {
+  margin-left: var(--sh-sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.sh-topbar {
+  height: var(--sh-topbar-h);
+  background: var(--sh-card);
+  border-bottom: 1px solid var(--sh-border);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.sh-topbar-title {
+  font-family: var(--sh-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sh-text-1);
+  flex: 1;
+}
+
+.sh-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sh-about-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sh-text-3);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sh-about-link:hover { background: var(--sh-green-50); color: var(--sh-green-700); }
+.sh-about-link.active { color: var(--sh-green-700); font-weight: 600; }
+
+.sh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: var(--sh-font-body);
+  text-decoration: none;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.sh-btn-primary { background: var(--sh-green-700); color: #fff; }
+.sh-btn-primary:hover { background: var(--sh-green-800); }
+.sh-btn-outline { background: transparent; color: var(--sh-green-700); border: 1.5px solid var(--sh-green-400); }
+.sh-btn-outline:hover { background: var(--sh-green-50); }
+.sh-btn-ghost { background: transparent; color: var(--sh-text-3); border: 1px solid var(--sh-border-md); }
+.sh-btn-ghost:hover { background: var(--sh-surface); }
+
+/* ── CONTENT ── */
+.sh-content {
+  padding: 28px;
+  flex: 1;
+}
+
+/* ── PAGE HERO ── */
+.sh-hero {
+  background: linear-gradient(135deg, var(--sh-green-900) 0%, var(--sh-green-700) 100%);
+  border-radius: 14px;
+  padding: 36px 40px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.sh-hero h1 {
+  font-family: var(--sh-font-display);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.sh-hero p {
+  font-size: 15px;
+  opacity: 0.75;
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+/* ── CARDS ── */
+.sh-card {
+  background: var(--sh-card);
+  border: 1px solid var(--sh-border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.sh-card-title {
+  font-family: var(--sh-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sh-text-1);
+  margin-bottom: 6px;
+}
+
+.sh-card-sub {
+  font-size: 13px;
+  color: var(--sh-text-3);
+  line-height: 1.6;
+}
+
+/* ── UTILITY ── */
+.sh-hidden { display: none !important; }
+.sh-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.sh-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.sh-mb-16  { margin-bottom: 16px; }
+.sh-mb-24  { margin-bottom: 24px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  :root { --sh-sidebar-w: 0px; }
+  .sh-sidebar { display: none; }
+  .sh-grid-2, .sh-grid-3 { grid-template-columns: 1fr; }
+}
