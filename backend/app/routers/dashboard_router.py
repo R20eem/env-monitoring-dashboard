@@ -14,6 +14,7 @@ from app.repositories.sensor_reading_repository import (
     get_latest_alert_pest_outbreak_per_site,
     get_latest_alert_disease_moderate_per_site,
     get_latest_alert_disease_high_per_site,
+    get_site_summary,
 )
 
 from app.schemas.sensor_reading import (
@@ -28,6 +29,7 @@ from app.schemas.sensor_reading import (
     LatestAlertPestOutbreakResponse,
     LatestAlertDiseaseModerateResponse,
     LatestAlertDiseaseHighResponse,
+    SiteSummaryResponse,
 )
 
 router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
@@ -261,3 +263,32 @@ def get_latest_alert_disease_high(db: Session = Depends(get_db)):
         )
         for r in readings
     ]
+
+
+@router.get(
+    "/summary",
+    response_model=list[SiteSummaryResponse],
+)
+def get_dashboard_summary(db: Session = Depends(get_db)):
+    """
+    returns the most recent get_site_summary readings
+    one object per site, i.e:
+    {
+        "site_id": "site_orchard",
+        "timestamp": "2023-12-31 23:00:00",
+        "status": "warning",
+        "air_temperature_c": 17.19,
+        "relative_humidity_pct": 97.5,
+        "leaf_wetness_0_1": 1.0,
+        "pest_trap_count": 1.0,
+        "wx_rain_mm_hr": 11.28,
+        "alert_triggered": 1.0,
+        "alert_pest_action": 0.0,
+        "alert_pest_outbreak": 0.0,
+        "alert_disease_moderate": 1.0,
+        "alert_disease_high": 0.0
+    }
+    for farmers dashboard
+    """
+    readings = get_site_summary(db)
+    return readings

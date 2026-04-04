@@ -181,3 +181,28 @@ class AlertHistoryResponse(BaseModel):
     alert_disease_high: float | None
 
     model_config = {"from_attributes": True}
+
+
+class SiteSummaryResponse(BaseModel):
+    """
+    shape of each item returned by get /api/dashboard/summary
+    one api call containing latest readings for farmer dashboard
+    """
+
+    site_id: str
+    timestamp: str
+    status: str | None
+
+    air_temperature_c: float | None
+    relative_humidity_pct: float | None
+    leaf_wetness_0_1: float | None
+    pest_trap_count: float | None
+    wx_rain_mm_hr: float | None
+
+    alert_triggered: float | None
+    alert_pest_action: float | None
+    alert_pest_outbreak: float | None
+    alert_disease_moderate: float | None
+    alert_disease_high: float | None
+
+    model_config = {"from_attributes": True}
