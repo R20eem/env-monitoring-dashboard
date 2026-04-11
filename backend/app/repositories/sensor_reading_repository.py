@@ -476,3 +476,30 @@ def get_alert_history(
         query = query.filter(SensorReading.status == status)
 
     return query.order_by(SensorReading.timestamp.desc()).limit(limit).all()
+
+
+def get_site_summary(db: Session) -> list[SensorReading]:
+    """
+    returns most recent readings for each site
+    Act as a summary for farmers dashboard
+    """
+    latest_subq = (
+        db.query(
+            SensorReading.site_id,
+            func.max(SensorReading.timestamp).label("max_ts"),
+        )
+        .group_by(SensorReading.site_id)
+        .subquery()
+    )
+
+    results = (
+        db.query(SensorReading)
+        .join(
+            latest_subq,
+            (SensorReading.site_id == latest_subq.c.site_id)
+            & (SensorReading.timestamp == latest_subq.c.max_ts),
+        )
+        .all()
+    )
+
+    return results
