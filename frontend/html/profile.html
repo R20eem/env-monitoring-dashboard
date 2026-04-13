@@ -84,21 +84,65 @@
           <span style="font-size:13px;color:var(--sh-text-3);">Role</span>
           <span style="font-size:13px;font-weight:600;color:var(--sh-text-1);text-transform:capitalize;" id="profile-role-2">—</span>
         </div>
+        <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--sh-border);">
+          <span style="font-size:13px;color:var(--sh-text-3);">Organization Code</span>
+          <span style="font-size:13px;font-weight:600;color:var(--sh-text-1);" id="profile-org">—</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--sh-border);">
+          <span style="font-size:13px;color:var(--sh-text-3);">Research End Date</span>
+          <span style="font-size:13px;font-weight:600;color:var(--sh-text-1);" id="profile-end">—</span>
+        </div>
+
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;">
           <span style="font-size:13px;color:var(--sh-text-3);">Member since</span>
           <span style="font-size:13px;font-weight:600;color:var(--sh-text-1);">2026</span>
         </div>
       </div>
 
+      <!-- Edit Button -->
+      <button id="edit-btn" class="sh-btn" style="margin-top:20px;">
+        Edit Profile
+      </button>
+
+
+      <!-- Existing box -->
       <div style="margin-top:20px;padding:16px;background:var(--sh-green-50);border-radius:8px;border:1px dashed var(--sh-green-400);">
         <div style="font-size:13px;font-weight:600;color:var(--sh-green-700);margin-bottom:4px;">🚧 More coming soon</div>
         <div style="font-size:12px;color:var(--sh-text-3);">Profile editing, password change and activity history will be added here.</div>
       </div>
     </div>
-
   </main>
 </div>
+<!-- Edit Profile Modal -->
+<div id="edit-modal" style="
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.5);
+  justify-content:center;
+  align-items:center;
+">
 
+  <div style="
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    width:300px;
+  ">
+
+    <h3>Edit Profile</h3>
+
+    <input id="edit-first" placeholder="First Name" style="width:100%;margin:8px 0;padding:8px;">
+    <input id="edit-last" placeholder="Last Name" style="width:100%;margin:8px 0;padding:8px;">
+
+    <button id="save-btn" style="margin-top:10px;">Save</button>
+    <button id="close-btn" style="margin-top:10px;">Cancel</button>
+
+  </div>
+</div>
+<!--
 <script>
   // Populate profile from localStorage
   const _email = localStorage.getItem('userEmail') || '—';
@@ -110,6 +154,8 @@
   document.getElementById('profile-email').textContent  = _email;
   document.getElementById('profile-role-2').textContent = _role;
 </script>
-<script src="../js/shared-nav.js"></script>
+-->
+<script src="../js/profile.js"></script>
+<script src="../js/shared-nav.js"></script> 
 </body>
 </html>
