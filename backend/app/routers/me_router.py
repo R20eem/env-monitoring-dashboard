@@ -43,7 +43,8 @@ def token_endpoint(
     )
 
 
-@router.get("/me", response_model=MeResponse)
+# @router.get("/me", response_model=MeResponse) changed to the below so the profile page can have more info and sperate 
+@router.get("/me")
 def me(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     try:
         email, role = decode_access_token(token)
@@ -60,4 +61,27 @@ def me(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
 
-    return MeResponse(id=user.id, email=user.email, role=role)
+    # return MeResponse(id=user.id, email=user.email, role=role)
+    if role == "researcher":
+        return {
+            "id": user.id,
+            "email": user.email,
+            "role": role,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "org_code": user.org_code,
+            "connection_end": user.connection_end
+        }
+
+    elif role == "farmer":
+        return {
+            "id": user.id,
+            "email": user.email,
+            "role": role,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "location": user.location,
+            "experience": user.experience
+     }
+    
+    

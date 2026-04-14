@@ -29,16 +29,17 @@ load_dotenv()
 app = FastAPI(title="Env Monitoring API")
 
 # 1. Explicitly name the Live Server addresses
-origins = [
-    "http://127.0.0.1:5500",
-    "http://localhost:5500",
-    "http://192.168.0.22:5500"
-]
+#origins = [
+    #"http://127.0.0.1:5500",
+   # "http://localhost:5500",
+    #"http://192.168.0.22:5500"
+#]
 
 # 2. Give them the ultimate VIP pass
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins, # <--- Points to the list above
+    # allow_origins=origins, # <--- Points to the list above
+    allow_origins=["*"],
     allow_credentials=True, 
     allow_methods=["*"],
     allow_headers=["*"],
