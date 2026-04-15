@@ -24,6 +24,9 @@ import csv
 import io
 from datetime import datetime
 
+from app.repositories.alert_log_repository import get_alert_history
+from app.schemas.alert_log import AlertLogResponse
+
 router = APIRouter(prefix="/api/researcher/dashboard", tags=["researcher-dashboard"])
 
 def validate_filters(
@@ -65,7 +68,7 @@ def trends(
     site_id: str | None = Query(default=None),
     start_date: str | None = Query(default=None),
     end_date: str | None = Query(default=None),
-    limit: int = Query(default=200),
+    limit: int = Query(default=200, le=1000),
     db: Session = Depends(get_db),
 ):
     """
@@ -91,7 +94,7 @@ def researcher_data(
     start_date: str | None = Query(default=None),
     end_date: str | None = Query(default=None),
     status: str | None = Query(default=None),
-    limit: int = Query(default=100),
+    limit: int = Query(default=100, le=500),
     db: Session = Depends(get_db),
 ):
     """
@@ -176,27 +179,32 @@ def export_researcher_data(
 
 @router.get(
     "/alerts/history",
-    response_model=list[AlertHistoryResponse],
+    response_model=list[AlertLogResponse],
 )
 def alert_history(
     site_id: str | None = Query(default=None),
     start_date: str | None = Query(default=None),
     end_date: str | None = Query(default=None),
-    status: str | None = Query(default=None),
-    limit: int = Query(default=100),
+    severity: str | None = Query(default=None),
+    limit: int = Query(default=100, le=500),
     db: Session = Depends(get_db),
 ):
     """
-    returns alert history for researchers
+    returns alert history from alert_log table
     """
 
-    validate_filters(start_date, end_date, status)
+    allowed_severity = {"warning", "critical"}
+    if severity and severity not in allowed_severity:
+        raise HTTPException(
+            status_code=400,
+            detail="invalid severity. allowed values: warning, critical",
+        )
 
     return get_alert_history(
         db=db,
         site_id=site_id,
         start_date=start_date,
         end_date=end_date,
-        status=status,
+        severity=severity,
         limit=limit,
     )

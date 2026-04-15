@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // }
 
     // 2. PERSONALIZE THE HEADER
-    const welcomeText = role === 'researcher' ? 'Welcome, Dr. Researcher' : 'Welcome, Farmer';
+    const welcomeText = role === 'researcher' ? 'Welcome, Researcher' : 'Welcome, Farmer';
     document.getElementById('welcome-message').innerText = welcomeText;
 
     // 3. THE MAGIC SWITCH: Show the correct layout based on role

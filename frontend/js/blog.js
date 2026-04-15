@@ -1,4 +1,4 @@
-const API_BASE = 'http://192.168.0.22:8000';
+const API_BASE = 'http://127.0.0.1:8000';
 const TOKEN_KEY = 'jwt_token';
 
 // ── STAY LOGGED IN — check all possible token keys
@@ -25,6 +25,350 @@ let currentFilter = 'all';
 let allPosts      = [];
 let openPostId    = null;
 
+// -- SAMPLE FALLBACK POSTS-- only used for demo, if there is real post from backend api than these will be used
+const SAMPLE_COMMENTS = {
+  1001: [
+    {
+      author_name: "Dr. Sarah Chen",
+      author_role: "researcher",
+      content: "The early clustering you observed is consistent with rising pest activity after humid mornings. It would be good to compare this with trap counts over the next few days.",
+      created_at: "2026-03-03T09:10:00"
+    },
+    {
+      author_name: "Sipho Dlamini",
+      author_role: "farmer",
+      content: "We saw something similar on our side as well, especially near the lower leaves.",
+      created_at: "2026-03-03T12:40:00"
+    },
+    {
+      author_name: "Dr. Michael Jacobs",
+      author_role: "researcher",
+      content: "Check whether leaf wetness stayed high overnight. That usually strengthens the pattern.",
+      created_at: "2026-03-04T08:25:00"
+    }
+  ],
+
+  1002: [
+    {
+      author_name: "Thabo Mokoena",
+      author_role: "farmer",
+      content: "This matches what we are seeing in the field. The warnings usually come after very damp mornings.",
+      created_at: "2026-03-29T07:50:00"
+    },
+    {
+      author_name: "Dr. Michael Jacobs",
+      author_role: "researcher",
+      content: "Yes, the dashboard trend suggests the disease alerts are not random. Humidity and leaf wetness are moving together.",
+      created_at: "2026-03-29T10:15:00"
+    },
+    {
+      author_name: "Naledi Khumalo",
+      author_role: "farmer",
+      content: "Would you recommend earlier spraying if these conditions continue for several days?",
+      created_at: "2026-03-29T13:30:00"
+    },
+    {
+      author_name: "Dr. Sarah Chen",
+      author_role: "researcher",
+      content: "That depends on crop stage, but sustained wetness definitely raises risk. Monitoring should be intensified first.",
+      created_at: "2026-03-30T15:05:00"
+    },
+    {
+      author_name: "Dr. Amina Patel",
+      author_role: "researcher",
+      content: "This is exactly why combining environmental variables in the dashboard is useful for early warning.",
+      created_at: "2026-03-30T09:20:00"
+    }
+  ],
+
+  1003: [
+    {
+      author_name: "Dr. Kabelo Naidoo",
+      author_role: "researcher",
+      content: "A 20% reduction is a strong result. It would be useful to compare it with the previous moisture alert frequency.",
+      created_at: "2026-03-13T08:10:00"
+    },
+    {
+      author_name: "Lerato Nkosi",
+      author_role: "farmer",
+      content: "We are considering the same switch. Did it change pest activity at all?",
+      created_at: "2026-03-13T11:45:00"
+    },
+    {
+      author_name: "Sipho Dlamini",
+      author_role: "farmer",
+      content: "So far it also seems to reduce water waste without stressing the plants.",
+      created_at: "2026-03-13T16:00:00"
+    },
+    {
+      author_name: "Dr. Sarah Chen",
+      author_role: "researcher",
+      content: "This would make a useful comparison case for the dashboard if both sites stay monitored.",
+      created_at: "2026-03-14T09:35:00"
+    }
+  ],
+
+  1004: [
+    {
+      author_name: "Dr. Amina Patel",
+      author_role: "researcher",
+      content: "This is a good point. Regional weather alone often misses the small field-level changes that actually trigger alerts.",
+      created_at: "2026-03-24T11:00:00"
+    },
+    {
+      author_name: "Thabo Mokoena", // used google translater
+      author_role: "farmer",
+      content: "Ja, dit help baie om plaaslike data te hê wanneer toestande vinnig verander.",
+      created_at: "2026-03-29T13:10:00"
+    }
+  ],
+
+  1005: [
+    {
+      author_name: "Dr. Michael Jacobs",
+      author_role: "researcher",
+      content: "That is a very good example of using the warning level as an early intervention point before reaching critical status.",
+      created_at: "2026-03-26T09:15:00"
+    }
+  ],
+
+  1006: [
+    {
+      author_name: "Dr. Sarah Chen",
+      author_role: "researcher",
+      content: "High humidity in the early morning is expected, but sustained levels above 90% can increase fungal risk.",
+      created_at: "2026-03-27T09:00:00"
+    },
+    {
+      author_name: "Dr. Amina Patel",
+      author_role: "researcher",
+      content: "I would monitor leaf wetness together with humidity. If both remain high, the risk becomes more significant.",
+      created_at: "2026-03-27T11:20:00"
+    }
+  ],
+
+  1007: [
+    {
+      author_name: "Dr. Michael Jacobs",
+      author_role: "researcher",
+      content: "This could be nocturnal pests like cutworms. Check near the soil early in the morning.",
+      created_at: "2026-03-28T08:10:00"
+    },
+    {
+      author_name: "Dr. Kabelo Naidoo",
+      author_role: "researcher",
+      content: "If the damage appears overnight, insect feeding is a stronger possibility than heat stress.",
+      created_at: "2026-03-28T10:05:00"
+    },
+    {
+      author_name: "Lerato Nkosi",
+      author_role: "farmer",
+      content: "We had similar damage last season and it turned out to be cutworms near the base.",
+      created_at: "2026-03-28T14:25:00"
+    }
+  ],
+
+  1008: [
+    {
+      author_name: "Naledi Khumalo",
+      author_role: "farmer",
+      content: "This is useful because we also noticed warnings after wetter nights, especially in lower parts of the field.",
+      created_at: "2026-03-18T14:00:00"
+    },
+    {
+      author_name: "Dr. Sarah Chen",
+      author_role: "researcher",
+      content: "Yes, and the maize site appears to show this more clearly than the others.",
+      created_at: "2026-03-18T15:25:00"
+    },
+    {
+      author_name: "Dr. Amina Patel",
+      author_role: "researcher",
+      content: "It may be worth testing whether the timing of irrigation is amplifying that effect.",
+      created_at: "2026-03-19T09:40:00"
+    },
+    {
+      author_name: "Sipho Dlamini",
+      author_role: "farmer",
+      content: "That would be interesting because we irrigate quite late in the afternoon on one section.",
+      created_at: "2026-03-19T12:10:00"
+    }
+  ],
+
+  1009: [
+    {
+      author_name: "Dr. Michael Jacobs",
+      author_role: "researcher",
+      content: "This is a good example of how the dashboard can support forecasting rather than only reporting.",
+      created_at: "2026-03-21T15:15:00"
+    },
+    {
+      author_name: "Musa Ndlovu",
+      author_role: "farmer",
+      content: "We often notice more trap activity after the hottest days too.",
+      created_at: "2026-03-21T17:00:00"
+    },
+    {
+      author_name: "Dr. Sarah Chen",
+      author_role: "researcher",
+      content: "It would be useful to compare this with humidity drops during the same periods.",
+      created_at: "2026-03-22T08:45:00"
+    }
+  ],
+
+  1010: [
+    {
+      author_name: "Thabo Mokoena",
+      author_role: "farmer",
+      content: "The maize site has definitely been the most concerning one from a field perspective this week.",
+      created_at: "2026-03-29T17:10:00"
+    },
+    {
+      author_name: "Dr. Sarah Chen",
+      author_role: "researcher",
+      content: "The alert concentration there suggests it should be prioritized for inspection and follow-up sampling.",
+      created_at: "2026-03-24T18:00:00"
+    },
+    {
+      author_name: "Dr. Amina Patel",
+      author_role: "researcher",
+      content: "The combination of rainfall, humidity, and leaf wetness makes that conclusion quite reasonable.",
+      created_at: "2026-03-25T08:20:00"
+    },
+    {
+      author_name: "Naledi Khumalo",
+      author_role: "farmer",
+      content: "Would you suggest adjusting irrigation timing there first, or focusing on pest checks?",
+      created_at: "2026-03-25T10:50:00"
+    },
+    {
+      author_name: "Dr. Kabelo Naidoo",
+      author_role: "researcher",
+      content: "I would start with field inspection and trap confirmation, then review irrigation timing immediately after.",
+      created_at: "2026-03-25T12:15:00"
+    },
+    {
+      author_name: "Dr. Michael Jacobs",
+      author_role: "researcher",
+      content: "This is a good candidate site for a case-study summary in the final report.",
+      created_at: "2026-03-25T14:30:00"
+    }
+  ]
+};
+
+// -- SAMPLE FALLBACK COMMENTS
+const SAMPLE_POSTS = [
+  {
+    id: 1001,
+    title: "Early signs of aphid activity in maize plots",
+    content: "We noticed a sharp increase in pest activity in the eastern maize plots after two humid mornings. Trap counts were still moderate, but leaf inspection showed early aphid clustering near the lower canopy. Farmers may want to inspect fields earlier in the day before the temperature rises.",
+    author_id: 1,
+    author_role: "farmer",
+    author_name: "Thabo Mokoena",
+    likes_count: 12,
+    comments_count: 3,
+    created_at: "2026-03-02T08:30:00"
+  },
+  {
+    id: 1002,
+    title: "Humidity and leaf wetness are strongly aligning with disease alerts",
+    content: "After reviewing recent sensor logs, we found that high humidity combined with persistent leaf wetness closely matched disease-risk warnings. This suggests the system is performing well as an early indicator for fungal risk, especially during cooler overnight periods.",
+    author_id: 2,
+    author_role: "researcher",
+    author_name: "Dr. Sarah Chen",
+    likes_count: 21,
+    comments_count: 5,
+    created_at: "2026-03-29T06:10:00"
+  },
+  {
+    id: 1003,
+    title: "Drip irrigation reduced water use on our test field",
+    content: "We switched one section of the farm to drip irrigation after repeated moisture-related alerts. Over two weeks, the soil stayed more stable and overall water use dropped noticeably. We are planning to extend the setup to a second site next month.",
+    author_id: 3,
+    author_role: "farmer",
+    author_name: "Sipho Dlamini",
+    likes_count: 17,
+    comments_count: 4,
+    created_at: "2026-03-12T10:45:00"
+  },
+  {
+    id: 1004, // used google translater
+    title: "Vergelyking van plaaslike sensorlesings met weerdata",
+    content: "Ons het plaaslike temperatuur- en reënvaldata vergelyk met streeksweerpatrone. Die plaaslike sensors wys vinniger veranderinge, wat belangrik is omdat dit plaagaktiwiteit en siekterisiko direk beïnvloed. Dit help boere om vinniger besluite te neem.",
+    author_id: 4,
+    author_role: "farmer",
+    author_name: "Johan van der Merwe",
+    likes_count: 9,
+    comments_count: 2,
+    created_at: "2026-03-29T09:20:00"
+  },
+  {
+    id: 1005,
+    title: "Brassica site recovered after warning spike",
+    content: "The brassica site showed a warning spike earlier this week, mainly linked to humidity and leaf wetness. After improving airflow and adjusting irrigation timing, the latest readings look much healthier. This was a good example of using the dashboard to act before the issue became critical.",
+    author_id: 5,
+    author_role: "farmer",
+    author_name: "Naledi Khumalo",
+    likes_count: 14,
+    comments_count: 1,
+    created_at: "2026-03-25T16:00:00"
+  },
+  {
+    id: 1006,
+    title: "Is this level of humidity normal for this season?",
+    content: "Over the past few mornings, humidity has been above 90% on my maize field. Is this something to worry about, or is it normal for March conditions?",
+    author_id: 6,
+    author_role: "farmer",
+    author_name: "Lerato Nkosi",
+    likes_count: 5,
+    comments_count: 2,
+    created_at: "2026-03-27T07:15:00"
+  },
+  {
+    id: 1007,
+    title: "What pest could cause sudden leaf damage overnight?",
+    content: "Yesterday evening the plants looked fine, but this morning I noticed several leaves with damage. Could this be insects or something else?",
+    author_id: 7,
+    author_role: "farmer",
+    author_name: "Musa Ndlovu",
+    likes_count: 7,
+    comments_count: 3,
+    created_at: "2026-03-28T06:40:00"
+  },
+  {
+    id: 1008,
+    title: "Research note: warning spikes are clustering after wet leaf periods",
+    content: "A review of March dashboard data shows that warning events tend to appear after extended periods of high leaf wetness and elevated humidity. This pattern is especially visible in the maize and brassica sites, suggesting the alerts are responding to meaningful environmental changes rather than random fluctuations.",
+    author_id: 8,
+    author_role: "researcher",
+    author_name: "Dr. Michael Jacobs",
+    likes_count: 16,
+    comments_count: 4,
+    created_at: "2026-03-18T11:30:00"
+  },
+  {
+    id: 1009,
+    title: "Pest trap count increases matched warmer afternoon readings",
+    content: "When comparing daily sensor trends, we observed that higher afternoon temperatures were often followed by increased pest trap counts. This does not prove causation on its own, but it is a useful signal for forecasting periods of higher pest activity on the dashboard.",
+    author_id: 9,
+    author_role: "researcher",
+    author_name: "Dr. Amina Patel",
+    likes_count: 13,
+    comments_count: 3,
+    created_at: "2026-03-21T13:05:00"
+  },
+  {
+    id: 1010,
+    title: "Field dashboard insight: maize site showed the highest alert concentration this week",
+    content: "Based on the latest dashboard review, the maize site recorded the highest concentration of warning and alert-triggered readings during the week. The combination of humidity, leaf wetness, and rainfall suggests this site should be prioritized for close field inspection.",
+    author_id: 10,
+    author_role: "researcher",
+    author_name: "Dr. Kabelo Naidoo",
+    likes_count: 18,
+    comments_count: 6,
+    created_at: "2026-03-24T15:20:00"
+  }
+];
 function decodeToken(token) {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
@@ -148,20 +492,19 @@ async function loadPosts() {
 
     loadingEl.classList.add('hidden');
 
-    if (!Array.isArray(data) || data.length === 0) {
-      emptyEl.classList.remove('hidden');
-      return;
+    if (Array.isArray(data) && data.length > 0) {
+      allPosts = data;
+    } else {
+      allPosts = SAMPLE_POSTS;
     }
 
-    allPosts = data;
     renderPosts();
 
   } catch (err) {
     loadingEl.classList.add('hidden');
-    listEl.innerHTML = `<p style="color:var(--red-alert);padding:20px 0;">
-      Could not load posts. Is the backend running at <strong>${API_BASE}</strong>?
-    </p>`;
-    console.error(err);
+    allPosts = SAMPLE_POSTS;
+    renderPosts();
+    console.warn('Using sample blog posts because backend posts could not be loaded.', err);
   }
 }
 
@@ -171,9 +514,14 @@ function renderPosts() {
   const token  = getToken();
   const user   = token ? decodeToken(token) : null;
 
+  let postsToRender = [...allPosts];
+
+  // Sort by likes first, then newest
+  postsToRender.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
   const filtered = currentFilter === 'all'
-    ? allPosts
-    : allPosts.filter(p => p.author_role === currentFilter);
+    ? postsToRender
+    : postsToRender.filter(p => p.author_role === currentFilter);
 
   if (filtered.length === 0) {
     listEl.innerHTML = `<p style="color:var(--text-mid);padding:20px 0;">No ${currentFilter} posts yet.</p>`;
@@ -345,36 +693,77 @@ document.getElementById('modal-overlay').addEventListener('click', (e) => {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-
 // ── LOAD COMMENTS ──
 async function loadComments(postId) {
   const listEl = document.getElementById('modal-comments-list');
   listEl.innerHTML = '<div class="spinner small"></div>';
+
+  let comments = [];
+
   try {
-    const res      = await fetch(`${API_BASE}/posts/${postId}/comments`);
-    const comments = await res.json();
+    const res = await fetch(`${API_BASE}/posts/${postId}/comments`);
+
+    if (res.ok) {
+      comments = await res.json();
+    }
+
+    if (!comments || comments.length === 0) {
+      comments = SAMPLE_COMMENTS[postId] || [];
+    }
+
     if (!Array.isArray(comments) || comments.length === 0) {
       listEl.innerHTML = '<p style="color:#888;font-size:14px;">No comments yet. Be the first!</p>';
       return;
     }
+
     listEl.innerHTML = '';
+
     comments.forEach(c => {
       const div = document.createElement('div');
       div.className = `comment-item ${c.author_role === 'researcher' ? 'researcher-comment' : ''}`;
+
       const dateStr = new Date(c.created_at).toLocaleDateString('en-GB', {
         day: 'numeric', month: 'short', year: 'numeric'
       });
+
       div.innerHTML = `
         <div class="comment-author ${c.author_role === 'researcher' ? 'researcher' : ''}">
           ${c.author_role === 'farmer' ? '🌾' : '🔬'} ${escHtml(c.author_name)} · ${dateStr}
         </div>
         <div class="comment-content">${escHtml(c.content)}</div>
       `;
+
       listEl.appendChild(div);
     });
+
   } catch (err) {
-    listEl.innerHTML = '<p style="color:var(--red-alert);font-size:14px;">Could not load comments.</p>';
-    console.error(err);
+    comments = SAMPLE_COMMENTS[postId] || [];
+
+    if (!comments.length) {
+      listEl.innerHTML = '<p style="color:var(--red-alert);font-size:14px;">Could not load comments.</p>';
+      console.error(err);
+      return;
+    }
+
+    listEl.innerHTML = '';
+
+    comments.forEach(c => {
+      const div = document.createElement('div');
+      div.className = `comment-item ${c.author_role === 'researcher' ? 'researcher-comment' : ''}`;
+
+      const dateStr = new Date(c.created_at).toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      });
+
+      div.innerHTML = `
+        <div class="comment-author ${c.author_role === 'researcher' ? 'researcher' : ''}">
+          ${c.author_role === 'farmer' ? '🌾' : '🔬'} ${escHtml(c.author_name)} · ${dateStr}
+        </div>
+        <div class="comment-content">${escHtml(c.content)}</div>
+      `;
+
+      listEl.appendChild(div);
+    });
   }
 }
 

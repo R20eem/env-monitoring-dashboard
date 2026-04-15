@@ -162,7 +162,7 @@
   padding: 22px 24px;
   margin-bottom: 16px;
   border: 1px solid var(--sh-border);
-  border-left: 4px solid transparent;
+  border-left: 50px solid transparent;
   transition: transform 0.2s, box-shadow 0.2s;
   animation: fadeSlideIn 0.4s ease both;
 }
