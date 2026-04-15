@@ -68,7 +68,7 @@ def trends(
     site_id: str | None = Query(default=None),
     start_date: str | None = Query(default=None),
     end_date: str | None = Query(default=None),
-    limit: int = Query(default=200),
+    limit: int = Query(default=200, le=1000),
     db: Session = Depends(get_db),
 ):
     """
@@ -94,7 +94,7 @@ def researcher_data(
     start_date: str | None = Query(default=None),
     end_date: str | None = Query(default=None),
     status: str | None = Query(default=None),
-    limit: int = Query(default=100),
+    limit: int = Query(default=100, le=500),
     db: Session = Depends(get_db),
 ):
     """
@@ -186,7 +186,7 @@ def alert_history(
     start_date: str | None = Query(default=None),
     end_date: str | None = Query(default=None),
     severity: str | None = Query(default=None),
-    limit: int = Query(default=100),
+    limit: int = Query(default=100, le=500),
     db: Session = Depends(get_db),
 ):
     """
