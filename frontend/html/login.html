@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - EcoLeaf</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font: system stack via style.css — no external request needed -->
     <!-- Link to the main stylesheet for variables and buttons -->
     <link rel="stylesheet" href="../css/style.css">
     <!-- Link to a new, dedicated auth stylesheet -->
@@ -18,39 +18,39 @@
                     <img src="../images/logo_transparent.png" alt="EcoLeaf Logo">
                 </a>
             </div>
-            <h2>Sign In</h2>
-            <p class="auth-subtext">to continue to your dashboard</p>
+        <h2 data-i18n="auth.signin_title">Sign In</h2>
+        <p class="auth-subtext" data-i18n="auth.signin_sub">to continue to your dashboard</p>
 
             <div class="auth-form">
-                <label for="role">I am a...</label>
+                <label for="role" data-i18n="auth.iam">I am a...</label>
                 <select id="role">
-                    <option value="farmer">🌾 Farmer</option>
-                    <option value="researcher">🔬 Researcher</option>
+                    <option value="farmer" data-i18n="auth.farmer">🌾 Farmer</option>
+                    <option value="researcher" data-i18n="auth.researcher">🔬 Researcher</option>
                 </select>
 
-                <label for="email">Email Address</label>
+                <label for="email" data-i18n="auth.email_label">Email Address</label>
                 <input id="email" type="email" placeholder="you@example.com">
 
                 <div id="org_code_wrapper" class="hidden">
-                    <label for="org_code">Organization Code</label>
+                    <label for="org_code" data-i18n="auth.org_label">Organization Code</label>
                     <input id="org_code" placeholder="e.g. ECO1">
                 </div>
 
-                <label for="password">Password</label>
+                <label for="password" data-i18n="auth.password_label">Password</label>
                 <input id="password" type="password" placeholder="••••••••">
                 
                 <span id="login-error" class="form-error"></span>
 
-                <!-- This is the resolved button from the merge conflict -->
-                <button id="login-btn" class="btn-primary full-w">Sign In</button>
+                <button id="login-btn" class="btn-primary full-w" data-i18n="auth.signin_btn">Sign In</button>
 
                 <p class="auth-switch">
-                    Don't have an account? <a href="register.html">Register Now</a>
+                    <span data-i18n="auth.no_account">Don't have an account?</span> <a href="register.html" data-i18n="auth.register_now">Register Now</a>
                 </p>
             </div>
         </div>
     </div>
 
+    <script src="../js/i18n.js"></script>
     <script>
         const API_BASE = `${window.location.protocol}//${window.location.hostname}:8000`;
         // const API_BASE = 'http://192.168.0.22:8000'; // Using the IP from blog.js

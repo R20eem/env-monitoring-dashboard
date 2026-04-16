@@ -20,18 +20,18 @@
   </div>
 
   <nav class="sh-nav">
-    <div class="sh-nav-label">Navigation</div>
+    <div class="sh-nav-label" data-i18n="nav.navigation">Navigation</div>
     <a href="index.html" class="sh-nav-link sh-dash-link">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
-      Dashboard
+      <span data-i18n="nav.dashboard">Dashboard</span>
     </a>
     <a href="blog.html" class="sh-nav-link active">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
-      Community Blog
+      <span data-i18n="nav.blog">Community Blog</span>
     </a>
     <a href="profile.html" class="sh-nav-link">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
-      Profile
+      <span data-i18n="nav.profile">Profile</span>
     </a>
   </nav>
 
@@ -45,11 +45,11 @@
     </div>
     <a href="login.html" class="sh-nav-link" id="sh-login-link">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h11M10 5l5 5-5 5"/></svg>
-      Sign In
+      <span data-i18n="nav.signin">Sign In</span>
     </a>
     <a href="#" class="sh-nav-link" id="sh-logout-btn" style="color:rgba(255,120,120,0.8);">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 15l4-5-4-5M17 10H7M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3"/></svg>
-      Logout
+      <span data-i18n="nav.logout">Logout</span>
     </a>
   </div>
 </aside>
@@ -61,107 +61,87 @@
 
   <!-- TOP BAR -->
   <header class="sh-topbar">
-    <div class="sh-topbar-title">Community Blog</div>
+    <div class="sh-topbar-title" data-i18n="blog.title">Community Blog</div>
     <div class="sh-topbar-right">
-      <a href="about.html" class="sh-about-link">ℹ About Us</a>
+      <a href="about.html" class="sh-about-link" data-i18n="nav.about">ℹ About Us</a>
       <div id="sh-nav-actions"></div>
     </div>
   </header>
 
-  <!-- SCROLLABLE CONTENT -->
   <main class="sh-content blog-page-content">
 
-    <!-- Hero Banner -->
     <div class="sh-hero sh-mb-24 blog-hero">
-      <h1>Community Blog</h1>
-      <p>Farmers and researchers sharing knowledge from the field.</p>
+      <h1 data-i18n="blog.h1">Community Blog</h1>
+      <p data-i18n="blog.hero_p">Farmers and researchers sharing knowledge from the field.</p>
       <div class="filter-pills">
-        <button class="pill active" data-filter="all">All Posts</button>
-        <button class="pill" data-filter="farmer">🌾 Farmers</button>
-        <button class="pill" data-filter="researcher">🔬 Researchers</button>
+        <button class="pill active" data-filter="all" data-i18n="blog.filter_all">All Posts</button>
+        <button class="pill" data-filter="farmer" data-i18n="blog.filter_farmer">🌾 Farmers</button>
+        <button class="pill" data-filter="researcher" data-i18n="blog.filter_res">🔬 Researchers</button>
       </div>
     </div>
 
-    <!-- Two-column blog layout -->
     <div class="blog-layout">
-
-      <!-- LEFT: Post feed -->
       <div class="feed-col" id="feed-col">
 
-        <!-- Create Post Box (shown when logged in) -->
         <div class="create-post-box hidden" id="create-post-box">
-          <h3>Share something with the community</h3>
-          <input type="text" id="post-title" placeholder="Title" maxlength="200" />
-          <textarea id="post-content" rows="4" placeholder="What's on your mind?"></textarea>
+          <h3 data-i18n="blog.share_title">Share something with the community</h3>
+          <input type="text" id="post-title" data-i18n-ph="blog.post_ph_title" placeholder="Title" maxlength="200" />
+          <textarea id="post-content" rows="4" data-i18n-ph="blog.post_ph_body" placeholder="What's on your mind?"></textarea>
           <div class="create-post-actions">
             <span id="post-error" class="form-error"></span>
-            <button class="sh-btn sh-btn-primary" id="submit-post">Post</button>
+            <button class="sh-btn sh-btn-primary" id="submit-post" data-i18n="blog.post_btn">Post</button>
           </div>
         </div>
 
-        <!-- Loading state -->
         <div class="feed-loading" id="feed-loading">
           <div class="spinner"></div>
-          <p>Loading posts…</p>
+          <p data-i18n="blog.loading">Loading posts…</p>
         </div>
 
-        <!-- Empty state -->
         <div class="feed-empty hidden" id="feed-empty">
           <span>🌱</span>
-          <p>No posts yet. Be the first to share something!</p>
+          <p data-i18n="blog.empty">No posts yet. Be the first to share something!</p>
         </div>
 
-        <!-- Posts list -->
         <div id="posts-list"></div>
-
       </div>
 
-      <!-- RIGHT: Auth / info sidebar -->
       <aside class="sidebar-col">
-
-        <!-- Login / status card -->
         <div class="sidebar-card" id="auth-card">
-          <h3 id="auth-card-title">Sign in to post</h3>
+          <h3 id="auth-card-title" data-i18n="blog.auth_title">Sign in to post</h3>
           <div id="auth-form">
             <select id="login-role">
-              <option value="farmer">🌾 Farmer</option>
-              <option value="researcher">🔬 Researcher</option>
+              <option value="farmer" data-i18n="auth.farmer">🌾 Farmer</option>
+              <option value="researcher" data-i18n="auth.researcher">🔬 Researcher</option>
             </select>
-            <input type="email" id="login-email" placeholder="Email" />
-            <input type="password" id="login-password" placeholder="Password" />
-            <input type="text" id="login-orgcode" placeholder="Org code (researchers only)" class="hidden" />
+            <input type="email" id="login-email" data-i18n-ph="auth.email_ph" placeholder="Email" />
+            <input type="password" id="login-password" data-i18n-ph="auth.password_label" placeholder="Password" />
+            <input type="text" id="login-orgcode" data-i18n-ph="auth.org_ph" placeholder="Org code (researchers only)" class="hidden" />
             <span id="login-error" class="form-error"></span>
-            <button class="sh-btn sh-btn-primary full-w" id="login-btn">Sign In</button>
-            <p class="sidebar-small">Don't have an account? <a href="register.html">Register</a></p>
+            <button class="sh-btn sh-btn-primary full-w" id="login-btn" data-i18n="blog.login_btn">Sign In</button>
+            <p class="sidebar-small"><span data-i18n="blog.no_account">Don't have an account?</span> <a href="register.html" data-i18n="blog.register_link">Register</a></p>
           </div>
-          <!-- Shown after login -->
           <div id="logged-in-info" class="hidden">
             <div class="user-badge" id="user-badge"></div>
-            <button class="sh-btn sh-btn-outline full-w" id="logout-btn">Sign Out</button>
+            <button class="sh-btn sh-btn-outline full-w" id="logout-btn" data-i18n="blog.signout_btn">Sign Out</button>
           </div>
         </div>
 
-        <!-- Community info card -->
         <div class="sidebar-card">
-          <h3>Community</h3>
+          <h3 data-i18n="blog.community_h">Community</h3>
           <ul class="stats-list">
-            <li><span class="stat-dot farmer-dot"></span> Farmers sharing field experience</li>
-            <li><span class="stat-dot researcher-dot"></span> Researchers sharing findings</li>
+            <li><span class="stat-dot farmer-dot"></span> <span data-i18n="blog.stats_farmer">Farmers sharing field experience</span></li>
+            <li><span class="stat-dot researcher-dot"></span> <span data-i18n="blog.stats_res">Researchers sharing findings</span></li>
           </ul>
-          <p class="sidebar-small" style="margin-top:10px;">
+          <p class="sidebar-small" style="margin-top:10px;" data-i18n="blog.sort_note">
             Posts are sorted by most recent. Like posts to show appreciation!
           </p>
         </div>
-
       </aside>
     </div>
-
   </main>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     POST MODAL — fixed overlay, outside scroll area
-     ═══════════════════════════════════════════════════════ -->
 <div class="modal-overlay hidden" id="modal-overlay">
   <div class="modal" id="comment-modal">
     <div class="modal-header">
@@ -172,15 +152,15 @@
       <p id="modal-post-content" class="modal-post-content"></p>
       <p class="modal-meta" id="modal-post-meta"></p>
       <hr class="modal-divider" />
-      <h4>Comments</h4>
+      <h4 data-i18n="blog.comments_h">Comments</h4>
       <div id="modal-comments-list">
         <div class="spinner small"></div>
       </div>
       <div id="modal-add-comment" class="hidden">
-        <textarea id="modal-comment-input" rows="3" placeholder="Write a comment…"></textarea>
+        <textarea id="modal-comment-input" rows="3" data-i18n-ph="blog.comment_ph" placeholder="Write a comment…"></textarea>
         <div class="modal-comment-actions">
           <span id="comment-error" class="form-error"></span>
-          <button class="sh-btn sh-btn-primary" id="submit-comment">Add Comment</button>
+          <button class="sh-btn sh-btn-primary" id="submit-comment" data-i18n="blog.comment_btn">Add Comment</button>
         </div>
       </div>
       <p id="modal-login-prompt" class="sidebar-small" style="margin-top:12px;"></p>
@@ -188,6 +168,7 @@
   </div>
 </div>
 
+<script src="../js/i18n.js"></script>
 <script src="../js/blog.js"></script>
 <script src="../js/shared-nav.js"></script>
 </body>

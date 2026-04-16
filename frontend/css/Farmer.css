@@ -5,7 +5,7 @@
    ONLY the card/widget internals use the farmer palette.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('../fonts/fonts.css');
 
 :root {
   /* Shell tokens — same as researcher */
