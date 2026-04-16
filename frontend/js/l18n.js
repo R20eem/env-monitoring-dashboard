@@ -68,6 +68,31 @@ const I18n = (() => {
     'f.map_good':         { en: 'Good (80+)',              af: 'Goed (80+)' },
     'f.map_attention':    { en: 'Attention (65–79)',        af: 'Aandag (65–79)' },
     'f.map_critical':     { en: 'Critical / alert active', af: 'Krities / waarskuwing aktief' },
+
+    /* ── DASHBOARD SITE NAMES & LABELS ── */
+    'f.site_maize':       { en: 'Maize',    af: 'Mielies' },
+    'f.site_orchard':     { en: 'Orchard',  af: 'Boord' },
+    'f.site_brassica':    { en: 'Brassica', af: 'Brassika' },
+    'f.grade_attention':  { en: 'Attention', af: 'Aandag' },
+    'f.grade_good':       { en: 'Good',      af: 'Goed' },
+    'f.grade_critical':   { en: 'Critical',  af: 'Krities' },
+
+    /* ── DASHBOARD SITE DESCRIPTIONS ── */
+    'f.desc_maize':       { en: 'High humidity is driving disease risk. Leaf wetness sustained 3+ days.',
+                            af: 'Hoë humiditeit dryf siekterisiko. Blaarvogtigheid volgehou 3+ dae.' },
+    'f.desc_orchard':     { en: 'Pest trap counts elevated. Outbreak risk rising this week.',
+                            af: 'Plaagvaltellings verhoog. Uitbraakrisiko styg hierdie week.' },
+    'f.desc_brassica':    { en: 'Most stable site. Low pest count, disease risk manageable.',
+                            af: 'Mees stabiele perseel. Lae plaagtelling, siekterisiko beheerbaar.' },
+
+    /* ── DASHBOARD INSIGHTS ── */
+    'f.insight_maize':    { en: 'Warm, sticky air (22°C / 79% humidity) is keeping disease risk elevated. Leaf wetness has stayed high for 3+ days — ideal conditions for fungal spread.',
+                            af: 'Warm, plakkerige lug (22°C / 79% humiditeit) hou siekterisiko verhoog. Blaarvogtigheid het 3+ dae hoog gebly — ideale toestande vir swamverspreiding.' },
+    'f.insight_orchard':  { en: 'Pest trap counts have spiked to 4+ this week. Temperature is at pest hatch threshold (>22°C). Check irrigation in the south-east corner — low soil moisture there.',
+                            af: 'Plaagvaltellings het hierdie week tot 4+ gespruit. Temperatuur is by plaag-broeitempel (>22°C). Kontroleer besproeiing in die suidoost-hoek — lae grondvog daar.' },
+    'f.insight_brassica': { en: 'Conditions are the most stable of all three sites. Pest count below 2 on average. A good window to apply preventative treatment before the next humidity spike.',
+                            af: 'Toestande is die mees stabiel van al drie persele. Plaagtelling gemiddeld onder 2. \'n Goeie venster om voorkomende behandeling toe te pas voor die volgende humiditeits piek.' },
+    'f.insight_what':     { en: 'What is happening?', af: 'Wat gebeur?' },
     'f.map_nasa':         { en: 'Low soil moisture (NASA)', af: 'Lae grondvog (NASA)' },
     'f.section_cal':      { en: 'Smart action calendar — Dec 25 to Dec 31',
                             af: 'Slim aksie kalender — Des 25 tot Des 31' },
@@ -203,6 +228,8 @@ const I18n = (() => {
     localStorage.setItem('ecoLeafLang', lang);
     apply();
     updateToggleBtn();
+    // Dispatch custom event for components that need to re-render
+    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
   }
 
   function getLang() { return currentLang; }
