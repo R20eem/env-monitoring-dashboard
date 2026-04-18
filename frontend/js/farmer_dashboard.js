@@ -7,7 +7,7 @@
 
 'use strict';
 
-const API_BASE  = 'http://192.168.0.22:8000';
+const API_BASE  = 'http://127.0.0.1:8000';
 const NASA_BASE = 'https://power.larc.nasa.gov/api/temporal/daily/point';
 
 /* Coordinates matching researcher.js SITE_COORDS */
@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupUser();
   renderHero();
   renderTiles();
+  loadScanSummary();
   renderInsight(currentSite);
   renderMap();
   renderCalendar();
@@ -281,6 +282,40 @@ async function fetchNasaData() {
 
   } catch (e) {
     console.warn('NASA API unavailable — static calendar used.', e);
+  }
+}
+
+async function loadScanSummary() {
+  const token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
+
+  if (!token) {
+    console.log("no token → skipping scan summary");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/api/scanner/my-summary`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      console.log("scan summary failed:", res.status);
+      return;
+    }
+
+    const data = await res.json();
+
+    document.getElementById('scan-total').textContent = data.total_scans ?? 0;
+    document.getElementById('scan-healthy').textContent = data.healthy_count ?? 0;
+    document.getElementById('scan-disease').textContent = data.disease_risk_count ?? 0;
+    document.getElementById('scan-pest').textContent = data.pest_risk_count ?? 0;
+    document.getElementById('scan-latest').textContent =
+      data.latest_scan?.prediction ?? '-';
+
+  } catch (err) {
+    console.error("error loading scan summary:", err);
   }
 }
 
