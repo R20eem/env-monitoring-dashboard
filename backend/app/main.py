@@ -24,6 +24,11 @@ from app.routers.dashboard_router import router as dashboard_router
 from app.routers.researcher_dashboard_router import router as researcher_dashboard_router
 from app.models.site_metadata import SiteMetadata
 from app.models.alert_log import AlertLog
+
+from app.routers.scanner_router import router as scanner_router
+from app.models.scan_result import ScanResult
+from fastapi.staticfiles import StaticFiles
+
 load_dotenv()
 
 app = FastAPI(title="Env Monitoring API")
@@ -65,3 +70,9 @@ app.include_router(dashboard_router)
 @app.get("/")
 def root():
     return {"message": "API is running"}
+
+app.include_router(scanner_router)
+# this makes the uploads folder public so images can be accessed from the browser
+# for example a file saved as uploads/image.jpg can be opened at
+# http://127.0.0.1:8000/uploads/image.jpg, or whatever server you use.
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
