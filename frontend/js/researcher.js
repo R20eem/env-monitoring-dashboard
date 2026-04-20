@@ -8,7 +8,7 @@
 'use strict';
 
 // ── CONFIG ──────────────────────────────────────────────────
-const API_BASE   = 'http://192.168.0.22:8000';
+const API_BASE   = 'http://127.0.0.1:8000';
 const TOKEN_KEY  = 'jwt_token';
 const NASA_BASE  = 'https://power.larc.nasa.gov/api/temporal/daily/point';
 
@@ -51,7 +51,7 @@ document.getElementById('r-logout-btn').addEventListener('click', () => {
 
 // ── EXPORT ───────────────────────────────────────────────────
 document.getElementById('r-export-btn').addEventListener('click', () => {
-  window.open(`${API_BASE}/api/researcher/dashboard/trends?limit=99999`, '_blank');
+  window.open(`${API_BASE}/api/researcher/dashboard/data/export`, '_blank');
 });
 
 // ── TAB SWITCHING ────────────────────────────────────────────
@@ -96,29 +96,45 @@ function destroyChart(id) {
 // ── DATA LOADING ─────────────────────────────────────────────
 async function loadData() {
   try {
-    const [summaryRes, trendsRes] = await Promise.all([
+    const [summaryRes, dataRes] = await Promise.all([
       fetch(`${API_BASE}/api/researcher/dashboard/summary`, {
         headers: { Authorization: `Bearer ${token}` }
       }),
-      fetch(`${API_BASE}/api/researcher/dashboard/trends?limit=5000`, {
+      fetch(`${API_BASE}/api/researcher/dashboard/data?limit=300`, {
         headers: { Authorization: `Bearer ${token}` }
       }),
     ]);
 
-    if (summaryRes.ok)  G.summary = await summaryRes.json();
-    if (trendsRes.ok)   G.all     = await trendsRes.json();
+    if (summaryRes.ok) G.summary = await summaryRes.json();
+    if (dataRes.ok) G.all = await dataRes.json();
 
     if (!G.all.length) throw new Error('empty');
 
+    // save last successful data for offline use
+    localStorage.setItem('researcher_cached_data', JSON.stringify(G.all));
+    localStorage.setItem('researcher_cached_summary', JSON.stringify(G.summary || null));
+
   } catch (e) {
-    console.warn('Backend unavailable — using sample data', e);
-    G.all = generateSample(1000);
+    console.warn('Backend unavailable — trying cached data', e);
+
+    const cachedData = localStorage.getItem('researcher_cached_data');
+    const cachedSummary = localStorage.getItem('researcher_cached_summary');
+
+    if (cachedData) {
+      G.all = JSON.parse(cachedData);
+      G.summary = cachedSummary ? JSON.parse(cachedSummary) : null;
+      console.warn('Using cached dashboard data');
+    } else {
+      console.warn('No cached data found — using sample data');
+      G.all = generateSample(1000);
+    }
   }
 
   G.sites = [...new Set(G.all.map(r => r.site_id))].filter(Boolean).sort();
 
   // populate all site selects
   document.querySelectorAll('[id$="-site-filter"], [id$="-site"], [id$="-chart-site"]').forEach(sel => {
+    sel.innerHTML = '<option value="all">All Sites</option>';
     G.sites.forEach(s => {
       const o = document.createElement('option');
       o.value = s;
@@ -129,9 +145,9 @@ async function loadData() {
 
   // data range in topbar
   if (G.all.length) {
-    const sorted = [...G.all].sort((a,b) => a.timestamp < b.timestamp ? -1 : 1);
-    const t0 = sorted[0].timestamp?.slice(0,10);
-    const t1 = sorted[sorted.length-1].timestamp?.slice(0,10);
+    const sorted = [...G.all].sort((a, b) => a.timestamp < b.timestamp ? -1 : 1);
+    const t0 = sorted[0].timestamp?.slice(0, 10);
+    const t1 = sorted[sorted.length - 1].timestamp?.slice(0, 10);
     document.getElementById('r-data-range').textContent =
       `Dataset: ${t0} → ${t1} · ${G.all.length.toLocaleString()} readings`;
   }
