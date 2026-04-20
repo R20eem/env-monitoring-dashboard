@@ -393,3 +393,113 @@ def get_trend_data(
         for r in readings
     ]
 
+def get_researcher_data(
+    db: Session,
+    site_id: str | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+    status: str | None = None,
+    limit: int = 100,
+) -> list[SensorReading]:
+    """
+    returns filtered sensor readings for the researcher data page
+    """
+
+    query = db.query(SensorReading)
+
+    if site_id:
+        query = query.filter(SensorReading.site_id == site_id)
+
+    if start_date:
+        query = query.filter(SensorReading.timestamp >= start_date)
+
+    if end_date:
+        query = query.filter(SensorReading.timestamp <= end_date)
+
+    if status:
+        query = query.filter(SensorReading.status == status)
+
+    return query.order_by(SensorReading.timestamp.desc()).limit(limit).all()
+
+def get_researcher_data_for_export(
+    db: Session,
+    site_id: str | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+    status: str | None = None,
+) -> list[SensorReading]:
+    """
+    returns filtered sensor readings for csv export
+    """
+
+    query = db.query(SensorReading)
+
+    if site_id:
+        query = query.filter(SensorReading.site_id == site_id)
+
+    if start_date:
+        query = query.filter(SensorReading.timestamp >= start_date)
+
+    if end_date:
+        query = query.filter(SensorReading.timestamp <= end_date)
+
+    if status:
+        query = query.filter(SensorReading.status == status)
+
+    return query.order_by(SensorReading.timestamp.desc()).all()
+
+
+def get_alert_history(
+    db: Session,
+    site_id: str | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+    status: str | None = None,
+    limit: int = 100,
+) -> list[SensorReading]:
+    """
+    returns historical rows where alerts were triggered
+    """
+
+    query = db.query(SensorReading).filter(SensorReading.alert_triggered == 1)
+
+    if site_id:
+        query = query.filter(SensorReading.site_id == site_id)
+
+    if start_date:
+        query = query.filter(SensorReading.timestamp >= start_date)
+
+    if end_date:
+        query = query.filter(SensorReading.timestamp <= end_date)
+
+    if status:
+        query = query.filter(SensorReading.status == status)
+
+    return query.order_by(SensorReading.timestamp.desc()).limit(limit).all()
+
+
+def get_site_summary(db: Session) -> list[SensorReading]:
+    """
+    returns most recent readings for each site
+    Act as a summary for farmers dashboard
+    """
+    latest_subq = (
+        db.query(
+            SensorReading.site_id,
+            func.max(SensorReading.timestamp).label("max_ts"),
+        )
+        .group_by(SensorReading.site_id)
+        .subquery()
+    )
+
+    results = (
+        db.query(SensorReading)
+        .join(
+            latest_subq,
+            (SensorReading.site_id == latest_subq.c.site_id)
+            & (SensorReading.timestamp == latest_subq.c.max_ts),
+        )
+        .all()
+    )
+
+    return results

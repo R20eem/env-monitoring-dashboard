@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 from app.database import Base, engine
@@ -21,11 +22,29 @@ from app.routers.post_router import router as post_router
 from app.routers.profile_router import router as profile_router
 from app.routers.dashboard_router import router as dashboard_router
 from app.routers.researcher_dashboard_router import router as researcher_dashboard_router
-
-
+from app.models.site_metadata import SiteMetadata
+from app.models.alert_log import AlertLog
 load_dotenv()
 
 app = FastAPI(title="Env Monitoring API")
+
+# 1. Explicitly name the Live Server addresses
+#origins = [
+    #"http://127.0.0.1:5500",
+   # "http://localhost:5500",
+    #"http://192.168.0.22:5500"
+#]
+
+# 2. Give them the ultimate VIP pass
+app.add_middleware(
+    CORSMiddleware,
+    # allow_origins=origins, # <--- Points to the list above
+    allow_origins=["*"],
+    allow_credentials=True, 
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+# -------------------------------------------
 
 Base.metadata.create_all(bind=engine)
 

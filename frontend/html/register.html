@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Leaf - Register</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6;">
+
+    <div class="stat-card" style="width: 400px; padding: 40px; margin: 20px;">
+        
+        <div style="text-align: center; margin-bottom: 25px;">
+            <img src="../images/logo_transparent.png" alt="Eco Leaf Logo" style="height: 60px;">
+            <h2 style="color: #117a3d; margin-top: 15px;">Create an Account</h2>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            
+            <select id="role" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 15px;">
+                <option value="farmer">🌾 I am a Farmer</option>
+                <option value="researcher">🔬 I am a Researcher</option>
+            </select>
+
+            <div style="display: flex; gap: 10px;">
+                <input id="first_name" placeholder="First Name" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                <input id="last_name" placeholder="Last Name" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            </div>
+            
+            <input id="email" placeholder="Email Address" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            
+            <select id="experience" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                <option value="">Years of Experience</option>
+                <option value="0-1 years">0-1 years</option>
+                <option value="1-3 years">1-3 years</option>
+                <option value="3-5 years">3-5 years</option>
+                <option value="5+ years">5+ years</option>
+            </select>
+            
+            <input id="location" placeholder="Farm Location" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            
+            <input id="org_code" placeholder="Organization Code (e.g. ECO-123)" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            
+            <input id="connection_end" type="date" title="Connection End Date" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; color: #666;">
+            
+            <input id="password" type="password" placeholder="Create Password" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            
+            <button onclick="register()" class="btn-primary" style="padding: 14px; font-size: 16px; margin-top: 10px; width: 100%;">Register</button>
+        </div>
+        
+        <p style="text-align: center; margin-top: 20px; font-size: 14px; color: #666;">
+            Already have an account? <a href="login.html" style="color: #117a3d; font-weight: bold; text-decoration: none;">Log in</a>
+        </p>
+    </div>
+
+    <script defer src="../js/auth.js"></script>
+
+</body>
+</html> 

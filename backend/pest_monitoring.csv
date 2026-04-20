@@ -1,5 +1,5 @@
 timestamp,site_id,air_temperature_c,relative_humidity_pct,leaf_wetness_0_1,light_lux,vibration_level,pest_trap_count,status,alert_triggered,alert_pest_action,alert_pest_outbreak,alert_disease_moderate,alert_disease_high,wx_rain_mm_hr
-2022-01-01 00:00:00,site_maize,14.83,97.1,0.872,1.0,0.397,9.0,warning,1,1,0,0,0,0.5
+2022-01-01 00:00:00,site_maize,14.83,1000.1,0.872,1.0,0.397,9.0,warning,1,1,0,0,0,0.5
 2022-01-01 00:15:00,site_maize,14.59,99.3,0.915,4.0,0.062,0.0,normal,0,0,0,0,0,0.485
 2022-01-01 00:30:00,site_maize,14.56,100.0,0.788,4.0,0.058,1.0,normal,0,0,0,0,0,0.47
 2022-01-01 00:45:00,site_maize,13.26,97.8,0.813,2.0,0.15,4.0,normal,0,0,0,0,0,0.455
