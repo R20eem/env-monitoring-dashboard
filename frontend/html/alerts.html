@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eco Leaf — Alerts</title>
+
+  <!-- Role guard -->
+  <script>
+    (function () {
+      var role  = localStorage.getItem('userRole');
+      var token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
+      if (role === 'researcher' && token) {
+        window.location.replace('researcher.html');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../css/farmer.css">
+</head>
+
+<body class="farmer-page">
+
+<div class="f-layout">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="f-sidebar">
+    <div class="f-sidebar-logo">
+      <img src="../images/logo_transparent.png" alt="Eco Leaf">
+      <div class="f-sidebar-brand">
+        Eco Leaf
+        <small>Field Dashboard</small>
+      </div>
+    </div>
+
+    <div class="f-nav-section">
+      <div class="f-nav-label">Navigation</div>
+
+      <a href="index.html" class="f-nav-link">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="2" y="2" width="7" height="7" rx="1.5"/>
+          <rect x="11" y="2" width="7" height="7" rx="1.5"/>
+          <rect x="2" y="11" width="7" height="7" rx="1.5"/>
+          <rect x="11" y="11" width="7" height="7" rx="1.5"/>
+        </svg>
+        Dashboard
+      </a>
+
+      <a href="alerts.html" class="f-nav-link active">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/>
+        </svg>
+        Alerts
+      </a>
+
+      <a href="blog.html" class="f-nav-link">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M3 5h14M3 9h10M3 13h12M3 17h8"/>
+        </svg>
+        Community Blog
+      </a>
+
+      <a href="profile.html" class="f-nav-link">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="10" cy="7" r="3"/>
+          <path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>
+        </svg>
+        Profile
+      </a>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <div class="f-main">
+
+    <!-- TOPBAR -->
+    <header class="f-topbar">
+      <div class="f-topbar-left">
+        <div class="f-topbar-title">Alerts</div>
+        <div class="f-topbar-sub">Important warnings about your crops</div>
+      </div>
+
+      <div class="f-topbar-right">
+        <a href="about.html" class="f-about-link">ℹ About</a>
+        <div class="f-live-pill">
+          <div class="f-live-dot"></div>
+          Live
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="f-content">
+
+      <!-- 🔝 ACTIVE ALERTS -->
+      <div class="f-section-label">Active alerts</div>
+      <div id="alerts-container">
+        <p>Loading alerts...</p>
+      </div>
+
+      <!-- 📋 HISTORY -->
+      <div class="f-section-label" style="margin-top:20px;">Alert history</div>
+      <div id="alerts-history"></div>
+
+    </main>
+  </div>
+</div>
+
+<script src="../js/alerts.js"></script>
+
+</body>
+</html>

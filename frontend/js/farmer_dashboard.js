@@ -7,7 +7,7 @@
 
 'use strict';
 
-const API_BASE  = 'http://192.168.0.22:8000';
+const API_BASE  = 'http://localhost:8000'; /* 'http://192.168.0.22:8000'; */
 const NASA_BASE = 'https://power.larc.nasa.gov/api/temporal/daily/point';
 
 /* Coordinates matching researcher.js SITE_COORDS */
