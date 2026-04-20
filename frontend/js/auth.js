@@ -51,7 +51,7 @@ window.onload = () => {
     let payload = {}
 
     if(role === "farmer"){
-    url = "http://127.0.0.1:8000/auth/farmers/register"
+    url = "http://172.20.10.4:8000/auth/farmers/register"
 
     payload = {
     first_name,
@@ -64,8 +64,8 @@ window.onload = () => {
     }
 
     if(role === "researcher"){
-    url = "http://127.0.0.1:8000/auth/researchers/register"
-
+    url = "http://172.20.10.4:8000/auth/researchers/register"
+    
     payload = {
     first_name,
     last_name,

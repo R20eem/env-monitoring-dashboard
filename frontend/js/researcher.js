@@ -8,7 +8,7 @@
 'use strict';
 
 // ── CONFIG ──────────────────────────────────────────────────
-const API_BASE   = 'http://127.0.0.1:8000';
+const API_BASE = 'http://172.20.10.4:8000';
 const TOKEN_KEY  = 'jwt_token';
 const NASA_BASE  = 'https://power.larc.nasa.gov/api/temporal/daily/point';
 
@@ -31,7 +31,8 @@ const SITE_COLORS = {
 
 // ── AUTH GUARD ───────────────────────────────────────────────
 const role  = localStorage.getItem('userRole');
-const token = localStorage.getItem('token') || localStorage.getItem(TOKEN_KEY);
+const token = localStorage.getItem('jwt_token');
+console.log("TOKEN:", token);
 
 if (!role || !token || role !== 'researcher') {
   window.location.href = 'login.html';
