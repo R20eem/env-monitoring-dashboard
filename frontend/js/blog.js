@@ -25,25 +25,39 @@ let currentFilter = 'all';
 let allPosts      = [];
 let openPostId    = null;
 
+// ── LANGUAGE HELPERS ──
+function getCurrentLang() {
+  return typeof I18n !== 'undefined' ? I18n.getLang() : 'en';
+}
+
+function getLocalizedContent(item, field) {
+  const lang = getCurrentLang();
+  const langField = `${field}_${lang}`;
+  return item[langField] || item[field] || '';
+}
+
 // -- SAMPLE FALLBACK POSTS-- only used for demo, if there is real post from backend api than these will be used
 const SAMPLE_COMMENTS = {
   1001: [
     {
       author_name: "Dr. Sarah Chen",
       author_role: "researcher",
-      content: "The early clustering you observed is consistent with rising pest activity after humid mornings. It would be good to compare this with trap counts over the next few days.",
+      content_en: "The early clustering you observed is consistent with rising pest activity after humid mornings. It would be good to compare this with trap counts over the next few days.",
+      content_af: "Die vroeë groepering wat jy waargeneem het, stem ooreen met stygende plaagaktiwiteit na vogtige oggende. Dit sou goed wees om dit te vergelyk met lokvaltellings oor die volgende paar dae.",
       created_at: "2026-03-03T09:10:00"
     },
     {
       author_name: "Sipho Dlamini",
       author_role: "farmer",
-      content: "We saw something similar on our side as well, especially near the lower leaves.",
+      content_en: "We saw something similar on our side as well, especially near the lower leaves.",
+      content_af: "Ons het iets soortgelyks aan ons kant ook gesien, veral naby die onderste blare.",
       created_at: "2026-03-03T12:40:00"
     },
     {
       author_name: "Dr. Michael Jacobs",
       author_role: "researcher",
-      content: "Check whether leaf wetness stayed high overnight. That usually strengthens the pattern.",
+      content_en: "Check whether leaf wetness stayed high overnight. That usually strengthens the pattern.",
+      content_af: "Kontroleer of blaarvogtigheid hoog gebly het oornag. Dit versterk gewoonlik die patroon.",
       created_at: "2026-03-04T08:25:00"
     }
   ],
@@ -52,31 +66,36 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Thabo Mokoena",
       author_role: "farmer",
-      content: "This matches what we are seeing in the field. The warnings usually come after very damp mornings.",
+      content_en: "This matches what we are seeing in the field. The warnings usually come after very damp mornings.",
+      content_af: "Dit stem ooreen met wat ons in die veld sien. Die waarskuwings kom gewoonlik na baie nat oggende.",
       created_at: "2026-03-29T07:50:00"
     },
     {
       author_name: "Dr. Michael Jacobs",
       author_role: "researcher",
-      content: "Yes, the dashboard trend suggests the disease alerts are not random. Humidity and leaf wetness are moving together.",
+      content_en: "Yes, the dashboard trend suggests the disease alerts are not random. Humidity and leaf wetness are moving together.",
+      content_af: "Ja, die paneelbordtendens dui daarop dat die siektewaarskuwings nie ewekansig is nie. Humiditeit en blaarvogtigheid beweeg saam.",
       created_at: "2026-03-29T10:15:00"
     },
     {
       author_name: "Naledi Khumalo",
       author_role: "farmer",
-      content: "Would you recommend earlier spraying if these conditions continue for several days?",
+      content_en: "Would you recommend earlier spraying if these conditions continue for several days?",
+      content_af: "Sou jy vroeër spuiting aanbeveel as hierdie toestande vir verskeie dae voortduur?",
       created_at: "2026-03-29T13:30:00"
     },
     {
       author_name: "Dr. Sarah Chen",
       author_role: "researcher",
-      content: "That depends on crop stage, but sustained wetness definitely raises risk. Monitoring should be intensified first.",
+      content_en: "That depends on crop stage, but sustained wetness definitely raises risk. Monitoring should be intensified first.",
+      content_af: "Dit hang af van gewasstadium, maar volgehoue nattigheid verhoog beslis risiko. Monitering moet eerste geïntensiveer word.",
       created_at: "2026-03-30T15:05:00"
     },
     {
       author_name: "Dr. Amina Patel",
       author_role: "researcher",
-      content: "This is exactly why combining environmental variables in the dashboard is useful for early warning.",
+      content_en: "This is exactly why combining environmental variables in the dashboard is useful for early warning.",
+      content_af: "Dit is presies waarom die kombinasie van omgewingsveranderlikes in die paneelbord nuttig is vir vroeë waarskuwing.",
       created_at: "2026-03-30T09:20:00"
     }
   ],
@@ -85,25 +104,29 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Dr. Kabelo Naidoo",
       author_role: "researcher",
-      content: "A 20% reduction is a strong result. It would be useful to compare it with the previous moisture alert frequency.",
+      content_en: "A 20% reduction is a strong result. It would be useful to compare it with the previous moisture alert frequency.",
+      content_af: "'n 20% vermindering is 'n sterk resultaat. Dit sou nuttig wees om dit te vergelyk met die vorige vogwaarskuwingsfrekwensie.",
       created_at: "2026-03-13T08:10:00"
     },
     {
       author_name: "Lerato Nkosi",
       author_role: "farmer",
-      content: "We are considering the same switch. Did it change pest activity at all?",
+      content_en: "We are considering the same switch. Did it change pest activity at all?",
+      content_af: "Ons oorweeg dieselfde verandering. Het dit plaagaktiwiteit hoegenaamd verander?",
       created_at: "2026-03-13T11:45:00"
     },
     {
       author_name: "Sipho Dlamini",
       author_role: "farmer",
-      content: "So far it also seems to reduce water waste without stressing the plants.",
+      content_en: "So far it also seems to reduce water waste without stressing the plants.",
+      content_af: "Tot dusver lyk dit ook asof dit watervermorsing verminder sonder om die plante te stres.",
       created_at: "2026-03-13T16:00:00"
     },
     {
       author_name: "Dr. Sarah Chen",
       author_role: "researcher",
-      content: "This would make a useful comparison case for the dashboard if both sites stay monitored.",
+      content_en: "This would make a useful comparison case for the dashboard if both sites stay monitored.",
+      content_af: "Dit sou 'n nuttige vergelykingsgeval vir die paneelbord maak as beide terreine gemonitor bly.",
       created_at: "2026-03-14T09:35:00"
     }
   ],
@@ -112,13 +135,15 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Dr. Amina Patel",
       author_role: "researcher",
-      content: "This is a good point. Regional weather alone often misses the small field-level changes that actually trigger alerts.",
+      content_en: "This is a good point. Regional weather alone often misses the small field-level changes that actually trigger alerts.",
+      content_af: "Dit is 'n goeie punt. Streeksweer alleen mis dikwels die klein veldvlakveranderinge wat werklik waarskuwings aktiveer.",
       created_at: "2026-03-24T11:00:00"
     },
     {
-      author_name: "Thabo Mokoena", // used google translater
+      author_name: "Thabo Mokoena",
       author_role: "farmer",
-      content: "Ja, dit help baie om plaaslike data te hê wanneer toestande vinnig verander.",
+      content_en: "Yes, it helps a lot to have local data when conditions change quickly.",
+      content_af: "Ja, dit help baie om plaaslike data te hê wanneer toestande vinnig verander.",
       created_at: "2026-03-29T13:10:00"
     }
   ],
@@ -127,7 +152,8 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Dr. Michael Jacobs",
       author_role: "researcher",
-      content: "That is a very good example of using the warning level as an early intervention point before reaching critical status.",
+      content_en: "That is a very good example of using the warning level as an early intervention point before reaching critical status.",
+      content_af: "Dit is 'n baie goeie voorbeeld van die gebruik van die waarskuwingsvlak as 'n vroeë intervensiepunt voordat kritiese status bereik word.",
       created_at: "2026-03-26T09:15:00"
     }
   ],
@@ -136,13 +162,15 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Dr. Sarah Chen",
       author_role: "researcher",
-      content: "High humidity in the early morning is expected, but sustained levels above 90% can increase fungal risk.",
+      content_en: "High humidity in the early morning is expected, but sustained levels above 90% can increase fungal risk.",
+      content_af: "Hoë humiditeit in die vroeë oggend word verwag, maar volgehoue vlakke bo 90% kan swamrisiko verhoog.",
       created_at: "2026-03-27T09:00:00"
     },
     {
       author_name: "Dr. Amina Patel",
       author_role: "researcher",
-      content: "I would monitor leaf wetness together with humidity. If both remain high, the risk becomes more significant.",
+      content_en: "I would monitor leaf wetness together with humidity. If both remain high, the risk becomes more significant.",
+      content_af: "Ek sou blaarvogtigheid saam met humiditeit monitor. As beide hoog bly, word die risiko meer betekenisvol.",
       created_at: "2026-03-27T11:20:00"
     }
   ],
@@ -151,19 +179,22 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Dr. Michael Jacobs",
       author_role: "researcher",
-      content: "This could be nocturnal pests like cutworms. Check near the soil early in the morning.",
+      content_en: "This could be nocturnal pests like cutworms. Check near the soil early in the morning.",
+      content_af: "Dit kan nagtelike plae soos snywurms wees. Kontroleer naby die grond vroeg in die oggend.",
       created_at: "2026-03-28T08:10:00"
     },
     {
       author_name: "Dr. Kabelo Naidoo",
       author_role: "researcher",
-      content: "If the damage appears overnight, insect feeding is a stronger possibility than heat stress.",
+      content_en: "If the damage appears overnight, insect feeding is a stronger possibility than heat stress.",
+      content_af: "As die beskadiging oornag verskyn, is insekvoeding 'n sterker moontlikheid as hitte-stres.",
       created_at: "2026-03-28T10:05:00"
     },
     {
       author_name: "Lerato Nkosi",
       author_role: "farmer",
-      content: "We had similar damage last season and it turned out to be cutworms near the base.",
+      content_en: "We had similar damage last season and it turned out to be cutworms near the base.",
+      content_af: "Ons het soortgelyke beskadiging verlede seisoen gehad en dit het uitgekom dat dit snywurms naby die basis was.",
       created_at: "2026-03-28T14:25:00"
     }
   ],
@@ -172,25 +203,29 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Naledi Khumalo",
       author_role: "farmer",
-      content: "This is useful because we also noticed warnings after wetter nights, especially in lower parts of the field.",
+      content_en: "This is useful because we also noticed warnings after wetter nights, especially in lower parts of the field.",
+      content_af: "Dit is nuttig omdat ons ook waarskuwings opgemerk het na natter nagte, veral in laer dele van die veld.",
       created_at: "2026-03-18T14:00:00"
     },
     {
       author_name: "Dr. Sarah Chen",
       author_role: "researcher",
-      content: "Yes, and the maize site appears to show this more clearly than the others.",
+      content_en: "Yes, and the maize site appears to show this more clearly than the others.",
+      content_af: "Ja, en die mielie-terrein blyk dit duideliker te toon as die ander.",
       created_at: "2026-03-18T15:25:00"
     },
     {
       author_name: "Dr. Amina Patel",
       author_role: "researcher",
-      content: "It may be worth testing whether the timing of irrigation is amplifying that effect.",
+      content_en: "It may be worth testing whether the timing of irrigation is amplifying that effect.",
+      content_af: "Dit mag die moeite werd wees om te toets of die tydsberekening van besproeiing daardie effek versterk.",
       created_at: "2026-03-19T09:40:00"
     },
     {
       author_name: "Sipho Dlamini",
       author_role: "farmer",
-      content: "That would be interesting because we irrigate quite late in the afternoon on one section.",
+      content_en: "That would be interesting because we irrigate quite late in the afternoon on one section.",
+      content_af: "Dit sou interessant wees omdat ons redelik laat in die middag op een afdeling besproei.",
       created_at: "2026-03-19T12:10:00"
     }
   ],
@@ -199,19 +234,22 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Dr. Michael Jacobs",
       author_role: "researcher",
-      content: "This is a good example of how the dashboard can support forecasting rather than only reporting.",
+      content_en: "This is a good example of how the dashboard can support forecasting rather than only reporting.",
+      content_af: "Dit is 'n goeie voorbeeld van hoe die paneelbord voorspelling kan ondersteun eerder as net verslagdoening.",
       created_at: "2026-03-21T15:15:00"
     },
     {
       author_name: "Musa Ndlovu",
       author_role: "farmer",
-      content: "We often notice more trap activity after the hottest days too.",
+      content_en: "We often notice more trap activity after the hottest days too.",
+      content_af: "Ons merk dikwels meer valaktiwiteit op na die warmste dae ook.",
       created_at: "2026-03-21T17:00:00"
     },
     {
       author_name: "Dr. Sarah Chen",
       author_role: "researcher",
-      content: "It would be useful to compare this with humidity drops during the same periods.",
+      content_en: "It would be useful to compare this with humidity drops during the same periods.",
+      content_af: "Dit sou nuttig wees om dit te vergelyk met humiditeitsdruppels gedurende dieselfde periodes.",
       created_at: "2026-03-22T08:45:00"
     }
   ],
@@ -220,37 +258,43 @@ const SAMPLE_COMMENTS = {
     {
       author_name: "Thabo Mokoena",
       author_role: "farmer",
-      content: "The maize site has definitely been the most concerning one from a field perspective this week.",
+      content_en: "The maize site has definitely been the most concerning one from a field perspective this week.",
+      content_af: "Die mielie-terrein was beslis die mees kommerwekkende een vanuit 'n veldperspektief vanjaar.",
       created_at: "2026-03-29T17:10:00"
     },
     {
       author_name: "Dr. Sarah Chen",
       author_role: "researcher",
-      content: "The alert concentration there suggests it should be prioritized for inspection and follow-up sampling.",
+      content_en: "The alert concentration there suggests it should be prioritized for inspection and follow-up sampling.",
+      content_af: "Die waarskuwingskonsentrasie daar stel voor dat dit geprioritiseer moet word vir inspeksie en opvolgmonstering.",
       created_at: "2026-03-24T18:00:00"
     },
     {
       author_name: "Dr. Amina Patel",
       author_role: "researcher",
-      content: "The combination of rainfall, humidity, and leaf wetness makes that conclusion quite reasonable.",
+      content_en: "The combination of rainfall, humidity, and leaf wetness makes that conclusion quite reasonable.",
+      content_af: "Die kombinasie van reënval, humiditeit en blaarvogtigheid maak daardie gevolgtrekking redelik.",
       created_at: "2026-03-25T08:20:00"
     },
     {
       author_name: "Naledi Khumalo",
       author_role: "farmer",
-      content: "Would you suggest adjusting irrigation timing there first, or focusing on pest checks?",
+      content_en: "Would you suggest adjusting irrigation timing there first, or focusing on pest checks?",
+      content_af: "Sou jy voorstel om besproeiingstydsberekening daar eerste aan te pas, of om op plaagkontroles te fokus?",
       created_at: "2026-03-25T10:50:00"
     },
     {
       author_name: "Dr. Kabelo Naidoo",
       author_role: "researcher",
-      content: "I would start with field inspection and trap confirmation, then review irrigation timing immediately after.",
+      content_en: "I would start with field inspection and trap confirmation, then review irrigation timing immediately after.",
+      content_af: "Ek sou begin met veldinspeksie en valbevestiging, dan besproeiingstydsberekening onmiddellik daarna hersien.",
       created_at: "2026-03-25T12:15:00"
     },
     {
       author_name: "Dr. Michael Jacobs",
       author_role: "researcher",
-      content: "This is a good candidate site for a case-study summary in the final report.",
+      content_en: "This is a good candidate site for a case-study summary in the final report.",
+      content_af: "Dit is 'n goeie kandidaatterrein vir 'n gevallestudie-opsomming in die finale verslag.",
       created_at: "2026-03-25T14:30:00"
     }
   ]
@@ -260,8 +304,10 @@ const SAMPLE_COMMENTS = {
 const SAMPLE_POSTS = [
   {
     id: 1001,
-    title: "Early signs of aphid activity in maize plots",
-    content: "We noticed a sharp increase in pest activity in the eastern maize plots after two humid mornings. Trap counts were still moderate, but leaf inspection showed early aphid clustering near the lower canopy. Farmers may want to inspect fields earlier in the day before the temperature rises.",
+    title_en: "Early signs of aphid activity in maize plots",
+    title_af: "Vroeë tekens van luisaktiwiteit in mieliepersele",
+    content_en: "We noticed a sharp increase in pest activity in the eastern maize plots after two humid mornings. Trap counts were still moderate, but leaf inspection showed early aphid clustering near the lower canopy. Farmers may want to inspect fields earlier in the day before the temperature rises.",
+    content_af: "Ons het 'n skerp toename in plaagaktiwiteit in die oostelike mieliepersele opgemerk na twee vogtige oggende. Lokvaltellings was steeds matig, maar blaarinspeksie het vroeë luisgroepering naby die onderste blaredak getoon. Boere wil dalk velde vroeër in die dag inspekteer voordat die temperatuur styg.",
     author_id: 1,
     author_role: "farmer",
     author_name: "Thabo Mokoena",
@@ -271,8 +317,10 @@ const SAMPLE_POSTS = [
   },
   {
     id: 1002,
-    title: "Humidity and leaf wetness are strongly aligning with disease alerts",
-    content: "After reviewing recent sensor logs, we found that high humidity combined with persistent leaf wetness closely matched disease-risk warnings. This suggests the system is performing well as an early indicator for fungal risk, especially during cooler overnight periods.",
+    title_en: "Humidity and leaf wetness are strongly aligning with disease alerts",
+    title_af: "Vogtigheid en blaarvogtigheid stem sterk ooreen met siektewaarskuwings",
+    content_en: "After reviewing recent sensor logs, we found that high humidity combined with persistent leaf wetness closely matched disease-risk warnings. This suggests the system is performing well as an early indicator for fungal risk, especially during cooler overnight periods.",
+    content_af: "Na hersiening van onlangse sensorlogs, het ons gevind dat hoë humiditeit gekombineer met aanhoudende blaarvogtigheid naby siekte-risiko waarskuwings ooreengestem het. Dit dui daarop dat die stelsel goed presteer as 'n vroeë aanwyser vir swamrisiko, veral tydens koeler oornagperiodes.",
     author_id: 2,
     author_role: "researcher",
     author_name: "Dr. Sarah Chen",
@@ -282,8 +330,10 @@ const SAMPLE_POSTS = [
   },
   {
     id: 1003,
-    title: "Drip irrigation reduced water use on our test field",
-    content: "We switched one section of the farm to drip irrigation after repeated moisture-related alerts. Over two weeks, the soil stayed more stable and overall water use dropped noticeably. We are planning to extend the setup to a second site next month.",
+    title_en: "Drip irrigation reduced water use on our test field",
+    title_af: "Drupbesproeiing het watergebruik op ons toetsveld verminder",
+    content_en: "We switched one section of the farm to drip irrigation after repeated moisture-related alerts. Over two weeks, the soil stayed more stable and overall water use dropped noticeably. We are planning to extend the setup to a second site next month.",
+    content_af: "Ons het een deel van die plaas na drupbesproeiing oorgeskakel na herhaalde vogverwante waarskuwings. Oor twee weke het die grond meer stabiel gebly en algehele watergebruik merkbaar gedaal. Ons beplan om die opstelling volgende maand na 'n tweede terrein uit te brei.",
     author_id: 3,
     author_role: "farmer",
     author_name: "Sipho Dlamini",
@@ -292,9 +342,11 @@ const SAMPLE_POSTS = [
     created_at: "2026-03-12T10:45:00"
   },
   {
-    id: 1004, // used google translater
-    title: "Vergelyking van plaaslike sensorlesings met weerdata",
-    content: "Ons het plaaslike temperatuur- en reënvaldata vergelyk met streeksweerpatrone. Die plaaslike sensors wys vinniger veranderinge, wat belangrik is omdat dit plaagaktiwiteit en siekterisiko direk beïnvloed. Dit help boere om vinniger besluite te neem.",
+    id: 1004,
+    title_en: "Comparison of local sensor readings with weather data",
+    title_af: "Vergelyking van plaaslike sensorlesings met weerdata",
+    content_en: "We compared local temperature and rainfall data with regional weather patterns. The local sensors show faster changes, which is important because it directly affects pest activity and disease risk. This helps farmers make decisions faster.",
+    content_af: "Ons het plaaslike temperatuur- en reënvaldata vergelyk met streeksweerpatrone. Die plaaslike sensors wys vinniger veranderinge, wat belangrik is omdat dit plaagaktiwiteit en siekterisiko direk beïnvloed. Dit help boere om vinniger besluite te neem.",
     author_id: 4,
     author_role: "farmer",
     author_name: "Johan van der Merwe",
@@ -304,8 +356,10 @@ const SAMPLE_POSTS = [
   },
   {
     id: 1005,
-    title: "Brassica site recovered after warning spike",
-    content: "The brassica site showed a warning spike earlier this week, mainly linked to humidity and leaf wetness. After improving airflow and adjusting irrigation timing, the latest readings look much healthier. This was a good example of using the dashboard to act before the issue became critical.",
+    title_en: "Brassica site recovered after warning spike",
+    title_af: "Brasika-terrein herstel na waarskuwingsgolf",
+    content_en: "The brassica site showed a warning spike earlier this week, mainly linked to humidity and leaf wetness. After improving airflow and adjusting irrigation timing, the latest readings look much healthier. This was a good example of using the dashboard to act before the issue became critical.",
+    content_af: "Die brasika-terrein het 'n waarskuwingsgolf vroeër vanjaar getoon, hoofsaaklik gekoppel aan humiditeit en blaarvogtigheid. Na verbetering van lugvloei en aanpassing van besproeiingstydsberekening, lyk die nuutste lesings baie gesonder. Dit was 'n goeie voorbeeld van die gebruik van die paneelbord om op te tree voordat die probleem kritiek geword het.",
     author_id: 5,
     author_role: "farmer",
     author_name: "Naledi Khumalo",
@@ -315,8 +369,10 @@ const SAMPLE_POSTS = [
   },
   {
     id: 1006,
-    title: "Is this level of humidity normal for this season?",
-    content: "Over the past few mornings, humidity has been above 90% on my maize field. Is this something to worry about, or is it normal for March conditions?",
+    title_en: "Is this level of humidity normal for this season?",
+    title_af: "Is hierdie vlak van humiditeit normaal vir hierdie seisoen?",
+    content_en: "Over the past few mornings, humidity has been above 90% on my maize field. Is this something to worry about, or is it normal for March conditions?",
+    content_af: "Oor die afgelope paar oggende was humiditeit bo 90% op my mielieveld. Is dit iets om oor bekommerd te wees, of is dit normaal vir Maart-toestande?",
     author_id: 6,
     author_role: "farmer",
     author_name: "Lerato Nkosi",
@@ -326,8 +382,10 @@ const SAMPLE_POSTS = [
   },
   {
     id: 1007,
-    title: "What pest could cause sudden leaf damage overnight?",
-    content: "Yesterday evening the plants looked fine, but this morning I noticed several leaves with damage. Could this be insects or something else?",
+    title_en: "What pest could cause sudden leaf damage overnight?",
+    title_af: "Watter plaag kan skielike blaarbeskadiging oornag veroorsaak?",
+    content_en: "Yesterday evening the plants looked fine, but this morning I noticed several leaves with damage. Could this be insects or something else?",
+    content_af: "Gisteraand het die plante goed gelyk, maar vanoggend het ek verskeie blare met beskadiging opgemerk. Kan dit insekte of iets anders wees?",
     author_id: 7,
     author_role: "farmer",
     author_name: "Musa Ndlovu",
@@ -337,8 +395,10 @@ const SAMPLE_POSTS = [
   },
   {
     id: 1008,
-    title: "Research note: warning spikes are clustering after wet leaf periods",
-    content: "A review of March dashboard data shows that warning events tend to appear after extended periods of high leaf wetness and elevated humidity. This pattern is especially visible in the maize and brassica sites, suggesting the alerts are responding to meaningful environmental changes rather than random fluctuations.",
+    title_en: "Research note: warning spikes are clustering after wet leaf periods",
+    title_af: "Navorsingsnota: waarskuwingsgolwe groeper na nat blaarperiodes",
+    content_en: "A review of March dashboard data shows that warning events tend to appear after extended periods of high leaf wetness and elevated humidity. This pattern is especially visible in the maize and brassica sites, suggesting the alerts are responding to meaningful environmental changes rather than random fluctuations.",
+    content_af: "''n Hersiening van Maart-paneelborddata toon dat waarskuwingsgebeurtenisse geneig is om te verskyn na verlengde periodes van hoë blaarvogtigheid en verhoogde humiditeit. Hierdie patroon is veral sigbaar in die mielie- en brasika-terreine, wat daarop dui dat die waarskuwings reageer op betekenisvolle omgewingsveranderinge eerder as ewekansige fluktuasies.",
     author_id: 8,
     author_role: "researcher",
     author_name: "Dr. Michael Jacobs",
@@ -348,8 +408,10 @@ const SAMPLE_POSTS = [
   },
   {
     id: 1009,
-    title: "Pest trap count increases matched warmer afternoon readings",
-    content: "When comparing daily sensor trends, we observed that higher afternoon temperatures were often followed by increased pest trap counts. This does not prove causation on its own, but it is a useful signal for forecasting periods of higher pest activity on the dashboard.",
+    title_en: "Pest trap count increases matched warmer afternoon readings",
+    title_af: "Toename in plaagvaltelling stem ooreen met warmer middaglesings",
+    content_en: "When comparing daily sensor trends, we observed that higher afternoon temperatures were often followed by increased pest trap counts. This does not prove causation on its own, but it is a useful signal for forecasting periods of higher pest activity on the dashboard.",
+    content_af: "Wanneer daaglikse sensorneigings vergelyk word, het ons waargeneem dat hoër middagtemperature dikwels gevolg word deur verhoogde plaagvaltellings. Dit bewys nie oorsaaklikheid op sigself nie, maar dit is 'n nuttige sein vir die voorspelling van periodes van hoër plaagaktiwiteit op die paneelbord.",
     author_id: 9,
     author_role: "researcher",
     author_name: "Dr. Amina Patel",
@@ -359,8 +421,10 @@ const SAMPLE_POSTS = [
   },
   {
     id: 1010,
-    title: "Field dashboard insight: maize site showed the highest alert concentration this week",
-    content: "Based on the latest dashboard review, the maize site recorded the highest concentration of warning and alert-triggered readings during the week. The combination of humidity, leaf wetness, and rainfall suggests this site should be prioritized for close field inspection.",
+    title_en: "Field dashboard insight: maize site showed the highest alert concentration this week",
+    title_af: "Veldpaneelbord-insig: mielie-terrein het die hoogste waarskuwingskonsentrasie vanjaar getoon",
+    content_en: "Based on the latest dashboard review, the maize site recorded the highest concentration of warning and alert-triggered readings during the week. The combination of humidity, leaf wetness, and rainfall suggests this site should be prioritized for close field inspection.",
+    content_af: "Gebaseer op die nuutste paneelbordhersiening, het die mielie-terrein die hoogste konsentrasie van waarskuwing- en waarskuwing-geaktiveerde lesings gedurende die week aangeteken. Die kombinasie van humiditeit, blaarvogtigheid en reënval dui daarop dat hierdie terrein geprioritiseer moet word vir noukeurige veldinspeksie.",
     author_id: 10,
     author_role: "researcher",
     author_name: "Dr. Kabelo Naidoo",
@@ -545,7 +609,7 @@ function renderPosts() {
 
     card.innerHTML = `
       <div class="post-card-header">
-        <h2 class="post-title-link">${escHtml(post.title)}</h2>
+        <h2 class="post-title-link">${escHtml(getLocalizedContent(post, 'title'))}</h2>
         <span class="role-badge ${badgeClass}">${badgeLabel}</span>
       </div>
       <div class="post-meta">
@@ -553,7 +617,7 @@ function renderPosts() {
           ${escHtml(post.author_name)}
         </span> · ${dateStr}
       </div>
-      <p class="post-preview">${escHtml(post.content)}</p>
+      <p class="post-preview">${escHtml(getLocalizedContent(post, 'content'))}</p>
       <div class="post-card-footer">
         <button class="action-btn like-btn" data-id="${post.id}" ${likeDisabled}>
           👍 <span class="like-count">${post.likes_count}</span>
@@ -656,8 +720,8 @@ function openModal(post) {
   const token = getToken();
   const user  = token ? decodeToken(token) : null;
 
-  document.getElementById('modal-post-title').textContent   = post.title;
-  document.getElementById('modal-post-content').textContent = post.content;
+  document.getElementById('modal-post-title').textContent   = getLocalizedContent(post, 'title');
+  document.getElementById('modal-post-content').textContent = getLocalizedContent(post, 'content');
 
   const dateStr = new Date(post.created_at).toLocaleDateString('en-GB', {
     day: 'numeric', month: 'long', year: 'numeric'
@@ -730,7 +794,7 @@ async function loadComments(postId) {
         <div class="comment-author ${c.author_role === 'researcher' ? 'researcher' : ''}">
           ${c.author_role === 'farmer' ? '🌾' : '🔬'} ${escHtml(c.author_name)} · ${dateStr}
         </div>
-        <div class="comment-content">${escHtml(c.content)}</div>
+        <div class="comment-content">${escHtml(getLocalizedContent(c, 'content'))}</div>
       `;
 
       listEl.appendChild(div);
@@ -759,7 +823,7 @@ async function loadComments(postId) {
         <div class="comment-author ${c.author_role === 'researcher' ? 'researcher' : ''}">
           ${c.author_role === 'farmer' ? '🌾' : '🔬'} ${escHtml(c.author_name)} · ${dateStr}
         </div>
-        <div class="comment-content">${escHtml(c.content)}</div>
+        <div class="comment-content">${escHtml(getLocalizedContent(c, 'content'))}</div>
       `;
 
       listEl.appendChild(div);
@@ -813,3 +877,11 @@ function escHtml(str) {
 // ── INIT ─
 updateAuthUI();
 loadPosts();
+
+// ── LISTEN FOR LANGUAGE CHANGES ──
+document.addEventListener('languageChanged', () => {
+  renderPosts(); // Re-render posts with new language
+  if (openPostId) {
+    loadComments(openPostId); // Re-render comments if modal is open
+  }
+});
