@@ -1,5 +1,6 @@
 import os
 import sys
+import io
 from pathlib import Path
 
 import pytest
@@ -122,3 +123,14 @@ def created_post(client, farmer_auth_headers):
         headers=farmer_auth_headers
     )
     return response.json()
+
+
+@pytest.fixture
+def scanner_mock_result():
+    return ("healthy", 0.95, "test reason")
+
+
+@pytest.fixture
+def fake_image_file():
+    # minimal fake jpg-like content for upload tests
+    return io.BytesIO(b"fake image content")

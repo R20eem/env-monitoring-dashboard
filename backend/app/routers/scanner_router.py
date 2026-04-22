@@ -6,6 +6,7 @@ import os
 import joblib
 import numpy as np
 import tensorflow as tf
+from datetime import datetime, UTC
 from PIL import Image
 from jose import JWTError
 
@@ -165,7 +166,7 @@ async def upload_scan(
         raise HTTPException(status_code=400, detail="invalid crop_type")
 
     # save image
-    timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    timestamp = datetime.now(UTC).strftime("%Y%m%d%H%M%S")
     filename = f"{timestamp}_{file.filename}"
     file_path = os.path.join(UPLOAD_DIR, filename)
 
@@ -184,7 +185,7 @@ async def upload_scan(
         prediction=prediction,
         confidence=confidence,
         reason=reason,
-        created_at=str(datetime.utcnow())
+        created_at=str(datetime.now(UTC))
     )
 
     db.add(scan)
