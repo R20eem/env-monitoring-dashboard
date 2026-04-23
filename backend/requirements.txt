@@ -35,10 +35,9 @@ jinja2==3.1.4
 
 email-validator==2.2.0
 
-# scanner part and ML
-joblib
-
-numpy
-pillow
-scikit-learn
-tensorflow
+# for ML and deep learning
+tensorflow==2.16.2
+numpy==1.26.4
+scikit-learn==1.4.2
+joblib==1.4.2
+pillow==10.3.0
