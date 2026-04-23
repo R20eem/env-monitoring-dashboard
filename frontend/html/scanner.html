@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Scanner — Eco Leaf</title>
+
+  <!-- Dashboard styles -->
+  <link rel="stylesheet" href="../css/farmer.css">
+
+  <!-- Scanner + shared -->
+  <link rel="stylesheet" href="../css/shared.css">
+  <link rel="stylesheet" href="../css/scanner.css">
+  <link rel="stylesheet" href="../fonts/fonts.css">
+</head>
+
+<body class="farmer-page">
+
+<div class="f-layout">
+
+  <!-- ═════════ SIDEBAR ═════════ -->
+  <aside class="f-sidebar">
+
+    <div class="f-sidebar-logo">
+      <img src="../images/logo_transparent.png" alt="Eco Leaf">
+      <div class="f-sidebar-brand">
+        Eco Leaf
+        <small>Field Dashboard</small>
+      </div>
+    </div>
+
+    <div class="f-nav-section">
+      <div class="f-nav-label">Navigation</div>
+
+      <a href="index.html" class="f-nav-link">
+        Dashboard
+      </a>
+
+      <a href="scanner.html" class="f-nav-link active">
+        Plant Scanner
+      </a>
+
+      <a href="blog.html" class="f-nav-link">
+        Community Blog
+      </a>
+
+      <a href="profile.html" class="f-nav-link">
+        Profile
+      </a>
+    </div>
+
+    <div class="f-sidebar-bottom">
+      <button class="f-logout-btn" id="f-logout-btn">Logout</button>
+    </div>
+
+  </aside>
+
+  <!-- ═════════ MAIN ═════════ -->
+  <div class="f-main">
+
+    <!-- TOPBAR -->
+    <header class="sh-topbar">
+      <div class="sh-topbar-title" data-i18n="about.title">Plant Scanner</div>
+      <div class="sh-topbar-right">
+        <a href="about.html" class="sh-about-link active" data-i18n="nav.about">ℹ About Us</a>
+        <div id="sh-nav-actions"></div>
+      </div>
+    </header>
+
+
+    <!-- CONTENT -->
+    <main class="f-content">
+
+      <!-- HERO -->
+      <div class="f-hero f-mb-24">
+        <div class="f-hero-text">
+          <h1>Scan a Plant</h1>
+          <p>Upload a plant image, choose crop type, and get a health prediction</p>
+        </div>
+      </div>
+
+      <!-- ═════════ UPLOAD CARD ═════════ -->
+      <div class="f-card f-mb-24">
+        <div class="f-card-title">Upload Plant Image</div>
+
+        <form id="scanner-form" class="f-mt-12">
+
+          <div class="f-form-row">
+
+            <select id="crop_type" required>
+              <option value="">Select crop</option>
+              <option value="maize">Maize</option>
+              <option value="brassica">Brassica</option>
+              <option value="orchard">Orchard</option>
+            </select>
+
+            <input type="number" id="site_id" placeholder="Site ID">
+
+            <label class="f-file-upload">
+              <span id="file-text">Choose Image</span>
+              <input type="file" id="scan_file" accept="image/*">
+            </label>
+
+          </div>
+
+          <div class="f-mt-12">
+            <img id="image-preview" class="f-hidden" style="max-width:220px;border-radius:10px;">
+          </div>
+
+          <div class="f-mt-12">
+            <button type="submit" class="f-btn f-btn-primary" id="scan-btn">
+              Scan Plant
+            </button>
+            <span id="scanner-error" style="margin-left:10px;color:red;"></span>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- ═════════ RESULT CARD ═════════ -->
+      <div class="f-card f-mb-24 f-hidden" id="result-card">
+        <div class="f-card-title">Scan Result</div>
+
+        <div class="f-result-grid f-mt-12">
+          <div><strong>Prediction:</strong> <span id="result-prediction">-</span></div>
+          <div><strong>Confidence:</strong> <span id="result-confidence">-</span></div>
+          <div><strong>Crop:</strong> <span id="result-crop">-</span></div>
+          <div><strong>Site:</strong> <span id="result-site">-</span></div>
+        </div>
+
+        <div class="f-mt-12">
+          <strong>Reason</strong>
+          <p id="result-reason-text">-</p>
+        </div>
+      </div>
+
+      <!-- ═════════ HOW IT WORKS ═════════ -->
+      <div class="f-card f-mb-24">
+        <div class="f-card-title">How it works</div>
+
+        <ul class="f-mt-12" style="color:var(--f-text-3);font-size:13px;">
+          <li>Select the crop type</li>
+          <li>Upload a clear plant or leaf image</li>
+          <li>The system checks the image using ML</li>
+          <li>The result is saved and shown below</li>
+        </ul>
+      </div>
+
+      <!-- ═════════ RECENT SCANS (UNCHANGED) ═════════ -->
+      <section class="scanner-card recent-scans-section">
+        <h2>My Recent Scans</h2>
+
+        <div id="my-scans-container" class="my-scans-grid">
+          <p id="my-scans-empty" class="empty-scans-text">No scans yet</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</div>
+
+<!-- JS -->
+<script src="../js/scanner.js"></script>
+<script src="../js/shared-nav.js"></script>
+
+</body>
+</html>

@@ -3,7 +3,17 @@
    Used by: index.html, blog.html, about.html, profile.html
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+/*
+  ── SYSTEM FONT STACK (no external requests — fast & fully offline) ──
+  Display / headings : "Trebuchet MS" ships on Windows XP+, macOS 10.0+,
+    iOS & Android. Bold, geometric feel — close in spirit to Syne.
+    Fallback chain adds ui-rounded (Apple SF Rounded), then safe sans.
+  Body copy          : system-ui resolves to the OS native UI font
+    (SF Pro on Apple, Segoe UI on Windows, Roboto on Android/Chrome OS).
+    Feels native, loads instantly, great at small sizes.
+  Monospace          : ui-monospace → "Cascadia Code" / "Menlo" / "Consolas"
+    depending on platform — all high-quality, zero download.
+*/
 
 :root {
   --sh-green-900: #173404;
@@ -26,9 +36,9 @@
   --sh-amber:     #ef9f27;
   --sh-sidebar-w: 220px;
   --sh-topbar-h:  60px;
-  --sh-font-display: 'Syne', sans-serif;
-  --sh-font-body:    'DM Sans', sans-serif;
-  --sh-font-mono:    'DM Mono', monospace;
+  --sh-font-display: 'Trebuchet MS', ui-rounded, 'Arial Rounded MT Bold', Arial, sans-serif;
+  --sh-font-body:    system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --sh-font-mono:    ui-monospace, 'Cascadia Code', 'Menlo', 'Consolas', 'Courier New', monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

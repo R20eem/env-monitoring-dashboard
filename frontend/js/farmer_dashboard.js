@@ -7,7 +7,7 @@
 
 'use strict';
 
-const API_BASE  = 'http://localhost:8000'; /* 'http://192.168.0.22:8000'; */
+const API_BASE  = 'http://127.0.0.1:8000';
 const NASA_BASE = 'https://power.larc.nasa.gov/api/temporal/daily/point';
 
 /* Coordinates matching researcher.js SITE_COORDS */
@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupUser();
   renderHero();
   renderTiles();
+  loadScanSummary();
   renderInsight(currentSite);
   renderMap();
   renderCalendar();
@@ -89,6 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Fire live API + NASA in parallel after paint */
   fetchLiveData();
   fetchNasaData();
+});
+
+/* ── LISTEN FOR LANGUAGE CHANGES ── */
+document.addEventListener('languageChanged', () => {
+  renderTiles();
+  renderInsight(currentSite);
+  const titleEl = document.getElementById('f-chart-title');
+  if (titleEl) titleEl.textContent = `Risk level & temperature — ${getLocalizedSiteName(currentSite).toLowerCase()}`;
 });
 
 /* ══════════════════════════════════════════════════════════
@@ -284,6 +293,40 @@ async function fetchNasaData() {
   }
 }
 
+async function loadScanSummary() {
+  const token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
+
+  if (!token) {
+    console.log("no token → skipping scan summary");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/api/scanner/my-summary`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      console.log("scan summary failed:", res.status);
+      return;
+    }
+
+    const data = await res.json();
+
+    document.getElementById('scan-total').textContent = data.total_scans ?? 0;
+    document.getElementById('scan-healthy').textContent = data.healthy_count ?? 0;
+    document.getElementById('scan-disease').textContent = data.disease_risk_count ?? 0;
+    document.getElementById('scan-pest').textContent = data.pest_risk_count ?? 0;
+    document.getElementById('scan-latest').textContent =
+      data.latest_scan?.prediction ?? '-';
+
+  } catch (err) {
+    console.error("error loading scan summary:", err);
+  }
+}
+
 /* Adds a dashed NASA regional temperature line to the risk chart */
 function injectNasaRegionalLine(t2mObj, dates, clean) {
   if (!riskChart || !t2mObj) return;
@@ -330,6 +373,24 @@ function renderHero() {
   setText('f-hero-name', `Good day, ${cap}`);
 }
 
+/* ── LOCALIZATION HELPERS ── */
+function getLocalizedSiteName(siteId) {
+  const siteMap = { 'site_maize': 'f.site_maize', 'site_orchard': 'f.site_orchard', 'site_brassica': 'f.site_brassica' };
+  return typeof I18n !== 'undefined' ? I18n.t(siteMap[siteId]) : STATIC.sites[siteId].label;
+}
+function getLocalizedGradeLabel(grade) {
+  const gradeMap = { 'attention': 'f.grade_attention', 'good': 'f.grade_good', 'critical': 'f.grade_critical' };
+  return typeof I18n !== 'undefined' ? I18n.t(gradeMap[grade]) : grade;
+}
+function getLocalizedSiteDesc(siteId) {
+  const descMap = { 'site_maize': 'f.desc_maize', 'site_orchard': 'f.desc_orchard', 'site_brassica': 'f.desc_brassica' };
+  return typeof I18n !== 'undefined' ? I18n.t(descMap[siteId]) : STATIC.sites[siteId].desc;
+}
+function getLocalizedInsight(siteId) {
+  const insightMap = { 'site_maize': 'f.insight_maize', 'site_orchard': 'f.insight_orchard', 'site_brassica': 'f.insight_brassica' };
+  return typeof I18n !== 'undefined' ? I18n.t(insightMap[siteId]) : STATIC.insights[siteId].text;
+}
+
 /* ══════════════════════════════════════════════════════════
    HEALTH SCORE TILES
 ══════════════════════════════════════════════════════════ */
@@ -340,7 +401,7 @@ function renderTiles() {
     <div class="f-tile ${s.grade} ${id === currentSite ? 'selected' : ''}"
          onclick="selectSite('${id}')" role="button" tabindex="0">
       <div class="f-tile-accent"></div>
-      <div class="f-tile-site">${s.label}</div>
+      <div class="f-tile-site">${getLocalizedSiteName(id)}</div>
       <div class="f-tile-score-row">
         <span class="f-tile-score">${s.score}</span>
         <span class="f-tile-score-max">/100</span>
@@ -348,8 +409,8 @@ function renderTiles() {
       <div class="f-score-bar">
         <div class="f-score-fill" style="width:${s.score}%"></div>
       </div>
-      <div class="f-tile-grade">${s.gradeLabel}</div>
-      <div class="f-tile-desc">${s.desc}</div>
+      <div class="f-tile-grade">${getLocalizedGradeLabel(s.grade)}</div>
+      <div class="f-tile-desc">${getLocalizedSiteDesc(id)}</div>
     </div>
   `).join('');
 }
@@ -367,7 +428,7 @@ window.selectSite = function (id) {
   renderInsight(id);
   renderChart(id);
   const titleEl = document.getElementById('f-chart-title');
-  if (titleEl) titleEl.textContent = `Risk level & temperature — ${STATIC.sites[id].label.toLowerCase()}`;
+  if (titleEl) titleEl.textContent = `Risk level & temperature — ${getLocalizedSiteName(id).toLowerCase()}`;
 };
 
 /* ══════════════════════════════════════════════════════════
@@ -429,13 +490,14 @@ function renderInsight(siteId) {
   if (!panel) return;
   const ins = STATIC.insights[siteId];
   const s   = STATIC.sites[siteId];
+  const whatHappening = typeof I18n !== 'undefined' ? I18n.t('f.insight_what') : 'What is happening?';
   panel.innerHTML = `
     <div class="f-insight-card">
       <div class="f-insight-header">
         <div class="f-insight-dot" style="background:${ins.color};"></div>
-        <div class="f-insight-title">${s.label} — What is happening?</div>
+        <div class="f-insight-title">${getLocalizedSiteName(siteId)} — ${whatHappening}</div>
       </div>
-      <div class="f-insight-text">${ins.text}</div>
+      <div class="f-insight-text">${getLocalizedInsight(siteId)}</div>
       <div class="f-metric-mini-grid">
         <div class="f-metric-mini">
           <div class="f-metric-mini-label">Temperature</div>

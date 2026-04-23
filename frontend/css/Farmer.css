@@ -5,7 +5,7 @@
    ONLY the card/widget internals use the farmer palette.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('../fonts/fonts.css');
 
 :root {
   /* Shell tokens — same as researcher */
@@ -540,7 +540,48 @@ body.farmer-page {
 }
 @media (max-width: 860px) {
   :root { --f-sidebar-w: 0px; }
-  .f-sidebar { display: none; }
+  .f-layout { flex-direction: column; }
+  .f-sidebar {
+    display: flex;
+    width: 100%;
+    height: 72px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    padding: 0 10px;
+    background: rgba(24,52,4,0.98);
+    box-shadow: 0 -14px 30px rgba(0,0,0,0.14);
+    align-items: center;
+    overflow: hidden;
+  }
+  .f-sidebar::before { display: none; }
+  .f-sidebar-logo, .f-sidebar-bottom, .f-nav-label { display: none; }
+  .f-nav-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .f-nav-link {
+    flex: 1;
+    justify-content: center;
+    padding: 10px 6px;
+    font-size: 11px;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+  .f-nav-link span {
+    display: block;
+    font-size: 10px;
+    line-height: 1.1;
+  }
+  .f-nav-link svg { width: 18px; height: 18px; }
+  .f-nav-link.active::before { display: none; }
+  .f-main { padding-bottom: 86px; }
   .f-tile-grid { grid-template-columns: 1fr; }
   .f-cal-grid  { grid-template-columns: repeat(4, 1fr); }
   .f-content   { padding: 16px; }
