@@ -1,4 +1,4 @@
- /* very basic css, please add stuff to make it visually better */
+
 .recent-scans-section {
   margin-top: 28px;
 }
@@ -61,4 +61,83 @@
   color: var(--sh-text-3);
   font-size: 14px;
   margin: 0;
+}
+
+.f-form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.f-card .f-form-row input,
+.f-card .f-form-row select {
+  height: 38px;           
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--f-border);
+  font-size: 13px;
+  background: #fff;
+  min-width: 160px;
+}
+
+.f-result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+
+/* remove arrows in Chrome, Safari */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* remove arrows in Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.f-card #scan_file {
+  height: 38px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--f-border);
+  font-size: 13px;
+}
+
+.f-card #scan_file {
+  background: #f9faf9;
+}
+
+.f-file-upload {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--f-border);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: #fff;
+  font-size: 13px;
+  color: var(--f-text-2);
+  transition: all 0.2s ease;
+}
+
+.f-file-upload:hover {
+  border-color: var(--f-green-500);
+  background: #f9faf9;
+}
+
+.f-file-upload input {
+  display: none;
+}
+
+.file-upload-btn {
+  background: rgba(99,153,34,0.08);
+  color: var(--f-green-700);
+  border: 1px solid var(--f-green-400);
+  font-weight: 600;
 }
