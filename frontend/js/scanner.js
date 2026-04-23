@@ -5,6 +5,7 @@ console.log('scanner role:', localStorage.getItem('userRole'));
 // get elements from the page
 const form = document.getElementById('scanner-form');
 const fileInput = document.getElementById('scan_file');
+const fileText = document.getElementById("file-text");
 const imagePreview = document.getElementById('image-preview');
 const scanBtn = document.getElementById('scan-btn');
 const errorEl = document.getElementById('scanner-error');
@@ -24,15 +25,23 @@ const myScansContainer = document.getElementById('my-scans-container');
 fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
 
+  // update file name text
+  if (file) {
+    fileText.textContent = file.name;
+  } else {
+    fileText.textContent = "Choose Image";
+  }
+
+  // preview image
   if (!file) {
-    imagePreview.classList.add('hidden');
+    imagePreview.classList.add('f-hidden');
     imagePreview.src = '';
     return;
   }
 
   const url = URL.createObjectURL(file);
   imagePreview.src = url;
-  imagePreview.classList.remove('hidden');
+  imagePreview.classList.remove('f-hidden');
 });
 
 // load farmer's own recent scans
@@ -167,5 +176,7 @@ form.addEventListener('submit', async (e) => {
     scanBtn.textContent = 'scan plant';
   }
 });
+
+
 
 loadMyScans();

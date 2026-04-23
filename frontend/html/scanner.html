@@ -1,137 +1,168 @@
 <!DOCTYPE html>
- <!-- very basic html and it does not look nice so please take a look at it -->
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Scanner — Eco Leaf</title>
-  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Dashboard styles -->
+  <link rel="stylesheet" href="../css/farmer.css">
+
+  <!-- Scanner + shared -->
   <link rel="stylesheet" href="../css/shared.css">
   <link rel="stylesheet" href="../css/scanner.css">
+  <link rel="stylesheet" href="../fonts/fonts.css">
 </head>
-<body class="sh-page">
 
-<aside class="sh-sidebar">
-  <div class="sh-sidebar-logo">
-    <img src="../images/logo_transparent.png" alt="Eco Leaf">
-    <div class="sh-brand">Eco Leaf<small>Environmental Monitor</small></div>
-  </div>
+<body class="farmer-page">
 
-  <nav class="sh-nav">
-    <div class="sh-nav-label">Navigation</div>
+<div class="f-layout">
 
-    <a href="index.html" class="sh-nav-link">
-      Dashboard
-    </a>
+  <!-- ═════════ SIDEBAR ═════════ -->
+  <aside class="f-sidebar">
 
-    <a href="scanner.html" class="sh-nav-link active">
-      Plant Scanner
-    </a>
-
-    <a href="blog.html" class="sh-nav-link">
-      Community Blog
-    </a>
-
-    <a href="profile.html" class="sh-nav-link">
-      Profile
-    </a>
-  </nav>
-</aside>
-
-<div class="sh-main">
-  <header class="sh-topbar">
-    <div class="sh-topbar-title">Plant Scanner</div>
-  </header>
-
-  <main class="sh-content scanner-page-content">
-    <div class="sh-hero sh-mb-24 scanner-hero">
-      <h1>Scan a Plant</h1>
-      <p>upload a plant image, choose the crop type, and get a health prediction</p>
+    <div class="f-sidebar-logo">
+      <img src="../images/logo_transparent.png" alt="Eco Leaf">
+      <div class="f-sidebar-brand">
+        Eco Leaf
+        <small>Field Dashboard</small>
+      </div>
     </div>
 
-    <div class="scanner-layout">
-      <section class="scanner-card">
-        <h2>upload plant image</h2>
+    <div class="f-nav-section">
+      <div class="f-nav-label">Navigation</div>
 
-        <form id="scanner-form" class="scanner-form">
-          <label for="crop_type">crop type</label>
-          <select id="crop_type" name="crop_type" required>
-            <option value="">select crop</option>
-            <option value="maize">maize</option>
-            <option value="brassica">brassica</option>
-            <option value="orchard">orchard</option>
-          </select>
+      <a href="index.html" class="f-nav-link">
+        Dashboard
+      </a>
 
-          <label for="site_id">site id</label>
-          <input type="number" id="site_id" name="site_id" placeholder="e.g. 1" required>
+      <a href="scanner.html" class="f-nav-link active">
+        Plant Scanner
+      </a>
 
-          <label for="scan_file">choose image</label>
-          <input type="file" id="scan_file" name="file" accept="image/*" required>
+      <a href="blog.html" class="f-nav-link">
+        Community Blog
+      </a>
 
-          <div class="preview-wrap">
-            <img id="image-preview" class="hidden" alt="Preview">
+      <a href="profile.html" class="f-nav-link">
+        Profile
+      </a>
+    </div>
+
+    <div class="f-sidebar-bottom">
+      <button class="f-logout-btn" id="f-logout-btn">Logout</button>
+    </div>
+
+  </aside>
+
+  <!-- ═════════ MAIN ═════════ -->
+  <div class="f-main">
+
+    <!-- TOPBAR -->
+    <header class="sh-topbar">
+      <div class="sh-topbar-title" data-i18n="about.title">Plant Scanner</div>
+      <div class="sh-topbar-right">
+        <a href="about.html" class="sh-about-link active" data-i18n="nav.about">ℹ About Us</a>
+        <div id="sh-nav-actions"></div>
+      </div>
+    </header>
+
+
+    <!-- CONTENT -->
+    <main class="f-content">
+
+      <!-- HERO -->
+      <div class="f-hero f-mb-24">
+        <div class="f-hero-text">
+          <h1>Scan a Plant</h1>
+          <p>Upload a plant image, choose crop type, and get a health prediction</p>
+        </div>
+      </div>
+
+      <!-- ═════════ UPLOAD CARD ═════════ -->
+      <div class="f-card f-mb-24">
+        <div class="f-card-title">Upload Plant Image</div>
+
+        <form id="scanner-form" class="f-mt-12">
+
+          <div class="f-form-row">
+
+            <select id="crop_type" required>
+              <option value="">Select crop</option>
+              <option value="maize">Maize</option>
+              <option value="brassica">Brassica</option>
+              <option value="orchard">Orchard</option>
+            </select>
+
+            <input type="number" id="site_id" placeholder="Site ID">
+
+            <label class="f-file-upload">
+              <span id="file-text">Choose Image</span>
+              <input type="file" id="scan_file" accept="image/*">
+            </label>
+
           </div>
 
-          <div class="scanner-actions">
-            <span id="scanner-error" class="form-error"></span>
-            <button type="submit" class="sh-btn sh-btn-primary" id="scan-btn">scan plant</button>
+          <div class="f-mt-12">
+            <img id="image-preview" class="f-hidden" style="max-width:220px;border-radius:10px;">
           </div>
+
+          <div class="f-mt-12">
+            <button type="submit" class="f-btn f-btn-primary" id="scan-btn">
+              Scan Plant
+            </button>
+            <span id="scanner-error" style="margin-left:10px;color:red;"></span>
+          </div>
+
         </form>
+      </div>
+
+      <!-- ═════════ RESULT CARD ═════════ -->
+      <div class="f-card f-mb-24 f-hidden" id="result-card">
+        <div class="f-card-title">Scan Result</div>
+
+        <div class="f-result-grid f-mt-12">
+          <div><strong>Prediction:</strong> <span id="result-prediction">-</span></div>
+          <div><strong>Confidence:</strong> <span id="result-confidence">-</span></div>
+          <div><strong>Crop:</strong> <span id="result-crop">-</span></div>
+          <div><strong>Site:</strong> <span id="result-site">-</span></div>
+        </div>
+
+        <div class="f-mt-12">
+          <strong>Reason</strong>
+          <p id="result-reason-text">-</p>
+        </div>
+      </div>
+
+      <!-- ═════════ HOW IT WORKS ═════════ -->
+      <div class="f-card f-mb-24">
+        <div class="f-card-title">How it works</div>
+
+        <ul class="f-mt-12" style="color:var(--f-text-3);font-size:13px;">
+          <li>Select the crop type</li>
+          <li>Upload a clear plant or leaf image</li>
+          <li>The system checks the image using ML</li>
+          <li>The result is saved and shown below</li>
+        </ul>
+      </div>
+
+      <!-- ═════════ RECENT SCANS (UNCHANGED) ═════════ -->
+      <section class="scanner-card recent-scans-section">
+        <h2>My Recent Scans</h2>
+
+        <div id="my-scans-container" class="my-scans-grid">
+          <p id="my-scans-empty" class="empty-scans-text">No scans yet</p>
+        </div>
       </section>
 
-      <aside class="scanner-side">
-        <div class="scanner-card result-card hidden" id="result-card">
-          <h2>scan result</h2>
+    </main>
+  </div>
 
-          <div class="result-row">
-            <span class="result-label">prediction</span>
-            <span class="result-value" id="result-prediction">-</span>
-          </div>
-
-          <div class="result-row">
-            <span class="result-label">confidence</span>
-            <span class="result-value" id="result-confidence">-</span>
-          </div>
-
-          <div class="result-row">
-            <span class="result-label">crop</span>
-            <span class="result-value" id="result-crop">-</span>
-          </div>
-
-          <div class="result-row">
-            <span class="result-label">site</span>
-            <span class="result-value" id="result-site">-</span>
-          </div>
-
-          <div class="result-reason">
-            <strong>reason</strong>
-            <p id="result-reason-text">-</p>
-          </div>
-        </div>
-
-        <div class="scanner-card">
-          <h2>how it works</h2>
-          <ul class="scanner-help">
-            <li>select the crop type</li>
-            <li>upload a clear plant or leaf image</li>
-            <li>the system checks the image using ml</li>
-            <li>the result is saved and can be seen later</li>
-          </ul>
-        </div>
-      </aside>
-    </div>
-
-    <!-- new section -->
-    <section class="scanner-card recent-scans-section">
-      <h2>my recent scans</h2>
-      <div id="my-scans-container" class="my-scans-grid">
-        <p id="my-scans-empty" class="empty-scans-text">no scans yet</p>
-      </div>
-    </section>
-  </main>
 </div>
 
+<!-- JS -->
 <script src="../js/scanner.js"></script>
 <script src="../js/shared-nav.js"></script>
+
 </body>
 </html>
