@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 from sqlalchemy.orm import Session
 from app.core.security import hash_password, verify_password, create_access_token
 from app.repositories.researcher_repository import get_researcher_by_email, create_researcher
@@ -43,7 +43,7 @@ def login_researcher(db: Session, email: str, org_code: str, password: str) -> s
     # check if the researcher's organisation connection has expired
     # if today's date is after the connection_end date we block the login
     end_date = datetime.strptime(r.connection_end, "%Y-%m-%d").date()
-    if end_date < datetime.utcnow().date():
+    if end_date < datetime.now(UTC).date():
         raise AuthError("Your organization connection has ended")
 
     return create_access_token(subject=r.email, role="researcher")
