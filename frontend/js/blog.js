@@ -878,8 +878,6 @@ function escHtml(str) {
 updateAuthUI();
 loadPosts();
 
-<<<<<<< HEAD
-=======
 // ── LISTEN FOR LANGUAGE CHANGES ──
 document.addEventListener('languageChanged', () => {
   renderPosts(); // Re-render posts with new language
@@ -887,4 +885,3 @@ document.addEventListener('languageChanged', () => {
     loadComments(openPostId); // Re-render comments if modal is open
   }
 });
->>>>>>> main
