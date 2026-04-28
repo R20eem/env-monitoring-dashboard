@@ -1,4 +1,27 @@
-const API_BASE = 'http://172.20.10.4:8000';
+/**
+ * File: blog.js
+ *
+ * Purpose:
+ * Handles community blog functionality including post creation,
+ * comments, likes, and filtering by user role.
+ *
+ * Responsibilities:
+ * - Fetch and display blog posts from API
+ * - Handle post creation and editing
+ * - Manage comments and likes functionality
+ * - Filter posts by farmer/researcher role
+ * - Handle modal interactions for post details
+ *
+ * Layer:
+ * Frontend
+ *
+ * Related:
+ * - blog.html
+ * - blog.css
+ * - l18n.js
+ */
+
+const API_BASE = 'http://127.0.0.1:8000';
 const TOKEN_KEY = 'jwt_token';
 
 // ── STAY LOGGED IN — check all possible token keys

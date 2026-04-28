@@ -1,3 +1,23 @@
+/**
+ * File: fonts.css
+ *
+ * Purpose:
+ * Self-hosted font definitions for offline use.
+ * Eliminates external font requests for better performance and offline capability.
+ *
+ * Responsibilities:
+ * - Define @font-face rules for custom fonts (DM Mono, DM Sans)
+ * - Specify font weights and styles for each font family
+ * - Ensure fonts work offline without external requests
+ *
+ * Layer:
+ * Frontend (CSS - Font Definitions)
+ *
+ * Related:
+ * - researcher.css (imports this file)
+ * - All pages using custom typography
+ */
+
 /* ============================================================
    LOCAL FONTS — fonts.css
    Self-hosted fonts for offline use

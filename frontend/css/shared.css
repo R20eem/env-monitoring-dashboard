@@ -1,3 +1,26 @@
+/**
+ * File: shared.css
+ *
+ * Purpose:
+ * Shared stylesheet for common layout components used across multiple pages.
+ * Provides consistent styling for sidebar, topbar, and shared UI elements.
+ *
+ * Responsibilities:
+ * - Define CSS custom properties (design tokens) for shared theme colors
+ * - Style sidebar navigation and logo
+ * - Style topbar and topbar-right sections
+ * - Provide shared button styles (sh-btn-primary, sh-btn-outline, etc.)
+ * - Include responsive design for shared layout components
+ *
+ * Layer:
+ * Frontend (CSS)
+ *
+ * Related:
+ * - All HTML pages using shared layout (index.html, blog.html, about.html, profile.html)
+ * - style.css
+ * - blog.css
+ */
+
 /* ============================================================
    SHARED SHELL — shared.css
    Used by: index.html, blog.html, about.html, profile.html

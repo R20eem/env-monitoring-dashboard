@@ -1,3 +1,26 @@
+/**
+ * File: Farmer.css
+ *
+ * Purpose:
+ * Stylesheet for the farmer dashboard page with site-specific monitoring features.
+ *
+ * Responsibilities:
+ * - Define CSS custom properties (design tokens) for farmer theme colors
+ * - Style sidebar, topbar, and main content layout
+ * - Provide styles for site selection buttons and sensor cards
+ * - Include responsive design for farmer dashboard
+ * - Mirror researcher.css layout for visual consistency
+ *
+ * Layer:
+ * Frontend (CSS)
+ *
+ * Related:
+ * - index.html
+ * - farmer_dashboard.js
+ * - style.css
+ * - researcher.css
+ */
+
 /* ============================================================
    FARMER DASHBOARD — farmer.css
    Shell (sidebar, topbar, layout) intentionally mirrors

@@ -1,3 +1,25 @@
+/**
+ * File: dash.js
+ *
+ * Purpose:
+ * Handles the main landing page dashboard which displays
+ * researcher data to all visitors (farmers and guests).
+ *
+ * Responsibilities:
+ * - Check user authentication and role
+ * - Display appropriate dashboard view based on user role
+ * - Load and display sensor data from API
+ * - Handle logout functionality
+ *
+ * Layer:
+ * Frontend
+ *
+ * Related:
+ * - index.html
+ * - researcher.html
+ * - style.css
+ */
+
 // Change this to your computer's Wi-Fi IP (e.g., 'http://192.168.0.22:8000') if testing on your phone!
 const API_BASE = "http://172.20.10.4:8000";
 
