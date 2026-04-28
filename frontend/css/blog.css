@@ -1,3 +1,25 @@
+/**
+ * File: blog.css
+ *
+ * Purpose:
+ * Stylesheet for the community blog page with social features.
+ *
+ * Responsibilities:
+ * - Style blog-specific components (hero, filter pills, post cards)
+ * - Provide styles for post creation, comments, and likes
+ * - Handle modal and overlay styling for post details
+ * - Include responsive design for blog layout
+ *
+ * Layer:
+ * Frontend (CSS)
+ *
+ * Related:
+ * - blog.html
+ * - blog.js
+ * - shared.css
+ * - style.css
+ */
+
 /* ============================================================
    BLOG PAGE — blog.css
    Import AFTER style.css and shared.css

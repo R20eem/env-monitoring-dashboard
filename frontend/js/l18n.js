@@ -1,3 +1,24 @@
+/**
+ * File: l18n.js
+ *
+ * Purpose:
+ * Internationalization (i18n) module for bilingual support (English/Afrikaans).
+ * Fully offline - no server calls required for translations.
+ *
+ * Responsibilities:
+ * - Provide translation table for all UI text
+ * - Apply translations to HTML elements with data-i18n attributes
+ * - Handle language toggle and persistence in localStorage
+ * - Inject language toggle button into topbar sections
+ *
+ * Layer:
+ * Frontend (Utility Module)
+ *
+ * Related:
+ * - All HTML pages using data-i18n attributes
+ * - shared-nav.js
+ */
+
 /* ============================================================
    ECO LEAF — i18n.js
    Fully offline bilingual module: English (en) / Afrikaans (af)

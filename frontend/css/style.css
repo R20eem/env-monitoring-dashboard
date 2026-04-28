@@ -14,6 +14,30 @@
   --radius:       14px;
   --font:         system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
+
+/**
+ * File: style.css
+ *
+ * Purpose:
+ * Main global stylesheet with design tokens and shared component styles.
+ * Provides base styling for all pages including buttons, forms, and layout.
+ *
+ * Responsibilities:
+ * - Define CSS custom properties (design tokens) for global theme colors
+ * - Style base HTML elements and common components
+ * - Provide shared button styles (btn-primary, btn-outline)
+ * - Include form input and modal styling
+ * - Handle responsive design for various screen sizes
+ *
+ * Layer:
+ * Frontend (CSS)
+ *
+ * Related:
+ * - All HTML pages
+ * - shared.css
+ * - Farmer.css
+ * - researcher.css
+ */
  
 /* ── RESET ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

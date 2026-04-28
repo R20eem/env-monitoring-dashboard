@@ -1,3 +1,25 @@
+/**
+ * File: researcher.js
+ *
+ * Purpose:
+ * Handles researcher dashboard functionality including data analysis,
+ * correlation visualization, and advanced analytics features.
+ *
+ * Responsibilities:
+ * - Fetch and display researcher-specific dashboard data
+ * - Render correlation matrices and trend analysis
+ * - Manage tab-based navigation between dashboard sections
+ * - Handle NASA POWER API integration for environmental data
+ *
+ * Layer:
+ * Frontend
+ *
+ * Related:
+ * - researcher.html
+ * - researcher.css
+ * - l18n.js
+ */
+
 /* ============================================================
    RESEARCHER DASHBOARD — researcher.js
    Wired to: /api/researcher/dashboard/* endpoints
