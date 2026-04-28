@@ -348,6 +348,10 @@ body.researcher-page {
 }
 
 .r-tab:hover { color: var(--r-text-2); }
+.r-tab:focus { 
+  outline: 2px solid var(--r-green-500); 
+  outline-offset: -2px; 
+}
 .r-tab.active {
   color: var(--r-green-700);
   font-weight: 600;
@@ -407,6 +411,10 @@ body.researcher-page {
 }
 
 .r-btn:active { transform: scale(0.98); }
+.r-btn:focus { 
+  outline: 2px solid var(--r-green-500); 
+  outline-offset: 2px; 
+}
 .r-btn svg { width: 14px; height: 14px; }
 
 .r-btn-primary { background: var(--r-green-700); color: #fff; }
@@ -552,6 +560,12 @@ body.researcher-page {
   color: var(--r-text-2);
   cursor: pointer;
   font-family: var(--r-font-body);
+}
+
+.r-select:focus {
+  outline: none;
+  border-color: var(--r-green-500);
+  box-shadow: 0 0 0 2px rgba(99, 153, 34, 0.2);
 }
 
 /* ── DATA TABLES ───────────────────────────────────────── */
