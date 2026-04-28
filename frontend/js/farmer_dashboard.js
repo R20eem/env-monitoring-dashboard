@@ -1,3 +1,25 @@
+/**
+ * File: farmer_dashboard.js
+ *
+ * Purpose:
+ * Handles farmer dashboard functionality including site selection,
+ * live sensor data display, and risk level visualization.
+ *
+ * Responsibilities:
+ * - Fetch and display sensor readings
+ * - Manage site selection and filtering
+ * - Render charts and statistics
+ * - Handle NASA POWER API integration for weather data
+ *
+ * Layer:
+ * Frontend
+ *
+ * Related:
+ * - index.html
+ * - Farmer.css
+ * - l18n.js
+ */
+
 /* ============================================================
    FARMER DASHBOARD — farmer_dashboard.js
    Live data: FastAPI /api/dashboard/* endpoints

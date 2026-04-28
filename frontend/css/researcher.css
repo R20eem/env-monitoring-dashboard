@@ -1,3 +1,24 @@
+/**
+ * File: researcher.css
+ *
+ * Purpose:
+ * Stylesheet for the researcher dashboard page with advanced data analysis features.
+ *
+ * Responsibilities:
+ * - Define CSS custom properties (design tokens) for researcher theme colors
+ * - Style sidebar, topbar, and tab navigation components
+ * - Provide styles for charts, tables, and data visualization elements
+ * - Include responsive design for different screen sizes
+ *
+ * Layer:
+ * Frontend (CSS)
+ *
+ * Related:
+ * - researcher.html
+ * - researcher.js
+ * - style.css
+ */
+
 /* ============================================================
    RESEARCHER DASHBOARD — researcher.css
    Import after style.css

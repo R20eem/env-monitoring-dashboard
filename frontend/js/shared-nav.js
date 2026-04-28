@@ -1,3 +1,26 @@
+/**
+ * File: shared-nav.js
+ *
+ * Purpose:
+ * Shared navigation module that handles authentication state,
+ * sidebar active links, and topbar buttons across all pages.
+ *
+ * Responsibilities:
+ * - Check user authentication and role
+ * - Update sidebar active link based on current page
+ * - Inject login/logout buttons into topbar
+ * - Handle dashboard routing based on user role
+ * - Manage logout functionality
+ *
+ * Layer:
+ * Frontend (Shared Utility)
+ *
+ * Related:
+ * - All HTML pages using shared navigation
+ * - l18n.js
+ * - login.html
+ */
+
 /* ============================================================
    SHARED NAV — shared-nav.js
    Drop this script into every page before </body>
