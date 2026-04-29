@@ -27,11 +27,12 @@
     - l18n.js
   -->
 
-  <!-- Role guard: researchers go to their own dashboard immediately -->
+  <!-- Role guard: researchers can view but are redirected to their own dashboard -->
   <script>
     (function () {
       var role  = localStorage.getItem('userRole');
       var token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
+      // Allow public access - only redirect researchers if they have a token
       if (role === 'researcher' && token) {
         window.location.replace('researcher.html');
       }

@@ -147,7 +147,7 @@
       <div class="sh-card-sub" style="margin-top:8px;margin-bottom:16px;" data-i18n="about.start_body">
         Register as a farmer to access the community blog and public dashboard. Researchers with an organisation code get full access to advanced analytics, NASA integration and raw data exports.
       </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;" id="about-cta-buttons">
         <a href="register.html" class="sh-btn sh-btn-primary" data-i18n="about.register_btn">Register Now</a>
         <a href="login.html"    class="sh-btn sh-btn-outline" data-i18n="about.signin_btn">Sign In</a>
       </div>
@@ -157,6 +157,19 @@
 </div>
 
 <script src="../js/l18n.js"></script>
+<script>
+  // Hide Register button if user is already logged in
+  (function() {
+    const token = localStorage.getItem('jwt_token') || localStorage.getItem('token');
+    const role = localStorage.getItem('userRole');
+    if (token && role) {
+      const ctaContainer = document.getElementById('about-cta-buttons');
+      if (ctaContainer) {
+        ctaContainer.innerHTML = '<a href="login.html" class="sh-btn sh-btn-outline" data-i18n="about.signin_btn">Sign In</a>';
+      }
+    }
+  })();
+</script>
 <script src="../js/shared-nav.js"></script>
 </body>
 </html>

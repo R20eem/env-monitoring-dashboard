@@ -41,10 +41,11 @@ function clearToken() {
   localStorage.removeItem('userRole');
 }
 
-// ── BLOG ACCESS GUARD — only redirect if truly no token
-if (!getToken()) {
-  window.location.href = 'login.html';
-}
+// ── BLOG ACCESS GUARD — removed to allow public access
+// Users can view blog without signing in
+// if (!getToken()) {
+//   window.location.href = 'login.html';
+// }
 
 // ── STATE ──
 let currentFilter = 'all';
@@ -902,8 +903,10 @@ function escHtml(str) {
 }
 
 // ── INIT ─
-updateAuthUI();
-loadPosts();
+document.addEventListener('DOMContentLoaded', () => {
+  updateAuthUI();
+  loadPosts();
+});
 
 // ── LISTEN FOR LANGUAGE CHANGES ──
 document.addEventListener('languageChanged', () => {

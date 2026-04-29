@@ -143,17 +143,14 @@ function setupUser() {
     });
   }
 
-  /* Topbar right-side buttons */
+  /* Topbar right-side buttons - NO sign out button here, only sidebar logout */
   const navActions = document.getElementById('f-nav-actions');
   if (navActions) {
     if (token && role) {
-      navActions.innerHTML = `<a href="#" class="f-btn f-btn-ghost" id="f-signout-btn">Sign Out</a>`;
-      document.getElementById('f-signout-btn').addEventListener('click', e => {
-        e.preventDefault();
-        localStorage.clear();
-        window.location.href = 'login.html';
-      });
+      // Logged in: show dashboard link only, no sign out in topbar
+      navActions.innerHTML = `<a href="index.html" class="f-btn f-btn-ghost">Dashboard</a>`;
     } else {
+      // Not logged in: show sign in and register
       navActions.innerHTML = `
         <a href="login.html"    class="f-btn f-btn-ghost">Sign In</a>
         <a href="register.html" class="f-btn f-btn-primary">Register</a>
