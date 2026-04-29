@@ -169,7 +169,7 @@ const I18n = (() => {
     'blog.post_ph_title': { en: 'Title',               af: 'Titel' },
     'blog.post_ph_body':  { en: "What's on your mind?", af: 'Wat dink jy?' },
     'blog.post_btn':      { en: 'Post',                 af: 'Plaas' },
-    'blog.loading':       { en: 'Loading posts…',       af: 'Plasings laai…' },
+    'blog.loading':       { en: 'Loading...',            af: 'Laai...' },
     'blog.empty':         { en: 'No posts yet. Be the first to share something!', af: 'Nog geen plasings nie. Wees die eerste om iets te deel!' },
     'blog.auth_title':    { en: 'Sign in to post',       af: 'Teken in om te plaas' },
     'blog.login_btn':     { en: 'Sign In',               af: 'Teken In' },
@@ -184,6 +184,25 @@ const I18n = (() => {
     'blog.comment_ph':    { en: 'Write a comment…',      af: 'Skryf \'n opmerking…' },
     'blog.comment_btn':   { en: 'Add Comment',           af: 'Voeg Opmerking By' },
     'blog.comments_h':    { en: 'Comments',              af: 'Opmerkings' },
+    'blog.no_posts':       { en: 'No posts yet.', af: 'Nog geen plasings nie.' },
+    'blog.no_comments':   { en: 'No comments yet. Be the first!', af: 'Nog geen opmerkings nie. Wees die eerste!' },
+    'blog.load_err':      { en: 'Could not load comments.', af: 'Kon nie opmerkings laai nie.' },
+    'blog.farmer':         { en: 'farmer',                af: 'boer' },
+    'blog.researcher':    { en: 'researcher',            af: 'navorser' },
+    'blog.by':             { en: 'By',                    af: 'Deur' },
+    'blog.signin_comment': { en: 'Sign in to leave a comment.', af: 'Teken in om \'n opmerking te los.' },
+    'blog.signin_post':    { en: 'Sign in to post',           af: 'Teken in om te plaas' },
+    'blog.welcome':        { en: 'Welcome back!',              af: 'Welkom terug!' },
+    'blog.fill_fields':    { en: 'Please fill in all fields.', af: 'Vul asseblief alle velde in.' },
+    'blog.login_err':      { en: 'Login failed.',              af: 'Teken in het misluk.' },
+    'blog.title_req':      { en: 'Title is required.',         af: 'Titel is nodig.' },
+    'blog.content_req':    { en: 'Content is required.',       af: 'Inhoud is nodig.' },
+    'blog.signin_first':   { en: 'Please sign in first.',     af: 'Teken asseblief eers in.' },
+    'blog.create_err':     { en: 'Could not create post.',     af: 'Kon nie plasings skep nie.' },
+    'blog.server_err':     { en: 'Server error. Please try again.', af: 'Bediener fout. Probeer asseblief weer.' },
+    'blog.comment_empty':  { en: 'Comment cannot be empty.',   af: 'Opmerking mag nie leeg wees nie.' },
+    'blog.comment_err':    { en: 'Could not post comment.',    af: 'Kon nie opmerking plaas nie.' },
+    'blog.server_err_short': { en: 'Server error.',            af: 'Bediener fout.' },
 
     /* ── PROFILE PAGE ── */
     'profile.title':      { en: 'Profile',      af: 'Profiel' },
@@ -320,7 +339,8 @@ const I18n = (() => {
     ].join(';');
 
     /* Style the button to match whatever topbar it lives in */
-    const isGreenTopbar = !!container.closest('.f-topbar, .r-topbar');
+    /* Only farmer topbar (.f-topbar) has green background - researcher has white */
+    const isGreenTopbar = !!container.closest('.f-topbar');
     btn.style.color  = isGreenTopbar ? 'rgba(255,255,255,0.75)' : 'var(--sh-text-3, #7a8a65)';
 
     btn.addEventListener('mouseenter', () => {
