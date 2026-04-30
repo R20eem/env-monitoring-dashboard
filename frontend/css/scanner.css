@@ -1,4 +1,3 @@
-
 .recent-scans-section {
   margin-top: 28px;
 }
@@ -42,14 +41,35 @@
   margin-bottom: 10px;
 }
 
+/* ── BASE BADGE ── */
 .scan-badge {
-  background: rgba(99,153,34,0.14);
-  color: var(--sh-green-700);
   font-size: 12px;
-  font-weight: 700;
-  padding: 5px 10px;
+  font-weight: 600;
+  padding: 5px 12px;
   border-radius: 999px;
   text-transform: lowercase;
+  border: 0.5px solid transparent;
+}
+
+/* ── HEALTHY — green ── */
+.scan-badge--normal {
+  background: rgba(74,138,24,0.12);
+  color: var(--fd-700, #3d6b22);
+  border-color: rgba(74,138,24,0.25);
+}
+
+/* ── PEST / RISK — amber ── */
+.scan-badge--warning {
+  background: rgba(201,124,26,0.12);
+  color: var(--fd-amber, #c97c1a);
+  border-color: rgba(201,124,26,0.25);
+}
+
+/* ── DISEASE / CRITICAL — red ── */
+.scan-badge--critical {
+  background: rgba(201,64,64,0.12);
+  color: var(--fd-red, #c94040);
+  border-color: rgba(201,64,64,0.25);
 }
 
 .scan-time {
@@ -63,6 +83,23 @@
   margin: 0;
 }
 
+/* ── RESULT CARD SEVERITY COLOURS ── */
+#result-card.result-card--normal {
+  border-left: 4px solid var(--fd-500, #63a33e);
+  background: var(--fd-50, #f4faea);
+}
+
+#result-card.result-card--warning {
+  border-left: 4px solid var(--fd-amber, #c97c1a);
+  background: var(--fd-amber-bg, #fdf3e3);
+}
+
+#result-card.result-card--critical {
+  border-left: 4px solid var(--fd-red, #c94040);
+  background: var(--fd-red-bg, #fdf0f0);
+}
+
+/* ── FORM ── */
 .f-form-row {
   display: flex;
   gap: 16px;
@@ -72,7 +109,7 @@
 
 .f-card .f-form-row input,
 .f-card .f-form-row select {
-  height: 38px;           
+  height: 38px;
   padding: 0 12px;
   border-radius: 10px;
   border: 1px solid var(--f-border);
@@ -86,7 +123,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
-
 
 /* remove arrows in Chrome, Safari */
 input[type=number]::-webkit-inner-spin-button,
@@ -106,9 +142,6 @@ input[type=number] {
   border-radius: 10px;
   border: 1px solid var(--f-border);
   font-size: 13px;
-}
-
-.f-card #scan_file {
   background: #f9faf9;
 }
 
@@ -133,11 +166,4 @@ input[type=number] {
 
 .f-file-upload input {
   display: none;
-}
-
-.file-upload-btn {
-  background: rgba(99,153,34,0.08);
-  color: var(--f-green-700);
-  border: 1px solid var(--f-green-400);
-  font-weight: 600;
 }
