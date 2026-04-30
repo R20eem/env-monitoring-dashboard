@@ -30,7 +30,7 @@
 'use strict';
 
 // ── CONFIG ──────────────────────────────────────────────────
-const API_BASE = 'http://172.20.10.4:8000';
+const API_BASE = 'http://127.0.0.1:8000';
 const TOKEN_KEY  = 'jwt_token';
 const NASA_BASE  = 'https://power.larc.nasa.gov/api/temporal/daily/point';
 
