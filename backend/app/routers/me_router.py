@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
+from typing import Optional
 
 from app.database import get_db
 from app.core.security import decode_access_token
@@ -11,6 +13,11 @@ from app.repositories.researcher_repository import get_researcher_by_email
 from app.services.farmer_auth_service import login_farmer
 from app.services.researcher_auth_service import login_researcher
 from app.services.auth_errors import AuthError
+
+class UpdateProfileRequest(BaseModel):
+    first_name:     Optional[str] = None
+    last_name:      Optional[str] = None
+    connection_end: Optional[str] = None
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
@@ -84,4 +91,42 @@ def me(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
             "experience": user.experience
      }
     
+
+@router.put("/update-profile")
+def update_profile(
+    body: UpdateProfileRequest,
+    db:    Session = Depends(get_db),
+    token: str     = Depends(oauth2_scheme)
+):
+    try:
+        email, role = decode_access_token(token)
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    if role == "farmer":
+        user = get_farmer_by_email(db, email)
+    elif role == "researcher":
+        user = get_researcher_by_email(db, email)
+    else:
+        user = None
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if body.first_name is not None:
+        user.first_name = body.first_name
+    if body.last_name is not None:
+        user.last_name = body.last_name
+
+    if role == "researcher" and body.connection_end is not None:
+        from datetime import datetime
+        try:
+            user.connection_end = datetime.strptime(body.connection_end, "%Y-%m-%d")
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
+
+    db.commit()
+    db.refresh(user)
+
+    return {"message": "Profile updated successfully"}
     
