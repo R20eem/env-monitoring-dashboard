@@ -67,12 +67,6 @@
         </svg>
         <span data-i18n="nav.dashboard">Dashboard</span>
       </a>
-      <a href="alerts.html" class="f-nav-link" id="alerts-link">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
-          <path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/>
-        </svg>
-        Alerts
-      </a>
       <a href="scanner.html" class="f-nav-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/>
@@ -202,18 +196,24 @@
         </div>
       </div>
 
+      <!-- SIMPLE VIEW -->
+      <div id="f-simple-view" style="display:block;"></div>
+
+      <!-- DETAILED VIEW -->
+      <div id="f-detailed-view" style="display:none;">
+
       <!-- SECTION 1: HEALTH SCORES -->
       <div class="f-section-label" data-i18n="f.section_tiles">Field health scores — click a tile to explore that site</div>
       <div class="f-tile-grid f-mb-24" id="f-tile-grid"></div>
 
       <!-- SECTION 2: CHART + INSIGHT -->
-      <div class="f-section-label">Conditions vs. risk — last 7 days</div>
-      <div class="f-chart-insight-row f-mb-24">
+      <div class="f-section-label">Risk level — last 7 days</div>
+      <div class="f-chart-insight-row f-mb-24" style="display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:stretch;">
 
-        <div class="f-card">
+        <div class="f-card" style="display:flex;flex-direction:column;">
           <div class="f-card-head">
             <div>
-              <div class="f-card-title" id="f-chart-title">Risk & temperature — maize</div>
+              <div class="f-card-title" id="f-chart-title">Risk — Maize</div>
             </div>
             <div class="f-site-btns">
               <button class="f-site-btn active" onclick="selectSite('site_maize')" data-i18n="f.btn_maize">Maize</button>
@@ -222,28 +222,30 @@
             </div>
           </div>
 
-          <div style="position:relative;width:100%;height:200px;">
+          <div style="position:relative;width:100%;flex:1;min-height:220px;">
             <canvas id="f-risk-chart"
                     role="img"
                     aria-label="Line chart showing risk level and temperature over the last 7 days.">
             </canvas>
           </div>
 
-          <div class="f-chart-legend">
-            <div class="f-legend-item">
-              <div class="f-legend-swatch" style="background:#c94040;"></div>
-              <span data-i18n="f.legend_risk">Risk level</span>
+          <div class="f-chart-legend" style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.05);display:flex;gap:20px;flex-wrap:wrap;">
+            <div class="f-legend-item" style="display:flex;align-items:center;gap:6px;">
+              <div style="width:18px;height:3px;background:#c94040;border-radius:2px;"></div>
+              <span style="font-size:12px;color:#7a8a65;">Risk &nbsp;<span style="color:#63a33e;">●</span> low &nbsp;<span style="color:#c97c1a;">●</span> mid &nbsp;<span style="color:#c94040;">●</span> high</span>
             </div>
-            <div class="f-legend-item">
-              <div class="f-legend-swatch" style="background:#3d6b22;"></div>
-              <span data-i18n="f.legend_temp">Temperature</span>
+            <div class="f-legend-item" style="display:flex;align-items:center;gap:6px;">
+              <div style="width:18px;height:0;border-top:2px dashed #3d6b22;"></div>
+              <span style="font-size:12px;color:#7a8a65;">Temperature (right axis)</span>
             </div>
           </div>
         </div>
 
-        <div id="f-insight-panel"></div>
+        <div id="f-insight-panel" style="min-height:0;"></div>
 
       </div>
+
+      </div><!-- end detailed view -->
 
       <!-- SECTION 3: MAP -->
       <div class="f-section-label" data-i18n="f.section_map">Satellite scouting map — click a dot to explore a site</div>

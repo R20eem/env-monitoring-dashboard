@@ -251,6 +251,157 @@ const I18n = (() => {
 
     /* ── SHARED NAV BUTTON LABELS ── */
     'sh.dashboard_btn':   { en: 'Dashboard',  af: 'Paneelbord' },
+
+    /* ── VIEW TOGGLE ── */
+    'view.simple':        { en: '🌱 Simple',   af: '🌱 Eenvoudig' },
+    'view.detailed':      { en: '📊 Detailed', af: '📊 Gedetailleerd' },
+
+    /* ── SIMPLE VIEW — weather strip ── */
+    'sv.today_title':     { en: 'Today on your farm',    af: 'Vandag op jou plaas' },
+    'sv.temperature':     { en: 'Temperature',           af: 'Temperatuur' },
+    'sv.humidity':        { en: 'Humidity',              af: 'Humiditeit' },
+    'sv.rain_today':      { en: 'Rain today',            af: 'Reën vandag' },
+    'sv.alerts_today':    { en: 'Alerts today',          af: 'Waarskuwings vandag' },
+
+    /* ── SIMPLE VIEW — site cards ── */
+    'sv.site_maize':      { en: 'Maize Field',           af: 'Mielie Land' },
+    'sv.site_orchard':    { en: 'Orchard',               af: 'Boord' },
+    'sv.site_brassica':   { en: 'Brassica Field',        af: 'Brassika Land' },
+
+    'sv.status_good':     { en: '✅ Looking Good',       af: '✅ Lyk Goed' },
+    'sv.status_warning':  { en: 'Needs Attention',       af: 'Benodig Aandag' },
+    'sv.status_danger':   { en: '⚠️ Act Now',            af: '⚠️ Tree Nou Op' },
+
+    'sv.msg_maize':       { en: 'Your maize field has high humidity right now. This can cause disease to spread. Check your plants soon.',
+                            af: 'Jou mielie land het tans hoë humiditeit. Dit kan siektes laat versprei. Gaan kyk jou plante binnekort.' },
+    'sv.msg_orchard':     { en: 'Your orchard has the most pest activity this week. Pest numbers are climbing and conditions are warm — pests love this weather.',
+                            af: 'Jou boord het hierdie week die meeste plaagaktiwiteit. Plaagtalle styg en toestande is warm — plae is lief vir hierdie weer.' },
+    'sv.msg_brassica':    { en: 'Your brassica field is your healthiest field right now. Pest numbers are low and conditions are stable.',
+                            af: 'Jou brassika land is tans jou gesondste land. Plaagtalle is laag en toestande is stabiel.' },
+
+    'sv.action_label':    { en: 'What to do:',           af: 'Wat om te doen:' },
+    'sv.action_maize':    { en: '👀 Walk the field and look for yellow or spotted leaves.',
+                            af: '👀 Loop die land en soek geel of gevlekte blare.' },
+    'sv.action_orchard':  { en: '🪤 Check your pest traps today. Consider spraying if traps are full.',
+                            af: '🪤 Gaan kyk jou plaagvalle vandag. Oorweeg bespuiting as valle vol is.' },
+    'sv.action_brassica': { en: '💧 Good time to apply preventative treatment before weather changes.',
+                            af: '💧 Goeie tyd om voorkomende behandeling toe te pas voor die weer verander.' },
+
+    'sv.pest_activity':   { en: 'Pest activity:',        af: 'Plaagaktiwiteit:' },
+    'sv.tap_details':     { en: 'Tap to see full details →', af: 'Tik om volle besonderhede te sien →' },
+
+    /* ── SIMPLE VIEW — week strip ── */
+    'sv.week_title':      { en: '📅 This week at a glance', af: '📅 Hierdie week op \'n oogopslag' },
+    'sv.week_legend':     { en: '🟢 Good day   🟡 Watch out   🔴 Take action',
+                            af: '🟢 Goeie dag   🟡 Pas op   🔴 Tree op' },
+    'sv.day_mon':         { en: 'Mon', af: 'Maa' },
+    'sv.day_tue':         { en: 'Tue', af: 'Din' },
+    'sv.day_wed':         { en: 'Wed', af: 'Woe' },
+    'sv.day_thu':         { en: 'Thu', af: 'Don' },
+    'sv.day_fri':         { en: 'Fri', af: 'Vry' },
+    'sv.day_sat':         { en: 'Sat', af: 'Sat' },
+    'sv.day_sun':         { en: 'Sun', af: 'Son' },
+    'sv.note_alerts_high':  { en: 'Alerts high',      af: 'Waarskuwings hoog' },
+    'sv.note_better':       { en: 'Getting better',   af: 'Word beter' },
+    'sv.note_best':         { en: 'Best day',          af: 'Beste dag' },
+    'sv.note_humidity':     { en: 'Humidity up',       af: 'Humiditeit op' },
+    'sv.note_nice':         { en: 'Nice day',           af: 'Lekker dag' },
+    'sv.note_pests':        { en: 'Pests up',           af: 'Plae op' },
+    'sv.note_today':        { en: 'Today',              af: 'Vandag' },
+
+    /* ── DETAILED VIEW — tile trend labels ── */
+    'dv.trend_rising':    { en: '↑ Risk rising',   af: '↑ Risiko styg' },
+    'dv.trend_spiking':   { en: '↑ Pest spiking',  af: '↑ Plae styg' },
+    'dv.trend_stable':    { en: '→ Stable',         af: '→ Stabiel' },
+    'dv.score_label':     { en: '/ 100 health score', af: '/ 100 gesondheidstelling' },
+    'dv.7day_risk':       { en: '7-day risk',       af: '7-dag risiko' },
+    'dv.badge_good':      { en: 'Good ✓',           af: 'Goed ✓' },
+    'dv.badge_watch':     { en: 'Watch',             af: 'Dophou' },
+    'dv.badge_alert':     { en: 'Alert !',           af: 'Waarskuwing !' },
+
+    /* ── DETAILED VIEW — tile micro-stats ── */
+    'dv.temp':            { en: 'Temp',      af: 'Temp' },
+    'dv.humidity':        { en: 'Humidity',  af: 'Humiditeit' },
+    'dv.pests':           { en: 'Pests',     af: 'Plae' },
+    'dv.rain':            { en: 'Rain',      af: 'Reën' },
+
+    /* ── DETAILED VIEW — chart ── */
+    'dv.chart_section':   { en: 'Risk level — last 7 days',  af: 'Risiko vlak — laaste 7 dae' },
+    'dv.legend_risk':     { en: 'Risk',                       af: 'Risiko' },
+    'dv.legend_low':      { en: 'low',                        af: 'laag' },
+    'dv.legend_mid':      { en: 'mid',                        af: 'mid' },
+    'dv.legend_high':     { en: 'high',                       af: 'hoog' },
+    'dv.legend_temp':     { en: 'Temperature (right axis)',   af: 'Temperatuur (regteras)' },
+
+    /* ── DETAILED VIEW — insight panel ── */
+    'dv.insight_what':    { en: 'Site Analysis',              af: 'Perseel Analise' },
+    'dv.gauge_label':     { en: '/100',                       af: '/100' },
+    'dv.temp_label':      { en: 'Temperature',                af: 'Temperatuur' },
+    'dv.humidity_label':  { en: 'Humidity',                   af: 'Humiditeit' },
+    'dv.pest_label':      { en: 'Pest avg',                   af: 'Plaag gem.' },
+    'dv.alerts_label':    { en: 'Alerts',                     af: 'Waarskuwings' },
+    'dv.rec_title':       { en: 'Recommended Actions',        af: 'Aanbevole Aksies' },
+
+    /* ── DETAILED VIEW — recommendations ── */
+    'dv.rec_maize_1':     { en: 'Walk the field — look for yellow or spotted leaves',
+                            af: 'Loop die land — soek geel of gevlekte blare' },
+    'dv.rec_maize_2':     { en: 'Improve air circulation to reduce leaf wetness',
+                            af: 'Verbeter lugsirkulasie om blaarvogtigheid te verminder' },
+    'dv.rec_maize_3':     { en: 'Consider fungicide if wetness continues 48hrs more',
+                            af: 'Oorweeg swamdoder as vogtigheid nog 48 uur voortduur' },
+    'dv.rec_orchard_1':   { en: 'Check all pest traps — replace if full',
+                            af: 'Gaan alle plaagvalle na — vervang as vol' },
+    'dv.rec_orchard_2':   { en: 'Check irrigation in south-east corner (low moisture)',
+                            af: 'Gaan besproeiing in suidoos-hoek na (lae vog)' },
+    'dv.rec_orchard_3':   { en: 'Consider targeted spray before next warm day',
+                            af: 'Oorweeg geteikende bespuiting voor volgende warm dag' },
+    'dv.rec_brassica_1':  { en: 'Conditions are stable — good window for treatment',
+                            af: 'Toestande is stabiel — goeie venster vir behandeling' },
+    'dv.rec_brassica_2':  { en: 'Apply preventative spray before next humidity spike',
+                            af: 'Pas voorkomende bespuiting toe voor volgende humiditeits piek' },
+    'dv.rec_brassica_3':  { en: 'Monitor weekly — lowest risk of three sites',
+                            af: 'Monitor weekliks — laagste risiko van drie persele' },
+
+    /* ── SCANNER PAGE ── */
+    'scan.title':         { en: 'Plant Scanner',              af: 'Plant Skandeerder' },
+    'scan.hero_h':        { en: 'Scan a Plant',               af: 'Skandeer \'n Plant' },
+    'scan.hero_p':        { en: 'Upload a plant image, choose crop type, and get a health prediction',
+                            af: 'Laai \'n plantfoto op, kies gewastipe, en kry \'n gesondheidvoorspelling' },
+    'scan.upload_title':  { en: 'Upload Plant Image',         af: 'Laai Plantfoto Op' },
+    'scan.select_crop':   { en: 'Select crop',                af: 'Kies gewas' },
+    'scan.site_id_ph':    { en: 'Site ID',                    af: 'Perseel ID' },
+    'scan.choose_image':  { en: 'Choose Image',               af: 'Kies Foto' },
+    'scan.btn':           { en: 'Scan Plant',                 af: 'Skandeer Plant' },
+    'scan.result_title':  { en: 'Scan Result',                af: 'Skandeer Uitslag' },
+    'scan.prediction':    { en: 'Prediction:',                af: 'Voorspelling:' },
+    'scan.confidence':    { en: 'Confidence:',                af: 'Sekerheid:' },
+    'scan.crop':          { en: 'Crop:',                      af: 'Gewas:' },
+    'scan.site':          { en: 'Site:',                      af: 'Perseel:' },
+    'scan.reason':        { en: 'Reason',                     af: 'Rede' },
+    'scan.how_title':     { en: 'How it works',               af: 'Hoe dit werk' },
+    'scan.how_1':         { en: 'Select the crop type',       af: 'Kies die gewastipe' },
+    'scan.how_2':         { en: 'Upload a clear plant or leaf image', af: 'Laai \'n duidelike plant- of bladfoto op' },
+    'scan.how_3':         { en: 'The system checks the image using ML', af: 'Die stelsel kontroleer die foto met ML' },
+    'scan.how_4':         { en: 'The result is saved and shown below', af: 'Die uitslag word gestoor en hieronder gewys' },
+    'scan.recent_title':  { en: 'My Recent Scans',            af: 'My Onlangse Skanderings' },
+    'scan.no_scans':      { en: 'No scans yet',               af: 'Nog geen skanderings nie' },
+
+    /* ── SCAN INSIGHTS (farmer dashboard) ── */
+    'f.scan_title':       { en: 'your plant scans',           af: 'jou plant skanderings' },
+    'f.scan_sub':         { en: 'live results from your recent plant scans', af: 'regstreekse uitslae van jou onlangse plant skanderings' },
+    'f.scan_total':       { en: 'total scans',                af: 'totale skanderings' },
+    'f.scan_healthy':     { en: 'healthy',                    af: 'gesond' },
+    'f.scan_disease':     { en: 'disease',                    af: 'siekte' },
+    'f.scan_pest':        { en: 'pest',                       af: 'plaag' },
+    'f.scan_latest':      { en: 'latest',                     af: 'nuutste' },
+    'f.scan_section':     { en: 'my scan insights',           af: 'my skandeer insigte' },
+
+    /* ── MOBILE NAV ── */
+    'mob.dashboard':      { en: 'Dashboard',  af: 'Paneelbord' },
+    'mob.scanner':        { en: 'Scanner',    af: 'Skandeerder' },
+    'mob.blog':           { en: 'Blog',       af: 'Blog' },
+    'mob.about':          { en: 'About',      af: 'Oor' },
+    'mob.profile':        { en: 'Profile',    af: 'Profiel' },
   };
 
   /* ── STATE ─────────────────────────────────────────────── */

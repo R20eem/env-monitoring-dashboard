@@ -93,31 +93,29 @@ const STATIC = {
 /* ══════════════════════════════════════════════════════════
    STATE
 ══════════════════════════════════════════════════════════ */
-let currentSite = 'site_maize';
-let riskChart   = null;
+let currentSite  = 'site_maize';
+let riskChart    = null;
+let currentView  = 'simple'; // 'simple' | 'detailed'
 
 /* ══════════════════════════════════════════════════════════
    BOOT
 ══════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   setupUser();
+  setupViewToggle();
   renderHero();
-  renderTiles();
+  renderView();
   loadScanSummary();
-  renderInsight(currentSite);
   renderMap();
   renderCalendar();
-  /* Chart.js loads async so we wait a tick */
   setTimeout(() => renderChart(currentSite), 80);
-  /* Fire live API + NASA in parallel after paint */
   fetchLiveData();
   fetchNasaData();
 });
 
 /* ── LISTEN FOR LANGUAGE CHANGES ── */
 document.addEventListener('languageChanged', () => {
-  renderTiles();
-  renderInsight(currentSite);
+  renderView();
   const titleEl = document.getElementById('f-chart-title');
   if (titleEl) titleEl.textContent = `Risk — ${getLocalizedSiteName(currentSite)}`;
 });
@@ -376,6 +374,196 @@ function injectNasaRegionalLine(t2mObj, dates, clean) {
 }
 
 /* ══════════════════════════════════════════════════════════
+   VIEW TOGGLE
+══════════════════════════════════════════════════════════ */
+function setupViewToggle() {
+  const topbar = document.getElementById('f-nav-actions');
+  if (!topbar) return;
+
+  const toggle = document.createElement('div');
+  toggle.id = 'f-view-toggle';
+  toggle.style.cssText = 'display:flex;align-items:center;gap:4px;background:rgba(0,0,0,0.06);border-radius:8px;padding:3px;';
+  toggle.innerHTML = `
+    <button id="btn-simple"   onclick="setView('simple')"
+      style="padding:5px 12px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;background:#fff;color:#3b6d11;box-shadow:0 1px 3px rgba(0,0,0,0.12);">
+      🌱 Simple
+    </button>
+    <button id="btn-detailed" onclick="setView('detailed')"
+      style="padding:5px 12px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;background:transparent;color:#7a8a65;box-shadow:none;">
+      📊 Detailed
+    </button>
+  `;
+  topbar.prepend(toggle);
+}
+
+window.setView = function(view) {
+  currentView = view;
+  const btnSimple   = document.getElementById('btn-simple');
+  const btnDetailed = document.getElementById('btn-detailed');
+  if (btnSimple && btnDetailed) {
+    if (view === 'simple') {
+      btnSimple.style.cssText   += ';background:#fff;color:#3b6d11;box-shadow:0 1px 3px rgba(0,0,0,0.12);';
+      btnDetailed.style.cssText += ';background:transparent;color:#7a8a65;box-shadow:none;';
+    } else {
+      btnDetailed.style.cssText += ';background:#fff;color:#3b6d11;box-shadow:0 1px 3px rgba(0,0,0,0.12);';
+      btnSimple.style.cssText   += ';background:transparent;color:#7a8a65;box-shadow:none;';
+    }
+  }
+  renderView();
+  // re-render chart only in detailed view
+  if (view === 'detailed') setTimeout(() => renderChart(currentSite), 80);
+};
+
+function renderView() {
+  const simpleSection   = document.getElementById('f-simple-view');
+  const detailedSection = document.getElementById('f-detailed-view');
+  if (!simpleSection || !detailedSection) {
+    renderTiles();
+    renderInsight(currentSite);
+    return;
+  }
+  if (currentView === 'simple') {
+    simpleSection.style.display   = 'block';
+    detailedSection.style.display = 'none';
+    renderSimpleView();
+  } else {
+    simpleSection.style.display   = 'none';
+    detailedSection.style.display = 'block';
+    renderTiles();
+    renderInsight(currentSite);
+  }
+}
+
+/* ── SIMPLE VIEW ── */
+function renderSimpleView() {
+  const container = document.getElementById('f-simple-view');
+  if (!container) return;
+
+  const T = k => (typeof I18n !== 'undefined') ? I18n.t(k) : k;
+
+  const siteData = {
+    site_maize: {
+      emoji: '🌽', name: T('sv.site_maize'),
+      status: 'warning', statusLabel: T('sv.status_warning'),
+      statusColor: '#c97c1a', statusBg: '#fff8ee',
+      message: T('sv.msg_maize'),
+      action: T('sv.action_maize'),
+      temp: '22°C', rain: '11mm', pestLevel: 2, alerts: 63
+    },
+    site_orchard: {
+      emoji: '🍎', name: T('sv.site_orchard'),
+      status: 'danger', statusLabel: T('sv.status_danger'),
+      statusColor: '#c94040', statusBg: '#fff0f0',
+      message: T('sv.msg_orchard'),
+      action: T('sv.action_orchard'),
+      temp: '22°C', rain: '11mm', pestLevel: 4, alerts: 66
+    },
+    site_brassica: {
+      emoji: '🥦', name: T('sv.site_brassica'),
+      status: 'good', statusLabel: T('sv.status_good'),
+      statusColor: '#3d6b22', statusBg: '#f0f8ea',
+      message: T('sv.msg_brassica'),
+      action: T('sv.action_brassica'),
+      temp: '22°C', rain: '11mm', pestLevel: 1, alerts: 56
+    }
+  };
+
+  // Today's weather summary
+  const weatherBlock = `
+    <div style="background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
+      <div style="font-size:36px;">🌦️</div>
+      <div style="flex:1;min-width:160px;">
+        <div style="font-size:17px;font-weight:700;color:#111a08;margin-bottom:4px;">${T('sv.today_title')}</div>
+        <div style="font-size:13px;color:#7a8a65;">December 31, 2023</div>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-size:26px;">🌡️</div>
+          <div style="font-size:16px;font-weight:700;color:#111a08;">22°C</div>
+          <div style="font-size:11px;color:#7a8a65;">${T('sv.temperature')}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:26px;">💧</div>
+          <div style="font-size:16px;font-weight:700;color:#111a08;">79%</div>
+          <div style="font-size:11px;color:#7a8a65;">${T('sv.humidity')}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:26px;">🌧️</div>
+          <div style="font-size:16px;font-weight:700;color:#111a08;">11 mm</div>
+          <div style="font-size:11px;color:#7a8a65;">${T('sv.rain_today')}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:26px;">🚨</div>
+          <div style="font-size:16px;font-weight:700;color:#c94040;">185</div>
+          <div style="font-size:11px;color:#7a8a65;">${T('sv.alerts_today')}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Per-site simple cards
+  const siteCards = Object.entries(siteData).map(([id, s]) => {
+    const pestDots = Array(5).fill(0).map((_, i) =>
+      `<span style="width:14px;height:14px;border-radius:50%;display:inline-block;margin-right:3px;background:${i < s.pestLevel ? s.statusColor : '#e5e5e5'};"></span>`
+    ).join('');
+
+    return `
+      <div style="background:${s.statusBg};border:2px solid ${s.statusColor}33;border-radius:14px;padding:20px 22px;cursor:pointer;"
+           onclick="window.setView('detailed');window.selectSite('${id}')">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+          <div style="font-size:40px;line-height:1;">${s.emoji}</div>
+          <div style="flex:1;">
+            <div style="font-size:17px;font-weight:700;color:#111a08;">${s.name}</div>
+            <div style="display:inline-block;margin-top:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;background:${s.statusColor};color:#fff;">
+              ${s.statusLabel}
+            </div>
+          </div>
+        </div>
+        <div style="font-size:14px;color:#3d4a2a;line-height:1.6;margin-bottom:14px;">${s.message}</div>
+        <div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:10px 14px;font-size:13px;color:#3d4a2a;margin-bottom:14px;">
+          <strong>${T('sv.action_label')}</strong> ${s.action}
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#7a8a65;">
+          <span>${T('sv.pest_activity')}</span>${pestDots}
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:#a8b89a;">${T('sv.tap_details')}</div>
+      </div>
+    `;
+  }).join('');
+
+  // 7-day simple summary
+  const weekDays = [
+    {key:'sv.day_mon', emoji:'🔴', noteKey:'sv.note_alerts_high'},
+    {key:'sv.day_tue', emoji:'🟡', noteKey:'sv.note_better'},
+    {key:'sv.day_wed', emoji:'🟢', noteKey:'sv.note_best'},
+    {key:'sv.day_thu', emoji:'🟡', noteKey:'sv.note_humidity'},
+    {key:'sv.day_fri', emoji:'🟢', noteKey:'sv.note_nice'},
+    {key:'sv.day_sat', emoji:'🔴', noteKey:'sv.note_pests'},
+    {key:'sv.day_sun', emoji:'🔴', noteKey:'sv.note_today'},
+  ];
+
+  const weekSummary = `
+    <div style="background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:14px;padding:20px 24px;margin-top:20px;">
+      <div style="font-size:15px;font-weight:700;color:#111a08;margin-bottom:14px;">${T('sv.week_title')}</div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;text-align:center;">
+        ${weekDays.map(d => `
+          <div style="background:#f4f9ed;border-radius:8px;padding:8px 4px;">
+            <div style="font-size:11px;color:#7a8a65;font-weight:600;">${T(d.key)}</div>
+            <div style="font-size:20px;margin:4px 0;">${d.emoji}</div>
+            <div style="font-size:10px;color:#7a8a65;">${T(d.noteKey)}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:#7a8a65;">${T('sv.week_legend')}</div>
+    </div>
+  `;
+
+  container.innerHTML = weatherBlock +
+    `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">${siteCards}</div>` +
+    weekSummary;
+}
+
+/* ══════════════════════════════════════════════════════════
    HERO
 ══════════════════════════════════════════════════════════ */
 function renderHero() {
@@ -411,27 +599,106 @@ function getLocalizedInsight(siteId) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   HEALTH SCORE TILES
+   HEALTH SCORE TILES  (detailed view)
 ══════════════════════════════════════════════════════════ */
 function renderTiles() {
   const grid = document.getElementById('f-tile-grid');
   if (!grid) return;
-  grid.innerHTML = Object.entries(STATIC.sites).map(([id, s]) => `
-    <div class="f-tile ${s.grade} ${id === currentSite ? 'selected' : ''}"
-         onclick="selectSite('${id}')" role="button" tabindex="0">
-      <div class="f-tile-accent"></div>
-      <div class="f-tile-site">${getLocalizedSiteName(id)}</div>
-      <div class="f-tile-score-row">
-        <span class="f-tile-score">${s.score}</span>
-        <span class="f-tile-score-max">/100</span>
+
+  const tileExtras = {
+    site_maize:    { icon:'🌽', trendDir:'up',   trendKey:'dv.trend_rising',  temp:'22.1°C', humidity:'78.8%', pest:'3.3',  rain:'11mm' },
+    site_orchard:  { icon:'🍎', trendDir:'up',   trendKey:'dv.trend_spiking', temp:'21.9°C', humidity:'78.3%', pest:'4.3',  rain:'11mm' },
+    site_brassica: { icon:'🥦', trendDir:'flat', trendKey:'dv.trend_stable',  temp:'21.6°C', humidity:'78.6%', pest:'1.7',  rain:'11mm' }
+  };
+
+  const gradeConfig = {
+    good:      { color:'#3d6b22', bg:'#f0f8ea', border:'#97c459', bar:'#63a33e', badgeKey:'dv.badge_good' },
+    attention: { color:'#854f0b', bg:'#fff8ee', border:'#ef9f27', bar:'#c97c1a', badgeKey:'dv.badge_watch' },
+    critical:  { color:'#a32d2d', bg:'#fff0f0', border:'#e24b4a', bar:'#c94040', badgeKey:'dv.badge_alert' }
+  };
+
+  const T = k => (typeof I18n !== 'undefined') ? I18n.t(k) : k;
+
+  grid.innerHTML = Object.entries(STATIC.sites).map(([id, s]) => {
+    const ex = tileExtras[id];
+    const gc = gradeConfig[s.grade];
+    const isActive = id === currentSite;
+    const trendColor = ex.trendDir === 'up' ? '#c94040' : ex.trendDir === 'down' ? '#3d6b22' : '#c97c1a';
+    const trendLabel = T(ex.trendKey);
+    const badge      = T(gc.badgeKey);
+
+    // Mini sparkline SVG from chart data
+    const pts = STATIC.chart[id].risk;
+    const minV = Math.min(...pts), maxV = Math.max(...pts);
+    const sparkW = 80, sparkH = 28;
+    const coords = pts.map((v, i) => {
+      const x = (i / (pts.length - 1)) * sparkW;
+      const y = sparkH - ((v - minV) / (maxV - minV || 1)) * sparkH;
+      return `${x},${y}`;
+    }).join(' ');
+    const sparkline = `<svg width="${sparkW}" height="${sparkH}" viewBox="0 0 ${sparkW} ${sparkH}" style="display:block;">
+      <polyline points="${coords}" fill="none" stroke="${gc.bar}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="${(pts.length-1)/(pts.length-1)*sparkW}" cy="${sparkH - ((pts[pts.length-1]-minV)/(maxV-minV||1))*sparkH}" r="3" fill="${gc.bar}"/>
+    </svg>`;
+
+    return `
+    <div onclick="selectSite('${id}')" role="button" tabindex="0"
+      style="background:${isActive ? gc.bg : '#fff'};border:2px solid ${isActive ? gc.border : 'rgba(0,0,0,0.07)'};
+             border-radius:14px;padding:18px 20px;cursor:pointer;transition:all 0.18s;position:relative;overflow:hidden;">
+
+      <!-- top row: icon + name + badge -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:28px;line-height:1;">${ex.icon}</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#111a08;">${getLocalizedSiteName(id)}</div>
+            <div style="font-size:11px;color:${trendColor};font-weight:600;margin-top:2px;">${trendLabel}</div>
+          </div>
+        </div>
+        <div style="padding:3px 9px;border-radius:20px;background:${gc.bar};color:#fff;font-size:11px;font-weight:700;white-space:nowrap;">
+          ${badge}
+        </div>
       </div>
-      <div class="f-score-bar">
-        <div class="f-score-fill" style="width:${s.score}%"></div>
+
+      <!-- score + sparkline -->
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px;">
+        <div>
+          <div style="font-size:36px;font-weight:800;color:${gc.color};line-height:1;">${s.score}</div>
+          <div style="font-size:11px;color:#a8b89a;font-weight:500;">${T('dv.score_label')}</div>
+        </div>
+        <div style="text-align:right;">
+          ${sparkline}
+          <div style="font-size:10px;color:#a8b89a;margin-top:3px;">${T('dv.7day_risk')}</div>
+        </div>
       </div>
-      <div class="f-tile-grade">${getLocalizedGradeLabel(s.grade)}</div>
-      <div class="f-tile-desc">${getLocalizedSiteDesc(id)}</div>
-    </div>
-  `).join('');
+
+      <!-- score bar -->
+      <div style="height:5px;background:#e8ede0;border-radius:99px;margin-bottom:12px;overflow:hidden;">
+        <div style="height:100%;width:${s.score}%;background:${gc.bar};border-radius:99px;transition:width 0.6s ease;"></div>
+      </div>
+
+      <!-- 4 micro-stats -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+        ${[
+          { label: T('dv.temp'),     val: ex.temp,     icon:'🌡️' },
+          { label: T('dv.humidity'), val: ex.humidity, icon:'💧' },
+          { label: T('dv.pests'),    val: ex.pest,     icon:'🪲' },
+          { label: T('dv.rain'),     val: ex.rain,     icon:'🌧️' }
+        ].map(m => `
+          <div style="background:rgba(0,0,0,0.03);border-radius:7px;padding:5px 4px;text-align:center;">
+            <div style="font-size:13px;">${m.icon}</div>
+            <div style="font-size:11px;font-weight:700;color:#111a08;">${m.val}</div>
+            <div style="font-size:9px;color:#a8b89a;">${m.label}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- desc -->
+      <div style="font-size:12px;color:#7a8a65;line-height:1.5;border-top:1px solid rgba(0,0,0,0.05);padding-top:10px;">
+        ${getLocalizedSiteDesc(id)}
+      </div>
+    </div>`;
+  }).join('');
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -443,15 +710,14 @@ window.selectSite = function (id) {
     const ids = ['site_maize','site_orchard','site_brassica'];
     b.classList.toggle('active', ids[i] === id);
   });
-  renderTiles();
-  renderInsight(id);
+  renderView();
   renderChart(id);
   const titleEl = document.getElementById('f-chart-title');
   if (titleEl) titleEl.textContent = `Risk — ${getLocalizedSiteName(id)}`;
 };
 
 /* ══════════════════════════════════════════════════════════
-   RISK CHART (Conditions vs Risk)
+   RISK CHART — dual line: risk level + temperature
 ══════════════════════════════════════════════════════════ */
 function renderChart(siteId) {
   const canvas = document.getElementById('f-risk-chart');
@@ -459,55 +725,121 @@ function renderChart(siteId) {
   const d = STATIC.chart[siteId];
   if (riskChart) { riskChart.destroy(); riskChart = null; }
 
+  // Make canvas fill its container
+  canvas.style.position = 'absolute';
+  canvas.style.inset = '0';
+
   riskChart = new Chart(canvas, {
-    type: 'line',
     data: {
       labels: d.dates,
       datasets: [
-        { label:'Risk level', data:d.risk,
-          borderColor:'#c94040', backgroundColor:'rgba(201,64,64,0.08)', fill:true,
-          tension:0.4, pointRadius:5, pointBackgroundColor:'#c94040',
-          pointBorderColor:'#fff', pointBorderWidth:2, borderWidth:2.5 }
+        {
+          type: 'line',
+          label: 'Risk level',
+          data: d.risk,
+          borderColor: '#c94040',
+          backgroundColor: 'rgba(201,64,64,0.07)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 5,
+          pointBackgroundColor: d.risk.map(v => v >= 70 ? '#c94040' : v >= 55 ? '#c97c1a' : '#63a33e'),
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          borderWidth: 2.5,
+          yAxisID: 'yRisk'
+        },
+        {
+          type: 'line',
+          label: 'Temperature (°C)',
+          data: d.temp,
+          borderColor: '#3d6b22',
+          backgroundColor: 'transparent',
+          fill: false,
+          tension: 0.4,
+          pointRadius: 3,
+          pointBackgroundColor: '#3d6b22',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 1.5,
+          borderWidth: 1.8,
+          borderDash: [5, 4],
+          yAxisID: 'yTemp'
+        }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
         tooltip: {
-          callbacks: {
-            label: ctx => {
-              const v = ctx.parsed.y;
-              const level = v >= 70 ? '🔴 High' : v >= 55 ? '🟡 Medium' : '🟢 Low';
-              return `  Risk: ${v.toFixed(0)}  (${level})`;
-            }
-          },
           backgroundColor: '#fff',
           borderColor: '#e5e5e5',
           borderWidth: 1,
           titleColor: '#111a08',
           bodyColor: '#3d4a2a',
-          padding: 10,
-          titleFont: { size: 12 },
-          bodyFont: { size: 13 }
+          padding: 12,
+          titleFont: { size: 12, weight: '700' },
+          bodyFont: { size: 13 },
+          callbacks: {
+            label: ctx => {
+              if (ctx.dataset.label === 'Risk level') {
+                const v = ctx.parsed.y;
+                const level = v >= 70 ? '🔴 High' : v >= 55 ? '🟡 Medium' : '🟢 Low';
+                return `  Risk: ${v.toFixed(0)}  ${level}`;
+              }
+              return `  Temp: ${ctx.parsed.y.toFixed(1)}°C`;
+            }
+          }
+        },
+        // Draw coloured zone bands
+        beforeDraw: chart => {
+          const { ctx, chartArea, scales } = chart;
+          if (!chartArea) return;
+          const y = scales.yRisk;
+          const zones = [
+            { from: 70, to: 100, color: 'rgba(201,64,64,0.04)' },
+            { from: 55, to: 70,  color: 'rgba(201,124,26,0.05)' },
+            { from: 30, to: 55,  color: 'rgba(99,163,62,0.04)' }
+          ];
+          zones.forEach(z => {
+            const yTop = y.getPixelForValue(z.to);
+            const yBot = y.getPixelForValue(z.from);
+            ctx.fillStyle = z.color;
+            ctx.fillRect(chartArea.left, yTop, chartArea.width, yBot - yTop);
+          });
         }
       },
       scales: {
         x: {
           grid: { display: false },
-          ticks: { font:{ size:12 }, color:'#7a8a65' },
+          ticks: { font: { size: 12 }, color: '#7a8a65' },
           border: { display: false }
         },
-        y: {
+        yRisk: {
+          position: 'left',
           min: 30, max: 100,
-          grid: { color:'rgba(0,0,0,0.05)' },
+          grid: { color: 'rgba(0,0,0,0.05)' },
           border: { display: false },
           ticks: {
-            font: { size:12 },
-            color: '#7a8a65',
+            font: { size: 11 },
+            color: '#c94040',
             stepSize: 20,
-            callback: v => v >= 70 ? `${v} ⚠` : `${v}`
+            callback: v => {
+              if (v === 70) return '70 ⚠';
+              return `${v}`;
+            }
+          }
+        },
+        yTemp: {
+          position: 'right',
+          min: 10, max: 30,
+          grid: { display: false },
+          border: { display: false },
+          ticks: {
+            font: { size: 11 },
+            color: '#3d6b22',
+            callback: v => `${v}°`
           }
         }
       }
@@ -516,39 +848,102 @@ function renderChart(siteId) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   INSIGHT PANEL
+   INSIGHT PANEL  (detailed view)
 ══════════════════════════════════════════════════════════ */
 function renderInsight(siteId) {
   const panel = document.getElementById('f-insight-panel');
   if (!panel) return;
   const ins = STATIC.insights[siteId];
   const s   = STATIC.sites[siteId];
-  const whatHappening = typeof I18n !== 'undefined' ? I18n.t('f.insight_what') : 'What is happening?';
+
+  // Risk gauge arc (SVG)
+  const score = s.score;
+  const R = 44, cx = 56, cy = 56;
+  const startAngle = Math.PI * 0.75;
+  const sweep      = Math.PI * 1.5;
+  const angle      = startAngle + (score / 100) * sweep;
+  const arcX = cx + R * Math.cos(angle);
+  const arcY = cy + R * Math.sin(angle);
+  const bgX  = cx + R * Math.cos(startAngle + sweep);
+  const bgY  = cy + R * Math.sin(startAngle + sweep);
+  const trackPath = `M ${cx + R * Math.cos(startAngle)} ${cy + R * Math.sin(startAngle)}
+    A ${R} ${R} 0 1 1 ${bgX} ${bgY}`;
+  const fillPath  = `M ${cx + R * Math.cos(startAngle)} ${cy + R * Math.sin(startAngle)}
+    A ${R} ${R} 0 ${score > 50 ? 1 : 0} 1 ${arcX} ${arcY}`;
+  const gaugeColor = score >= 75 ? '#63a33e' : score >= 60 ? '#c97c1a' : '#c94040';
+
+  // Recommendations per site using i18n
+  const T = k => (typeof I18n !== 'undefined') ? I18n.t(k) : k;
+  const recs = {
+    site_maize: [
+      { icon:'👀', text: T('dv.rec_maize_1') },
+      { icon:'🌬️', text: T('dv.rec_maize_2') },
+      { icon:'📅', text: T('dv.rec_maize_3') }
+    ],
+    site_orchard: [
+      { icon:'🪤', text: T('dv.rec_orchard_1') },
+      { icon:'💧', text: T('dv.rec_orchard_2') },
+      { icon:'🚿', text: T('dv.rec_orchard_3') }
+    ],
+    site_brassica: [
+      { icon:'✅', text: T('dv.rec_brassica_1') },
+      { icon:'🛡️', text: T('dv.rec_brassica_2') },
+      { icon:'📊', text: T('dv.rec_brassica_3') }
+    ]
+  };
+
+  const whatHappening = T('dv.insight_what');
+
   panel.innerHTML = `
-    <div class="f-insight-card">
-      <div class="f-insight-header">
-        <div class="f-insight-dot" style="background:${ins.color};"></div>
-        <div class="f-insight-title">${getLocalizedSiteName(siteId)} — ${whatHappening}</div>
+    <div style="background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:14px;padding:20px;height:100%;display:flex;flex-direction:column;gap:14px;box-sizing:border-box;">
+
+      <!-- header -->
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:${ins.color};flex-shrink:0;"></div>
+        <div style="font-size:14px;font-weight:700;color:#111a08;">${getLocalizedSiteName(siteId)} — ${whatHappening}</div>
       </div>
-      <div class="f-insight-text">${getLocalizedInsight(siteId)}</div>
-      <div class="f-metric-mini-grid">
-        <div class="f-metric-mini">
-          <div class="f-metric-mini-label">Temperature</div>
-          <div class="f-metric-mini-val">${ins.temp}</div>
-        </div>
-        <div class="f-metric-mini">
-          <div class="f-metric-mini-label">Humidity</div>
-          <div class="f-metric-mini-val">${ins.humidity}</div>
-        </div>
-        <div class="f-metric-mini">
-          <div class="f-metric-mini-label">Pest avg</div>
-          <div class="f-metric-mini-val">${ins.pest}</div>
-        </div>
-        <div class="f-metric-mini">
-          <div class="f-metric-mini-label">Alerts</div>
-          <div class="f-metric-mini-val">${ins.alerts}</div>
+
+      <!-- gauge + 4 stats -->
+      <div style="display:flex;align-items:center;gap:16px;">
+        <svg width="112" height="80" viewBox="0 0 112 80" style="flex-shrink:0;">
+          <path d="${trackPath}" fill="none" stroke="#e8ede0" stroke-width="8" stroke-linecap="round"/>
+          <path d="${fillPath}"  fill="none" stroke="${gaugeColor}" stroke-width="8" stroke-linecap="round"/>
+          <text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="20" font-weight="800" fill="${gaugeColor}">${score}</text>
+          <text x="${cx}" y="${cy + 12}" text-anchor="middle" font-size="9" fill="#a8b89a">${T('dv.gauge_label')}</text>
+        </svg>
+        <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          ${[
+            { label: T('dv.temp_label'),     val: ins.temp,     icon:'🌡️' },
+            { label: T('dv.humidity_label'), val: ins.humidity, icon:'💧' },
+            { label: T('dv.pest_label'),     val: ins.pest,     icon:'🪲' },
+            { label: T('dv.alerts_label'),   val: ins.alerts,   icon:'🚨' }
+          ].map(m => `
+            <div style="background:#f8faf5;border-radius:8px;padding:8px 10px;">
+              <div style="font-size:11px;color:#a8b89a;margin-bottom:2px;">${m.icon} ${m.label}</div>
+              <div style="font-size:14px;font-weight:700;color:#111a08;">${m.val}</div>
+            </div>
+          `).join('')}
         </div>
       </div>
+
+      <!-- insight text -->
+      <div style="font-size:13px;color:#3d4a2a;line-height:1.65;background:#f8faf5;border-radius:10px;padding:12px 14px;border-left:3px solid ${ins.color};">
+        ${getLocalizedInsight(siteId)}
+      </div>
+
+      <!-- recommendations -->
+      <div style="flex:1;display:flex;flex-direction:column;">
+        <div style="font-size:11px;font-weight:700;color:#a8b89a;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">${T('dv.rec_title')}</div>
+        <div style="display:flex;flex-direction:column;gap:6px;flex:1;">
+          ${recs[siteId].map((r, i) => `
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:${i === 0 ? '#fff8ee' : '#f8faf5'};border-radius:8px;${i === 0 ? `border-left:3px solid ${ins.color};` : ''}flex:1;">
+              <span style="font-size:16px;flex-shrink:0;">${r.icon}</span>
+              <span style="font-size:12.5px;color:#3d4a2a;line-height:1.4;">${r.text}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
     </div>
   `;
 }
