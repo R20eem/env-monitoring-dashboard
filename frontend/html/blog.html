@@ -202,5 +202,41 @@
 <script src="../js/l18n.js"></script>
 <script src="../js/blog.js"></script>
 <script src="../js/shared-nav.js"></script>
+
+<!-- Mobile Bottom Navigation -->
+<nav class="sh-mobile-nav">
+  <a href="index.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+    Dashboard
+  </a>
+  <a href="blog.html" class="active">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+    Blog
+  </a>
+  <a href="about.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
+    About
+  </a>
+  <a href="profile.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+    Profile
+  </a>
+</nav>
+
+<script>
+  // Add mobile nav class to body on small screens
+  (function() {
+    if (window.innerWidth <= 860) {
+      document.body.classList.add('has-mobile-nav');
+    }
+    window.addEventListener('resize', function() {
+      if (window.innerWidth <= 860) {
+        document.body.classList.add('has-mobile-nav');
+      } else {
+        document.body.classList.remove('has-mobile-nav');
+      }
+    });
+  })();
+</script>
 </body>
 </html>

@@ -40,8 +40,9 @@
   </script>
 
   <link rel="stylesheet" href="../css/farmer.css">
+  <link rel="stylesheet" href="../css/shared.css">
 </head>
-<body class="farmer-page">
+<body class="farmer-page  sh-page has-mobile-nav">
 
 <div class="f-layout">
 
@@ -212,8 +213,7 @@
         <div class="f-card">
           <div class="f-card-head">
             <div>
-              <div class="f-card-title" id="f-chart-title">Risk level & temperature — maize</div>
-              <div class="f-card-sub" data-i18n="f.chart_sub">Local risk (humidity + leaf wetness + temp) vs temperature and pest count. Dashed line = NASA regional when available.</div>
+              <div class="f-card-title" id="f-chart-title">Risk & temperature — maize</div>
             </div>
             <div class="f-site-btns">
               <button class="f-site-btn active" onclick="selectSite('site_maize')" data-i18n="f.btn_maize">Maize</button>
@@ -222,29 +222,21 @@
             </div>
           </div>
 
-          <div style="position:relative;width:100%;height:230px;">
+          <div style="position:relative;width:100%;height:200px;">
             <canvas id="f-risk-chart"
                     role="img"
-                    aria-label="Line chart showing risk level, temperature, and pest count over the last 7 days for the selected farm site.">
+                    aria-label="Line chart showing risk level and temperature over the last 7 days.">
             </canvas>
           </div>
 
           <div class="f-chart-legend">
             <div class="f-legend-item">
               <div class="f-legend-swatch" style="background:#c94040;"></div>
-              <span data-i18n="f.legend_risk">Local risk level</span>
+              <span data-i18n="f.legend_risk">Risk level</span>
             </div>
             <div class="f-legend-item">
-              <div class="f-legend-swatch" style="background:#3d6b22;border-top:2px dashed #3d6b22;background:transparent;"></div>
-              <span data-i18n="f.legend_temp">Avg temperature</span>
-            </div>
-            <div class="f-legend-item">
-              <div class="f-legend-box" style="background:rgba(201,124,26,0.25);border:1px solid #c97c1a;"></div>
-              <span data-i18n="f.legend_pest">Pest count</span>
-            </div>
-            <div class="f-legend-item">
-              <div class="f-legend-swatch" style="border-top:2px dashed #2d7dd6;background:transparent;"></div>
-              <span data-i18n="f.legend_nasa">NASA regional temp</span>
+              <div class="f-legend-swatch" style="background:#3d6b22;"></div>
+              <span data-i18n="f.legend_temp">Temperature</span>
             </div>
           </div>
         </div>
@@ -286,5 +278,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="../js/l18n.js"></script>
 <script src="../js/farmer_dashboard.js"></script>
+
+<!-- MOBILE NAV -->
+<nav class="sh-mobile-nav">
+  <a href="index.html" class="active">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+    <span>Dashboard</span>
+  </a>
+  <a href="blog.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+    <span>Blog</span>
+  </a>
+  <a href="about.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
+    <span>About</span>
+  </a>
+  <a href="profile.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+    <span>Profile</span>
+  </a>
+</nav>
+
+<script>
+  (function() {
+    if (window.innerWidth <= 860) document.body.classList.add('has-mobile-nav');
+    window.addEventListener('resize', function() {
+      document.body.classList.toggle('has-mobile-nav', window.innerWidth <= 860);
+    });
+  })();
+</script>
+
+
 </body>
 </html>

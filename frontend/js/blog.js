@@ -25,7 +25,7 @@ const API_BASE = 'http://127.0.0.1:8000';
 const TOKEN_KEY = 'jwt_token';
 
 // Get I18n for translations (if available, otherwise fallback)
-const I18n = window.I18n || { t: (k) => k, getLang: () => 'en' };
+// const I18n = window.I18n || { t: (k) => k, getLang: () => 'en' };
 
 // ── STAY LOGGED IN — check all possible token keys
 function getToken() {
@@ -569,29 +569,42 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 
 // ── LOAD POSTS ────
 async function loadPosts() {
+  console.log('Blog: loadPosts called');
   const loadingEl = document.getElementById('feed-loading');
   const emptyEl   = document.getElementById('feed-empty');
   const listEl    = document.getElementById('posts-list');
 
+  if (!loadingEl || !listEl) {
+    console.error('Blog: loadPosts - Missing loading or list elements');
+    return;
+  }
+  
+  console.log('Blog: Showing loading spinner');
   loadingEl.classList.remove('hidden');
   emptyEl.classList.add('hidden');
   listEl.innerHTML = '';
 
   try {
+    console.log('Blog: Fetching from API_BASE:', API_BASE);
     const res  = await fetch(`${API_BASE}/posts`);
+    console.log('Blog: API response status:', res.status);
     const data = await res.json();
+    console.log('Blog: API response data:', data);
 
     loadingEl.classList.add('hidden');
 
     if (Array.isArray(data) && data.length > 0) {
       allPosts = data;
+      console.log('Blog: Using posts from API, count:', data.length);
     } else {
       allPosts = SAMPLE_POSTS;
+      console.log('Blog: Using SAMPLE_POSTS fallback, count:', SAMPLE_POSTS.length);
     }
 
     renderPosts();
 
   } catch (err) {
+    console.error('Blog: Error loading posts:', err);
     loadingEl.classList.add('hidden');
     allPosts = SAMPLE_POSTS;
     renderPosts();
@@ -601,9 +614,21 @@ async function loadPosts() {
 
 // ── RENDER POSTS ───
 function renderPosts() {
+  console.log('Blog: renderPosts called, allPosts length:', allPosts ? allPosts.length : 0);
   const listEl = document.getElementById('posts-list');
   const token  = getToken();
   const user   = token ? decodeToken(token) : null;
+
+  if (!listEl) {
+    console.error('Blog: renderPosts - posts-list element not found');
+    return;
+  }
+  
+  if (!allPosts || allPosts.length === 0) {
+    console.log('Blog: No posts to render');
+    listEl.innerHTML = '<p style="color:var(--text-mid);padding:20px 0;">No posts available</p>';
+    return;
+  }
 
   let postsToRender = [...allPosts];
 
@@ -613,6 +638,8 @@ function renderPosts() {
   const filtered = currentFilter === 'all'
     ? postsToRender
     : postsToRender.filter(p => p.author_role === currentFilter);
+
+  console.log('Blog: Rendering', filtered.length, 'posts after filter');
 
   if (filtered.length === 0) {
     const filterLabel = currentFilter === 'all' ? I18n.t('blog.filter_all') : (currentFilter === 'farmer' ? I18n.t('blog.filter_farmer') : I18n.t('blog.filter_res'));
@@ -902,11 +929,7 @@ function escHtml(str) {
     .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
 
-// ── INIT ─
-document.addEventListener('DOMContentLoaded', () => {
-  updateAuthUI();
-  loadPosts();
-});
+
 
 // ── LISTEN FOR LANGUAGE CHANGES ──
 document.addEventListener('languageChanged', () => {
@@ -915,4 +938,27 @@ document.addEventListener('languageChanged', () => {
   if (openPostId) {
     loadComments(openPostId); // Re-render comments if modal is open
   }
+});
+
+// ── INIT ─
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Blog: DOMContentLoaded fired');
+  console.log('Blog: Checking required elements...');
+  
+  // Check if required elements exist
+  const feedLoading = document.getElementById('feed-loading');
+  const postsList = document.getElementById('posts-list');
+  const authForm = document.getElementById('auth-form');
+  
+  console.log('Blog: feed-loading element:', feedLoading ? 'found' : 'NOT FOUND');
+  console.log('Blog: posts-list element:', postsList ? 'found' : 'NOT FOUND');
+  console.log('Blog: auth-form element:', authForm ? 'found' : 'NOT FOUND');
+  
+  if (!feedLoading || !postsList || !authForm) {
+    console.error('Blog: Missing required DOM elements!');
+    return;
+  }
+  
+  updateAuthUI();
+  loadPosts();
 });

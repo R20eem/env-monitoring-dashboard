@@ -119,7 +119,7 @@ document.addEventListener('languageChanged', () => {
   renderTiles();
   renderInsight(currentSite);
   const titleEl = document.getElementById('f-chart-title');
-  if (titleEl) titleEl.textContent = `Risk level & temperature — ${getLocalizedSiteName(currentSite).toLowerCase()}`;
+  if (titleEl) titleEl.textContent = `Risk — ${getLocalizedSiteName(currentSite)}`;
 });
 
 /* ══════════════════════════════════════════════════════════
@@ -447,7 +447,7 @@ window.selectSite = function (id) {
   renderInsight(id);
   renderChart(id);
   const titleEl = document.getElementById('f-chart-title');
-  if (titleEl) titleEl.textContent = `Risk level & temperature — ${getLocalizedSiteName(id).toLowerCase()}`;
+  if (titleEl) titleEl.textContent = `Risk — ${getLocalizedSiteName(id)}`;
 };
 
 /* ══════════════════════════════════════════════════════════
@@ -460,17 +460,14 @@ function renderChart(siteId) {
   if (riskChart) { riskChart.destroy(); riskChart = null; }
 
   riskChart = new Chart(canvas, {
+    type: 'line',
     data: {
       labels: d.dates,
       datasets: [
-        { type:'line',  label:'Risk level',    data:d.risk,
-          borderColor:'#c94040', backgroundColor:'rgba(201,64,64,0.07)', fill:true,
-          tension:0.42, pointRadius:3, pointBackgroundColor:'#c94040', borderWidth:2, yAxisID:'y' },
-        { type:'line',  label:'Avg temp (°C)', data:d.temp,
-          borderColor:'#3d6b22', borderDash:[5,4], backgroundColor:'transparent', fill:false,
-          tension:0.42, pointRadius:2, pointBackgroundColor:'#3d6b22', borderWidth:1.5, yAxisID:'y2' },
-        { type:'bar',   label:'Pest count',    data:d.pest,
-          backgroundColor:'rgba(201,124,26,0.2)', borderColor:'#c97c1a', borderWidth:1, yAxisID:'y3' }
+        { label:'Risk level', data:d.risk,
+          borderColor:'#c94040', backgroundColor:'rgba(201,64,64,0.08)', fill:true,
+          tension:0.4, pointRadius:5, pointBackgroundColor:'#c94040',
+          pointBorderColor:'#fff', pointBorderWidth:2, borderWidth:2.5 }
       ]
     },
     options: {
@@ -478,24 +475,41 @@ function renderChart(siteId) {
       maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        tooltip: { callbacks: {
-          label: ctx => {
-            if (ctx.dataset.label === 'Risk level')        return ` Risk: ${ctx.parsed.y.toFixed(1)}`;
-            if (ctx.dataset.label === 'Avg temp (°C)')     return ` Temp: ${ctx.parsed.y.toFixed(1)}°C`;
-            if (ctx.dataset.label === 'NASA regional temp')return ` NASA temp: ${ctx.parsed.y.toFixed(1)}°C`;
-            return ` Pest avg: ${ctx.parsed.y.toFixed(2)}`;
-          }
-        }}
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const v = ctx.parsed.y;
+              const level = v >= 70 ? '🔴 High' : v >= 55 ? '🟡 Medium' : '🟢 Low';
+              return `  Risk: ${v.toFixed(0)}  (${level})`;
+            }
+          },
+          backgroundColor: '#fff',
+          borderColor: '#e5e5e5',
+          borderWidth: 1,
+          titleColor: '#111a08',
+          bodyColor: '#3d4a2a',
+          padding: 10,
+          titleFont: { size: 12 },
+          bodyFont: { size: 13 }
+        }
       },
       scales: {
-        x:  { grid:{ display:false }, ticks:{ font:{size:11}, color:'#7a8a65' } },
-        y:  { position:'left',  min:30, max:100, grid:{ color:'rgba(0,0,0,0.04)' },
-               ticks:{ font:{size:10}, color:'#c94040', callback:v=>v },
-               title:{ display:true, text:'Risk', font:{size:10}, color:'#c94040' } },
-        y2: { position:'right', min:10, max:30, grid:{ display:false },
-               ticks:{ font:{size:10}, color:'#3d6b22', callback:v=>v+'°' },
-               title:{ display:true, text:'Temp', font:{size:10}, color:'#3d6b22' } },
-        y3: { display:false, min:0, max:12 }
+        x: {
+          grid: { display: false },
+          ticks: { font:{ size:12 }, color:'#7a8a65' },
+          border: { display: false }
+        },
+        y: {
+          min: 30, max: 100,
+          grid: { color:'rgba(0,0,0,0.05)' },
+          border: { display: false },
+          ticks: {
+            font: { size:12 },
+            color: '#7a8a65',
+            stepSize: 20,
+            callback: v => v >= 70 ? `${v} ⚠` : `${v}`
+          }
+        }
       }
     }
   });
