@@ -122,18 +122,18 @@
       </div>
       <div class="f-topbar-right">
         <a href="about.html" class="f-about-link" data-i18n="nav.about_short">ℹ About</a>
-        <div class="f-nasa-pill">
-          <svg viewBox="0 0 20 20" fill="currentColor">
+        <!-- NASA icon only — tooltip on hover -->
+        <div class="f-nasa-pill" title="NASA POWER satellite data active" style="padding:5px 8px;">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="width:14px;height:14px;">
             <circle cx="10" cy="10" r="3"/>
             <path fill-rule="evenodd" d="M10 0a10 10 0 100 20A10 10 0 0010 0zm0 2a8 8 0 110 16A8 8 0 0110 2z"/>
           </svg>
-          <span data-i18n="f.nasa_pill">NASA POWER</span>
         </div>
-        <div class="f-live-pill">
+        <!-- Live dot only -->
+        <div class="f-live-pill" style="padding:5px 8px;gap:0;">
           <div class="f-live-dot" id="f-live-dot"></div>
-          <span data-i18n="f.live_pill">Live</span>
         </div>
-        <div id="f-nav-actions" style="display:flex;gap:8px;align-items:center;"></div>
+        <div id="f-nav-actions" style="display:flex;gap:6px;align-items:center;"></div>
       </div>
     </header>
 
@@ -318,4 +318,4 @@
 
 
 </body>
-</html>   
+</html>

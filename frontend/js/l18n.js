@@ -528,10 +528,17 @@ const I18n = (() => {
   }
 
   /* ── INIT ───────────────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', () => {
+  function init() {
     injectToggleBtn();
     apply();
-  });
+  }
+
+  /* Call init immediately if DOM is ready, otherwise wait for DOMContentLoaded */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
   return { t, setLang, getLang, apply };
 
