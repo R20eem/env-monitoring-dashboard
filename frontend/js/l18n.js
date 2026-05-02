@@ -51,6 +51,8 @@ const I18n = (() => {
     'nav.dashboard':      { en: 'Dashboard',       af: 'Paneelbord' },
     'nav.blog':           { en: 'Community Blog',  af: 'Gemeenskapsblog' },
     'nav.profile':        { en: 'Profile',         af: 'Profiel' },
+    'nav.alerts':         { en: 'Alerts',          af: 'Waarskuwings' },
+    'nav.scanner':        { en: 'Plant Scanner',   af: 'Plant Skandeerder' },
     'nav.signin':         { en: 'Sign In',         af: 'Teken In' },
     'nav.logout':         { en: 'Logout',          af: 'Meld Af' },
     'nav.signout':        { en: 'Sign Out',        af: 'Teken Uit' },
@@ -398,6 +400,7 @@ const I18n = (() => {
 
     /* ── MOBILE NAV ── */
     'mob.dashboard':      { en: 'Dashboard',  af: 'Paneelbord' },
+    'mob.alerts':         { en: 'Alerts',     af: 'Waarskuwings' },
     'mob.scanner':        { en: 'Scanner',    af: 'Skandeerder' },
     'mob.blog':           { en: 'Blog',       af: 'Blog' },
     'mob.about':          { en: 'About',      af: 'Oor' },
