@@ -144,6 +144,11 @@ function setupUser() {
   /* Topbar right-side buttons - NO sign out button here, only sidebar logout */
   const navActions = document.getElementById('f-nav-actions');
   if (navActions) {
+    const langToggle = document.getElementById('lang-toggle');
+    const viewToggle = document.getElementById('f-view-toggle');
+    const hasLangToggle = langToggle && navActions.contains(langToggle);
+    const hasViewToggle = viewToggle && navActions.contains(viewToggle);
+
     if (token && role) {
       // Logged in: show dashboard link only, no sign out in topbar
       navActions.innerHTML = `<a href="index.html" class="f-btn f-btn-ghost">Dashboard</a>`;
@@ -154,6 +159,9 @@ function setupUser() {
         <a href="register.html" class="f-btn f-btn-primary">Register</a>
       `;
     }
+
+    if (hasViewToggle) navActions.insertBefore(viewToggle, navActions.firstChild);
+    if (hasLangToggle) navActions.insertBefore(langToggle, navActions.firstChild);
   }
 }
 
