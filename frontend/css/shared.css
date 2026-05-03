@@ -344,4 +344,95 @@ body.sh-page {
   :root { --sh-sidebar-w: 0px; }
   .sh-sidebar { display: none; }
   .sh-grid-2, .sh-grid-3 { grid-template-columns: 1fr; }
+  
+  /* Mobile optimizations - fix white bar issue */
+  .sh-main { 
+    width: 100%; 
+    min-height: 100vh;
+    margin-left: 0;
+  }
+  .sh-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px !important;
+    height: auto !important;
+    min-height: 56px;
+  }
+  .sh-topbar-right {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+  .sh-content {
+    padding: 16px;
+  }
+  .sh-hero {
+    padding: 20px 16px;
+  }
+  .sh-hero h1 {
+    font-size: 24px;
+  }
+  .sh-card {
+    padding: 16px;
+  }
+  .sh-grid-2, .sh-grid-3 {
+    gap: 12px;
+  }
+  
+  /* Mobile bottom navigation bar */
+  .sh-mobile-nav {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .sh-topbar-title { font-size: 18px; }
+  .sh-topbar-sub { font-size: 12px; }
+  .sh-btn { padding: 8px 14px; font-size: 13px; }
+  .sh-hero h1 { font-size: 20px; }
+  .sh-card-title { font-size: 16px; }
+}
+
+/* Mobile bottom navigation - hidden by default */
+.sh-mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--sh-green-900);
+  z-index: 1000;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+}
+
+.sh-mobile-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 10px;
+  gap: 4px;
+  border-radius: 8px;
+}
+
+.sh-mobile-nav a.active {
+  color: var(--sh-green-400);
+}
+
+.sh-mobile-nav a svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Add padding to content when mobile nav is visible */
+body.sh-page.has-mobile-nav .sh-content {
+  padding-bottom: 80px;
 }

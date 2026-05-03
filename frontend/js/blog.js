@@ -24,6 +24,9 @@
 const API_BASE = 'http://127.0.0.1:8000';
 const TOKEN_KEY = 'jwt_token';
 
+// Get I18n for translations (if available, otherwise fallback)
+// const I18n = window.I18n || { t: (k) => k, getLang: () => 'en' };
+
 // ── STAY LOGGED IN — check all possible token keys
 function getToken() {
   return localStorage.getItem('jwt_token') || localStorage.getItem('token');
@@ -38,10 +41,11 @@ function clearToken() {
   localStorage.removeItem('userRole');
 }
 
-// ── BLOG ACCESS GUARD — only redirect if truly no token
-if (!getToken()) {
-  window.location.href = 'login.html';
-}
+// ── BLOG ACCESS GUARD — removed to allow public access
+// Users can view blog without signing in
+// if (!getToken()) {
+//   window.location.href = 'login.html';
+// }
 
 // ── STATE ──
 let currentFilter = 'all';
@@ -480,14 +484,14 @@ function updateAuthUI() {
     authForm.classList.add('hidden');
     loggedInInfo.classList.remove('hidden');
     createBox.classList.remove('hidden');
-    authCardTitle.textContent = 'Welcome back!';
+    authCardTitle.textContent = I18n.t('blog.welcome');
     const icon = user.role === 'farmer' ? '🌾' : '🔬';
     userBadge.textContent = `${icon} Signed in as ${user.role}`;
   } else {
     authForm.classList.remove('hidden');
     loggedInInfo.classList.add('hidden');
     createBox.classList.add('hidden');
-    authCardTitle.textContent = 'Sign in to post';
+    authCardTitle.textContent = I18n.t('blog.signin_post');
   }
 }
 
@@ -511,7 +515,7 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   errEl.textContent = '';
 
   if (!email || !password) {
-    errEl.textContent = 'Please fill in all fields.';
+    errEl.textContent = I18n.t('blog.fill_fields');
     return;
   }
 
@@ -533,7 +537,7 @@ document.getElementById('login-btn').addEventListener('click', async () => {
     const data = await res.json();
 
     if (!res.ok) {
-      errEl.textContent = data.detail || 'Login failed.';
+      errEl.textContent = data.detail || I18n.t('blog.login_err');
       return;
     }
 
@@ -551,7 +555,7 @@ document.getElementById('login-btn').addEventListener('click', async () => {
     loadPosts();
 
   } catch (err) {
-    errEl.textContent = 'Could not reach the server. Is the backend running?';
+    errEl.textContent = I18n.t('blog.server_unreachable');
     console.error(err);
   }
 });
@@ -565,29 +569,42 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 
 // ── LOAD POSTS ────
 async function loadPosts() {
+  console.log('Blog: loadPosts called');
   const loadingEl = document.getElementById('feed-loading');
   const emptyEl   = document.getElementById('feed-empty');
   const listEl    = document.getElementById('posts-list');
 
+  if (!loadingEl || !listEl) {
+    console.error('Blog: loadPosts - Missing loading or list elements');
+    return;
+  }
+  
+  console.log('Blog: Showing loading spinner');
   loadingEl.classList.remove('hidden');
   emptyEl.classList.add('hidden');
   listEl.innerHTML = '';
 
   try {
+    console.log('Blog: Fetching from API_BASE:', API_BASE);
     const res  = await fetch(`${API_BASE}/posts`);
+    console.log('Blog: API response status:', res.status);
     const data = await res.json();
+    console.log('Blog: API response data:', data);
 
     loadingEl.classList.add('hidden');
 
     if (Array.isArray(data) && data.length > 0) {
       allPosts = data;
+      console.log('Blog: Using posts from API, count:', data.length);
     } else {
       allPosts = SAMPLE_POSTS;
+      console.log('Blog: Using SAMPLE_POSTS fallback, count:', SAMPLE_POSTS.length);
     }
 
     renderPosts();
 
   } catch (err) {
+    console.error('Blog: Error loading posts:', err);
     loadingEl.classList.add('hidden');
     allPosts = SAMPLE_POSTS;
     renderPosts();
@@ -597,9 +614,21 @@ async function loadPosts() {
 
 // ── RENDER POSTS ───
 function renderPosts() {
+  console.log('Blog: renderPosts called, allPosts length:', allPosts ? allPosts.length : 0);
   const listEl = document.getElementById('posts-list');
   const token  = getToken();
   const user   = token ? decodeToken(token) : null;
+
+  if (!listEl) {
+    console.error('Blog: renderPosts - posts-list element not found');
+    return;
+  }
+  
+  if (!allPosts || allPosts.length === 0) {
+    console.log('Blog: No posts to render');
+    listEl.innerHTML = `<p style="color:var(--text-mid);padding:20px 0;">${I18n.t('blog.no_posts')}</p>`;
+    return;
+  }
 
   let postsToRender = [...allPosts];
 
@@ -610,8 +639,11 @@ function renderPosts() {
     ? postsToRender
     : postsToRender.filter(p => p.author_role === currentFilter);
 
+  console.log('Blog: Rendering', filtered.length, 'posts after filter');
+
   if (filtered.length === 0) {
-    listEl.innerHTML = `<p style="color:var(--text-mid);padding:20px 0;">No ${currentFilter} posts yet.</p>`;
+    const filterLabel = currentFilter === 'all' ? I18n.t('blog.filter_all') : (currentFilter === 'farmer' ? I18n.t('blog.filter_farmer') : I18n.t('blog.filter_res'));
+    listEl.innerHTML = `<p style="color:var(--text-mid);padding:20px 0;">${I18n.t('blog.no_posts')} (${filterLabel})</p>`;
     return;
   }
 
@@ -623,7 +655,7 @@ function renderPosts() {
     card.style.animationDelay = `${i * 0.06}s`;
 
     const badgeClass = post.author_role === 'farmer' ? 'badge-farmer' : 'badge-researcher';
-    const badgeLabel = post.author_role === 'farmer' ? '🌾 Farmer' : '🔬 Researcher';
+    const badgeLabel = post.author_role === 'farmer' ? I18n.t('auth.farmer') : I18n.t('auth.researcher');
     const dateStr    = new Date(post.created_at).toLocaleDateString('en-GB', {
       day: 'numeric', month: 'short', year: 'numeric'
     });
@@ -636,7 +668,7 @@ function renderPosts() {
         <span class="role-badge ${badgeClass}">${badgeLabel}</span>
       </div>
       <div class="post-meta">
-        By <span class="author-link" data-role="${post.author_role}" data-id="${post.author_id}">
+        ${I18n.t('blog.by')} <span class="author-link" data-role="${post.author_role}" data-id="${post.author_id}">
           ${escHtml(post.author_name)}
         </span> · ${dateStr}
       </div>
@@ -709,13 +741,13 @@ document.getElementById('submit-post').addEventListener('click', async () => {
   const token   = getToken();
 
   errEl.textContent = '';
-  if (!title)   { errEl.textContent = 'Title is required.'; return; }
-  if (!content) { errEl.textContent = 'Content is required.'; return; }
-  if (!token)   { errEl.textContent = 'Please sign in first.'; return; }
+    if (!title)   { errEl.textContent = I18n.t('blog.title_req'); return; }
+    if (!content) { errEl.textContent = I18n.t('blog.content_req'); return; }
+  if (!token)   { errEl.textContent = I18n.t('blog.signin_first'); return; }
 
   const btn = document.getElementById('submit-post');
   btn.disabled = true;
-  btn.textContent = 'Posting…';
+  btn.textContent = I18n.t('blog.posting');
 
   try {
     const res  = await fetch(`${API_BASE}/posts`, {
@@ -724,16 +756,16 @@ document.getElementById('submit-post').addEventListener('click', async () => {
       body: JSON.stringify({ title, content }),
     });
     const data = await res.json();
-    if (!res.ok) { errEl.textContent = data.detail || 'Could not create post.'; return; }
+    if (!res.ok) { errEl.textContent = data.detail || I18n.t('blog.create_err'); return; }
     document.getElementById('post-title').value   = '';
     document.getElementById('post-content').value = '';
     await loadPosts();
   } catch (err) {
-    errEl.textContent = 'Server error. Please try again.';
+    errEl.textContent = I18n.t('blog.server_err');
     console.error(err);
   } finally {
     btn.disabled    = false;
-    btn.textContent = 'Post';
+    btn.textContent = I18n.t('blog.post_btn');
   }
 });
 
@@ -750,7 +782,7 @@ function openModal(post) {
     day: 'numeric', month: 'long', year: 'numeric'
   });
   document.getElementById('modal-post-meta').textContent =
-    `By ${post.author_name} (${post.author_role}) · ${dateStr}`;
+    `${I18n.t('blog.by')} ${post.author_name} (${post.author_role === 'farmer' ? I18n.t('blog.farmer') : I18n.t('blog.researcher')}) · ${dateStr}`;
 
   const addCommentDiv = document.getElementById('modal-add-comment');
   const loginPrompt   = document.getElementById('modal-login-prompt');
@@ -759,7 +791,7 @@ function openModal(post) {
     loginPrompt.textContent = '';
   } else {
     addCommentDiv.classList.add('hidden');
-    loginPrompt.textContent = 'Sign in to leave a comment.';
+    loginPrompt.textContent = I18n.t('blog.signin_comment');
   }
 
   document.getElementById('modal-overlay').classList.remove('hidden');
@@ -783,7 +815,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
 // ── LOAD COMMENTS ──
 async function loadComments(postId) {
   const listEl = document.getElementById('modal-comments-list');
-  listEl.innerHTML = '<div class="spinner small"></div>';
+  listEl.innerHTML = `<div class="spinner small"></div><p style="color:#888;font-size:14px;">${I18n.t('blog.loading')}</p>`;
 
   let comments = [];
 
@@ -799,7 +831,7 @@ async function loadComments(postId) {
     }
 
     if (!Array.isArray(comments) || comments.length === 0) {
-      listEl.innerHTML = '<p style="color:#888;font-size:14px;">No comments yet. Be the first!</p>';
+      listEl.innerHTML = `<p style="color:#888;font-size:14px;">${I18n.t('blog.no_comments')}</p>`;
       return;
     }
 
@@ -827,7 +859,7 @@ async function loadComments(postId) {
     comments = SAMPLE_COMMENTS[postId] || [];
 
     if (!comments.length) {
-      listEl.innerHTML = '<p style="color:var(--red-alert);font-size:14px;">Could not load comments.</p>';
+      listEl.innerHTML = `<p style="color:var(--red-alert);font-size:14px;">${I18n.t('blog.load_err')}</p>`;
       console.error(err);
       return;
     }
@@ -861,12 +893,12 @@ document.getElementById('submit-comment').addEventListener('click', async () => 
   const token   = getToken();
 
   errEl.textContent = '';
-  if (!content) { errEl.textContent = 'Comment cannot be empty.'; return; }
-  if (!token)   { errEl.textContent = 'Please sign in first.'; return; }
+  if (!content) { errEl.textContent = I18n.t('blog.comment_empty'); return; }
+  if (!token)   { errEl.textContent = I18n.t('blog.signin_first'); return; }
 
   const btn = document.getElementById('submit-comment');
   btn.disabled    = true;
-  btn.textContent = 'Posting…';
+  btn.textContent = I18n.t('blog.posting');
 
   try {
     const res  = await fetch(`${API_BASE}/posts/${openPostId}/comments`, {
@@ -875,18 +907,18 @@ document.getElementById('submit-comment').addEventListener('click', async () => 
       body: JSON.stringify({ content }),
     });
     const data = await res.json();
-    if (!res.ok) { errEl.textContent = data.detail || 'Could not post comment.'; return; }
+    if (!res.ok) { errEl.textContent = data.detail || I18n.t('blog.comment_err'); return; }
     document.getElementById('modal-comment-input').value = '';
     await loadComments(openPostId);
     const p = allPosts.find(p => p.id === openPostId);
     if (p) p.comments_count += 1;
     renderPosts();
   } catch (err) {
-    errEl.textContent = 'Server error.';
+    errEl.textContent = I18n.t('blog.server_err_short');
     console.error(err);
   } finally {
     btn.disabled    = false;
-    btn.textContent = 'Add Comment';
+    btn.textContent = I18n.t('blog.comment_btn');
   }
 });
 
@@ -897,14 +929,36 @@ function escHtml(str) {
     .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
 
-// ── INIT ─
-updateAuthUI();
-loadPosts();
+
 
 // ── LISTEN FOR LANGUAGE CHANGES ──
 document.addEventListener('languageChanged', () => {
   renderPosts(); // Re-render posts with new language
+  updateAuthUI(); // Update auth card title
   if (openPostId) {
     loadComments(openPostId); // Re-render comments if modal is open
   }
+});
+
+// ── INIT ─
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Blog: DOMContentLoaded fired');
+  console.log('Blog: Checking required elements...');
+  
+  // Check if required elements exist
+  const feedLoading = document.getElementById('feed-loading');
+  const postsList = document.getElementById('posts-list');
+  const authForm = document.getElementById('auth-form');
+  
+  console.log('Blog: feed-loading element:', feedLoading ? 'found' : 'NOT FOUND');
+  console.log('Blog: posts-list element:', postsList ? 'found' : 'NOT FOUND');
+  console.log('Blog: auth-form element:', authForm ? 'found' : 'NOT FOUND');
+  
+  if (!feedLoading || !postsList || !authForm) {
+    console.error('Blog: Missing required DOM elements!');
+    return;
+  }
+  
+  updateAuthUI();
+  loadPosts();
 });

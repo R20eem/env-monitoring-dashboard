@@ -60,19 +60,16 @@
   });
 
   // ── TOPBAR BUTTONS ───────────────────────────────────────────
+  // Note: Sign out is only available in the sidebar, not in the topbar
   const navActions = document.getElementById('sh-nav-actions');
   if (navActions) {
     // Use i18n if available, else fall back to English
     const _t = (key, fallback) => (typeof I18n !== 'undefined' ? I18n.t(key) : fallback);
     if (isLogged) {
+      // Logged in: show dashboard link only, no sign out in topbar
       navActions.innerHTML = `
         <a href="${dashUrl}" class="sh-btn sh-btn-ghost">${_t('sh.dashboard_btn','Dashboard')}</a>
-        <a href="#" class="sh-btn sh-btn-primary" id="sh-signout-btn">${_t('nav.signout','Sign Out')}</a>
       `;
-      document.getElementById('sh-signout-btn').addEventListener('click', e => {
-        e.preventDefault();
-        doLogout();
-      });
     } else {
       navActions.innerHTML = `
         <a href="login.html"    class="sh-btn sh-btn-outline">${_t('nav.signin','Sign In')}</a>

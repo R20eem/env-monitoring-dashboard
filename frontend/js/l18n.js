@@ -51,6 +51,8 @@ const I18n = (() => {
     'nav.dashboard':      { en: 'Dashboard',       af: 'Paneelbord' },
     'nav.blog':           { en: 'Community Blog',  af: 'Gemeenskapsblog' },
     'nav.profile':        { en: 'Profile',         af: 'Profiel' },
+    'nav.alerts':         { en: 'Alerts',          af: 'Waarskuwings' },
+    'nav.scanner':        { en: 'Plant Scanner',   af: 'Plant Skandeerder' },
     'nav.signin':         { en: 'Sign In',         af: 'Teken In' },
     'nav.logout':         { en: 'Logout',          af: 'Meld Af' },
     'nav.signout':        { en: 'Sign Out',        af: 'Teken Uit' },
@@ -169,7 +171,7 @@ const I18n = (() => {
     'blog.post_ph_title': { en: 'Title',               af: 'Titel' },
     'blog.post_ph_body':  { en: "What's on your mind?", af: 'Wat dink jy?' },
     'blog.post_btn':      { en: 'Post',                 af: 'Plaas' },
-    'blog.loading':       { en: 'Loading posts…',       af: 'Plasings laai…' },
+    'blog.loading':       { en: 'Loading...',            af: 'Laai...' },
     'blog.empty':         { en: 'No posts yet. Be the first to share something!', af: 'Nog geen plasings nie. Wees die eerste om iets te deel!' },
     'blog.auth_title':    { en: 'Sign in to post',       af: 'Teken in om te plaas' },
     'blog.login_btn':     { en: 'Sign In',               af: 'Teken In' },
@@ -184,6 +186,28 @@ const I18n = (() => {
     'blog.comment_ph':    { en: 'Write a comment…',      af: 'Skryf \'n opmerking…' },
     'blog.comment_btn':   { en: 'Add Comment',           af: 'Voeg Opmerking By' },
     'blog.comments_h':    { en: 'Comments',              af: 'Opmerkings' },
+    'blog.no_posts':       { en: 'No posts yet.', af: 'Nog geen plasings nie.' },
+    'blog.no_comments':   { en: 'No comments yet. Be the first!', af: 'Nog geen opmerkings nie. Wees die eerste!' },
+    'blog.load_err':      { en: 'Could not load comments.', af: 'Kon nie opmerkings laai nie.' },
+    'blog.farmer':         { en: 'farmer',                af: 'boer' },
+    'blog.researcher':    { en: 'researcher',            af: 'navorser' },
+    'blog.by':             { en: 'By',                    af: 'Deur' },
+    'blog.read_more':      { en: 'Read more →',           af: 'Lees meer →' },
+    'blog.signin_comment': { en: 'Sign in to leave a comment.', af: 'Teken in om \'n opmerking te los.' },
+    'blog.signin_post':    { en: 'Sign in to post',           af: 'Teken in om te plaas' },
+    'blog.welcome':        { en: 'Welcome back!',              af: 'Welkom terug!' },
+    'blog.fill_fields':    { en: 'Please fill in all fields.', af: 'Vul asseblief alle velde in.' },
+    'blog.login_err':      { en: 'Login failed.',              af: 'Teken in het misluk.' },
+    'blog.title_req':      { en: 'Title is required.',         af: 'Titel is nodig.' },
+    'blog.content_req':    { en: 'Content is required.',       af: 'Inhoud is nodig.' },
+    'blog.signin_first':   { en: 'Please sign in first.',     af: 'Teken asseblief eers in.' },
+    'blog.create_err':     { en: 'Could not create post.',     af: 'Kon nie plasings skep nie.' },
+    'blog.server_err':     { en: 'Server error. Please try again.', af: 'Bediener fout. Probeer asseblief weer.' },
+    'blog.comment_empty':  { en: 'Comment cannot be empty.',   af: 'Opmerking mag nie leeg wees nie.' },
+    'blog.comment_err':    { en: 'Could not post comment.',    af: 'Kon nie opmerking plaas nie.' },
+    'blog.server_err_short': { en: 'Server error.',            af: 'Bediener fout.' },
+    'blog.posting': { en: 'Posting...', af: 'Plaas tans...' },
+    'blog.server_unreachable': { en: 'Could not reach the server. Is the backend running?', af: 'Kon nie die bediener bereik nie. Loop die backend?' },
 
     /* ── PROFILE PAGE ── */
     'profile.title':      { en: 'Profile',      af: 'Profiel' },
@@ -232,6 +256,200 @@ const I18n = (() => {
 
     /* ── SHARED NAV BUTTON LABELS ── */
     'sh.dashboard_btn':   { en: 'Dashboard',  af: 'Paneelbord' },
+
+    /* ── VIEW TOGGLE ── */
+    'view.simple':        { en: '🌱 Simple',   af: '🌱 Eenvoudig' },
+    'view.detailed':      { en: '📊 Detailed', af: '📊 Gedetailleerd' },
+
+    /* ── SIMPLE VIEW — weather strip ── */
+    'sv.today_title':     { en: 'Today on your farm',    af: 'Vandag op jou plaas' },
+    'sv.temperature':     { en: 'Temperature',           af: 'Temperatuur' },
+    'sv.humidity':        { en: 'Humidity',              af: 'Humiditeit' },
+    'sv.rain_today':      { en: 'Rain today',            af: 'Reën vandag' },
+    'sv.alerts_today':    { en: 'Alerts today',          af: 'Waarskuwings vandag' },
+
+    /* ── SIMPLE VIEW — site cards ── */
+    'sv.site_maize':      { en: 'Maize Field',           af: 'Mielie Land' },
+    'sv.site_orchard':    { en: 'Orchard',               af: 'Boord' },
+    'sv.site_brassica':   { en: 'Brassica Field',        af: 'Brassika Land' },
+
+    'sv.status_good':     { en: '✅ Looking Good',       af: '✅ Lyk Goed' },
+    'sv.status_warning':  { en: 'Needs Attention',       af: 'Benodig Aandag' },
+    'sv.status_danger':   { en: '⚠️ Act Now',            af: '⚠️ Tree Nou Op' },
+
+    'sv.msg_maize':       { en: 'Your maize field has high humidity right now. This can cause disease to spread. Check your plants soon.',
+                            af: 'Jou mielie land het tans hoë humiditeit. Dit kan siektes laat versprei. Gaan kyk jou plante binnekort.' },
+    'sv.msg_orchard':     { en: 'Your orchard has the most pest activity this week. Pest numbers are climbing and conditions are warm — pests love this weather.',
+                            af: 'Jou boord het hierdie week die meeste plaagaktiwiteit. Plaagtalle styg en toestande is warm — plae is lief vir hierdie weer.' },
+    'sv.msg_brassica':    { en: 'Your brassica field is your healthiest field right now. Pest numbers are low and conditions are stable.',
+                            af: 'Jou brassika land is tans jou gesondste land. Plaagtalle is laag en toestande is stabiel.' },
+
+    'sv.action_label':    { en: 'What to do:',           af: 'Wat om te doen:' },
+    'sv.action_maize':    { en: '👀 Walk the field and look for yellow or spotted leaves.',
+                            af: '👀 Loop die land en soek geel of gevlekte blare.' },
+    'sv.action_orchard':  { en: '🪤 Check your pest traps today. Consider spraying if traps are full.',
+                            af: '🪤 Gaan kyk jou plaagvalle vandag. Oorweeg bespuiting as valle vol is.' },
+    'sv.action_brassica': { en: '💧 Good time to apply preventative treatment before weather changes.',
+                            af: '💧 Goeie tyd om voorkomende behandeling toe te pas voor die weer verander.' },
+
+    'sv.pest_activity':   { en: 'Pest activity:',        af: 'Plaagaktiwiteit:' },
+    'sv.tap_details':     { en: 'Tap to see full details →', af: 'Tik om volle besonderhede te sien →' },
+
+    /* ── SIMPLE VIEW — week strip ── */
+    'sv.week_title':      { en: '📅 This week at a glance', af: '📅 Hierdie week op \'n oogopslag' },
+    'sv.week_legend':     { en: '🟢 Good day   🟡 Watch out   🔴 Take action',
+                            af: '🟢 Goeie dag   🟡 Pas op   🔴 Tree op' },
+    'sv.day_mon':         { en: 'Mon', af: 'Maa' },
+    'sv.day_tue':         { en: 'Tue', af: 'Din' },
+    'sv.day_wed':         { en: 'Wed', af: 'Woe' },
+    'sv.day_thu':         { en: 'Thu', af: 'Don' },
+    'sv.day_fri':         { en: 'Fri', af: 'Vry' },
+    'sv.day_sat':         { en: 'Sat', af: 'Sat' },
+    'sv.day_sun':         { en: 'Sun', af: 'Son' },
+    'sv.note_alerts_high':  { en: 'Alerts high',      af: 'Waarskuwings hoog' },
+    'sv.note_better':       { en: 'Getting better',   af: 'Word beter' },
+    'sv.note_best':         { en: 'Best day',          af: 'Beste dag' },
+    'sv.note_humidity':     { en: 'Humidity up',       af: 'Humiditeit op' },
+    'sv.note_nice':         { en: 'Nice day',           af: 'Lekker dag' },
+    'sv.note_pests':        { en: 'Pests up',           af: 'Plae op' },
+    'sv.note_today':        { en: 'Today',              af: 'Vandag' },
+
+    /* ── DETAILED VIEW — tile trend labels ── */
+    'dv.trend_rising':    { en: '↑ Risk rising',   af: '↑ Risiko styg' },
+    'dv.trend_spiking':   { en: '↑ Pest spiking',  af: '↑ Plae styg' },
+    'dv.trend_stable':    { en: '→ Stable',         af: '→ Stabiel' },
+    'dv.score_label':     { en: '/ 100 health score', af: '/ 100 gesondheidstelling' },
+    'dv.7day_risk':       { en: '7-day risk',       af: '7-dag risiko' },
+    'dv.badge_good':      { en: 'Good ✓',           af: 'Goed ✓' },
+    'dv.badge_watch':     { en: 'Watch',             af: 'Dophou' },
+    'dv.badge_alert':     { en: 'Alert !',           af: 'Waarskuwing !' },
+
+    /* ── DETAILED VIEW — tile micro-stats ── */
+    'dv.temp':            { en: 'Temp',      af: 'Temp' },
+    'dv.humidity':        { en: 'Humidity',  af: 'Humiditeit' },
+    'dv.pests':           { en: 'Pests',     af: 'Plae' },
+    'dv.rain':            { en: 'Rain',      af: 'Reën' },
+
+    /* ── DETAILED VIEW — chart ── */
+    'dv.chart_section':   { en: 'Risk level — last 7 days',  af: 'Risiko vlak — laaste 7 dae' },
+    'dv.legend_risk':     { en: 'Risk',                       af: 'Risiko' },
+    'dv.legend_low':      { en: 'low',                        af: 'laag' },
+    'dv.legend_mid':      { en: 'mid',                        af: 'mid' },
+    'dv.legend_high':     { en: 'high',                       af: 'hoog' },
+    'dv.legend_temp':     { en: 'Temperature (right axis)',   af: 'Temperatuur (regteras)' },
+
+    /* ── DETAILED VIEW — insight panel ── */
+    'dv.insight_what':    { en: 'Site Analysis',              af: 'Perseel Analise' },
+    'dv.gauge_label':     { en: '/100',                       af: '/100' },
+    'dv.temp_label':      { en: 'Temperature',                af: 'Temperatuur' },
+    'dv.humidity_label':  { en: 'Humidity',                   af: 'Humiditeit' },
+    'dv.pest_label':      { en: 'Pest avg',                   af: 'Plaag gem.' },
+    'dv.alerts_label':    { en: 'Alerts',                     af: 'Waarskuwings' },
+    'dv.rec_title':       { en: 'Recommended Actions',        af: 'Aanbevole Aksies' },
+
+    /* ── DETAILED VIEW — recommendations ── */
+    'dv.rec_maize_1':     { en: 'Walk the field — look for yellow or spotted leaves',
+                            af: 'Loop die land — soek geel of gevlekte blare' },
+    'dv.rec_maize_2':     { en: 'Improve air circulation to reduce leaf wetness',
+                            af: 'Verbeter lugsirkulasie om blaarvogtigheid te verminder' },
+    'dv.rec_maize_3':     { en: 'Consider fungicide if wetness continues 48hrs more',
+                            af: 'Oorweeg swamdoder as vogtigheid nog 48 uur voortduur' },
+    'dv.rec_orchard_1':   { en: 'Check all pest traps — replace if full',
+                            af: 'Gaan alle plaagvalle na — vervang as vol' },
+    'dv.rec_orchard_2':   { en: 'Check irrigation in south-east corner (low moisture)',
+                            af: 'Gaan besproeiing in suidoos-hoek na (lae vog)' },
+    'dv.rec_orchard_3':   { en: 'Consider targeted spray before next warm day',
+                            af: 'Oorweeg geteikende bespuiting voor volgende warm dag' },
+    'dv.rec_brassica_1':  { en: 'Conditions are stable — good window for treatment',
+                            af: 'Toestande is stabiel — goeie venster vir behandeling' },
+    'dv.rec_brassica_2':  { en: 'Apply preventative spray before next humidity spike',
+                            af: 'Pas voorkomende bespuiting toe voor volgende humiditeits piek' },
+    'dv.rec_brassica_3':  { en: 'Monitor weekly — lowest risk of three sites',
+                            af: 'Monitor weekliks — laagste risiko van drie persele' },
+
+    /* ── ALERTS PAGE ── */
+    'alerts.title':         { en: 'Alerts Overview', af: 'Waarskuwings Oorsig' },
+    'alerts.hero_p':        { en: 'Monitor important warnings and protect your crops in real time', af: 'Monitor belangrike waarskuwings en beskerm jou gewasse in real time' },
+    'alerts.total':         { en: 'Total alerts', af: 'Totale waarskuwings' },
+    'alerts.critical':      { en: 'Critical', af: 'Krities' },
+    'alerts.warnings':      { en: 'Warnings', af: 'Waarskuwings' },
+    'alerts.latest':        { en: 'Latest Alert', af: 'Nuutste Waarskuwing' },
+    'alerts.all':           { en: 'All Alerts', af: 'Alle Waarskuwings' },
+    'alerts.filter_all':    { en: 'All', af: 'Alle' },
+    'alerts.filter_critical': { en: 'Critical', af: 'Krities' },
+    'alerts.filter_warning': { en: 'Warning', af: 'Waarskuwing' },
+    'alerts.loading':       { en: 'Loading latest alert...', af: 'Laai nuutste waarskuwing...' },
+    'alerts.topbar_sub':    { en: 'Simple warnings to protect your crops', af: 'Eenvoudige waarskuwings om jou gewasse te beskerm' },
+    'alerts.loading_alerts':{ en: 'Loading alerts...', af: 'Laai waarskuwings...' },
+    'alerts.empty_healthy': { en: '✅ No alerts — your crops look healthy!', af: '✅ Geen waarskuwings — jou gewasse lyk gesond!' },
+    'alerts.empty_other':   { en: 'No other alerts to show.', af: 'Geen ander waarskuwings om te wys nie.' },
+    'alerts.failed':        { en: '❌ Failed to load alerts. Please try again.', af: '❌ Kon nie waarskuwings laai nie. Probeer asseblief weer.' },
+    'alerts.normal':        { en: 'Normal', af: 'Normaal' },
+    'alerts.field': { en: 'Field', af: 'Veld' },
+    'alerts.unknown_crop': { en: 'Unknown crop', af: 'Onbekende gewas' },
+    'alerts.confidence': { en: 'confidence', af: 'sekerheid' },
+    'alerts.humidity': { en: 'humidity', af: 'humiditeit' },
+    'alerts.healthy_plant': { en: 'Healthy Plant', af: 'Gesonde Plant' },
+    'alerts.disease_detected': { en: 'Disease Detected', af: 'Siekte Bespeur' },
+    'alerts.scan_result': { en: 'Scan Result', af: 'Skandeer Uitslag' },
+    'alerts.disease_risk': { en: 'Disease Risk', af: 'Siekterisiko' },
+    'alerts.high_risk': { en: 'High Risk Detected', af: 'Hoë Risiko Bespeur' },
+    'alerts.warning_condition': { en: 'Warning Condition', af: 'Waarskuwingstoestand' },
+    'alerts.normal_condition': { en: 'Normal Condition', af: 'Normale Toestand' },
+    'alerts.advice_disease_critical': { en: 'Your plant may be diseased. Please inspect it immediately.', af: 'Jou plant mag siek wees. Ondersoek dit asseblief onmiddellik.' },
+    'alerts.advice_disease_warning': { en: 'Monitor your plant closely over the next few days.', af: 'Monitor jou plant noukeurig oor die volgende paar dae.' },
+    'alerts.advice_disease_healthy': { en: 'Your plant looks healthy. Keep up good care.', af: 'Jou plant lyk gesond. Hou aan met goeie sorg.' },
+    'alerts.advice_unhealthy': { en: 'Your plant may be unhealthy. Please check it and take action.', af: 'Jou plant mag ongesond wees. Gaan dit na en neem aksie.' },
+    'alerts.advice_critical': { en: 'Immediate attention required.', af: 'Onmiddellike aandag word vereis.' },
+    'alerts.advice_warning': { en: 'Monitor conditions closely.', af: 'Monitor toestande noukeurig.' },
+    'alerts.advice_normal': { en: 'Everything looks fine.', af: 'Alles lyk reg.' },
+    'scan.hero_h':        { en: 'Scan a Plant',               af: 'Skandeer \'n Plant' },
+    'scan.hero_p':        { en: 'Upload a plant image, choose crop type, and get a health prediction',
+                            af: 'Laai \'n plantfoto op, kies gewastipe, en kry \'n gesondheidvoorspelling' },
+    'scan.upload_title':  { en: 'Upload Plant Image',         af: 'Laai Plantfoto Op' },
+    'scan.select_crop':   { en: 'Select crop',                af: 'Kies gewas' },
+    'scan.site_id_ph':    { en: 'Site ID',                    af: 'Perseel ID' },
+    'scan.choose_image':  { en: 'Choose Image',               af: 'Kies Foto' },
+    'scan.btn':           { en: 'Scan Plant',                 af: 'Skandeer Plant' },
+    'scan.result_title':  { en: 'Scan Result',                af: 'Skandeer Uitslag' },
+    'scan.prediction':    { en: 'Prediction:',                af: 'Voorspelling:' },
+    'scan.confidence':    { en: 'Confidence:',                af: 'Sekerheid:' },
+    'scan.crop':          { en: 'Crop:',                      af: 'Gewas:' },
+    'scan.site':          { en: 'Site:',                      af: 'Perseel:' },
+    'scan.reason':        { en: 'Reason',                     af: 'Rede' },
+    'scan.how_title':     { en: 'How it works',               af: 'Hoe dit werk' },
+    'scan.how_1':         { en: 'Select the crop type',       af: 'Kies die gewastipe' },
+    'scan.how_2':         { en: 'Upload a clear plant or leaf image', af: 'Laai \'n duidelike plant- of bladfoto op' },
+    'scan.how_3':         { en: 'The system checks the image using ML', af: 'Die stelsel kontroleer die foto met ML' },
+    'scan.how_4':         { en: 'The result is saved and shown below', af: 'Die uitslag word gestoor en hieronder gewys' },
+    'scan.recent_title':  { en: 'My Recent Scans',            af: 'My Onlangse Skanderings' },
+    'scan.no_scans':      { en: 'No scans yet',               af: 'Nog geen skanderings nie' },
+    'scan.login_history': { en: 'Log in to see your scan history', af: 'Teken in om jou skandeergeskiedenis te sien' },
+    'scan.load_err':      { en: 'Could not load your scans',       af: 'Kon nie jou skanderings laai nie' },
+    'scan.scanning':      { en: 'Scanning...', af: 'Skandeer tans...' },
+    'scan.err_fields':    { en: 'Please complete all fields and choose an image.', af: 'Voltooi asseblief alle velde en kies \'n foto.' },
+    'scan.err_login':     { en: 'You need to log in first before scanning.', af: 'Jy moet eers inteken voor jy kan skandeer.' },
+    'scan.err_failed':    { en: 'Scan failed.', af: 'Skandering het misluk.' },
+    'scan.err_conn':      { en: 'Could not connect to the scanner service.', af: 'Kon nie met die skandeerdiens koppel nie.' },
+    'scan.image_alt':     { en: 'Scan image', af: 'Skandeerfoto' },
+
+    /* ── SCAN INSIGHTS (farmer dashboard) ── */
+    'f.scan_title':       { en: 'your plant scans',           af: 'jou plant skanderings' },
+    'f.scan_sub':         { en: 'live results from your recent plant scans', af: 'regstreekse uitslae van jou onlangse plant skanderings' },
+    'f.scan_total':       { en: 'total scans',                af: 'totale skanderings' },
+    'f.scan_healthy':     { en: 'healthy',                    af: 'gesond' },
+    'f.scan_disease':     { en: 'disease',                    af: 'siekte' },
+    'f.scan_pest':        { en: 'pest',                       af: 'plaag' },
+    'f.scan_latest':      { en: 'latest',                     af: 'nuutste' },
+    'f.scan_section':     { en: 'my scan insights',           af: 'my skandeer insigte' },
+
+    /* ── MOBILE NAV ── */
+    'mob.dashboard':      { en: 'Dashboard',  af: 'Paneelbord' },
+    'mob.alerts':         { en: 'Alerts',     af: 'Waarskuwings' },
+    'mob.scanner':        { en: 'Scanner',    af: 'Skandeerder' },
+    'mob.blog':           { en: 'Blog',       af: 'Blog' },
+    'mob.about':          { en: 'About',      af: 'Oor' },
+    'mob.profile':        { en: 'Profile',    af: 'Profiel' },
   };
 
   /* ── STATE ─────────────────────────────────────────────── */
@@ -277,15 +495,19 @@ const I18n = (() => {
 
   /* ── TOGGLE BUTTON ──────────────────────────────────────── */
   /*
-    Injects a pill button into whichever topbar-right exists on the page.
-    Works for farmer (f-topbar-right), researcher (r-topbar-right),
-    and shared-layout (sh-topbar-right) pages.
+    Injects a pill button into the page topbar.
+    Works for farmer, researcher, and shared layouts.
+    Prefer an explicit placeholder if available.
   */
   function injectToggleBtn() {
     const selectors = [
+      '#lang-toggle-target',
       '.f-topbar-right',
       '.r-topbar-right',
       '.sh-topbar-right',
+      '.f-topbar',
+      '.r-topbar',
+      '.sh-topbar',
     ];
 
     let container = null;
@@ -305,11 +527,9 @@ const I18n = (() => {
     btn.style.cssText = [
       'display:inline-flex',
       'align-items:center',
-      'gap:5px',
+      'gap:6px',
       'padding:6px 13px',
       'border-radius:20px',
-      'border:1.5px solid currentColor',
-      'background:transparent',
       'cursor:pointer',
       'font-size:12px',
       'font-weight:700',
@@ -319,17 +539,20 @@ const I18n = (() => {
       'font-family:inherit',
     ].join(';');
 
-    /* Style the button to match whatever topbar it lives in */
-    const isGreenTopbar = !!container.closest('.f-topbar, .r-topbar');
-    btn.style.color  = isGreenTopbar ? 'rgba(255,255,255,0.75)' : 'var(--sh-text-3, #7a8a65)';
+    /* Detect green topbar by checking if the PAGE has a farmer/green topbar,
+       not by traversing ancestors of the container (which fails for target divs) */
+    const isGreenTopbar = !!document.querySelector('.f-topbar');
+    const isWhiteTopbar = !!document.querySelector('.sh-topbar') || !!document.querySelector('.r-topbar');
+
+    btn.style.color      = isGreenTopbar ? '#fff'                        : 'var(--sh-green-800,#27500a)';
+    btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.18)'      : 'var(--sh-green-100,#eaf3de)';
+    btn.style.border     = isGreenTopbar ? '1.5px solid rgba(255,255,255,0.4)' : '1.5px solid var(--sh-green-400,#97c459)';
 
     btn.addEventListener('mouseenter', () => {
-      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.12)' : 'var(--sh-green-50,#f4f9ed)';
-      btn.style.color = isGreenTopbar ? '#fff' : 'var(--sh-green-700,#3b6d11)';
+      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.30)' : 'var(--sh-green-200,#c0dd97)';
     });
     btn.addEventListener('mouseleave', () => {
-      btn.style.background = 'transparent';
-      btn.style.color = isGreenTopbar ? 'rgba(255,255,255,0.75)' : 'var(--sh-text-3,#7a8a65)';
+      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.18)' : 'var(--sh-green-100,#eaf3de)';
     });
 
     btn.addEventListener('click', () => {
@@ -354,10 +577,17 @@ const I18n = (() => {
   }
 
   /* ── INIT ───────────────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', () => {
+  function init() {
     injectToggleBtn();
     apply();
-  });
+  }
+
+  /* Call init immediately if DOM is ready, otherwise wait for DOMContentLoaded */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
   return { t, setLang, getLang, apply };
 

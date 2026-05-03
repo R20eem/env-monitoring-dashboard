@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/shared.css">
 </head>
-<body class="sh-page">
+<body class="sh-page has-mobile-nav">
 
 <aside class="sh-sidebar">
   <div class="sh-sidebar-logo">
@@ -41,6 +41,14 @@
     <a href="index.html" class="sh-nav-link sh-dash-link">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
       <span data-i18n="nav.dashboard">Dashboard</span>
+    </a>
+    <a href="alerts.html" class="sh-nav-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
+      <span data-i18n="nav.alerts">Alerts</span>
+    </a>
+    <a href="scanner.html" class="sh-nav-link">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
+      <span data-i18n="nav.scanner">Plant Scanner</span>
     </a>
     <a href="blog.html" class="sh-nav-link">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
@@ -147,7 +155,7 @@
       <div class="sh-card-sub" style="margin-top:8px;margin-bottom:16px;" data-i18n="about.start_body">
         Register as a farmer to access the community blog and public dashboard. Researchers with an organisation code get full access to advanced analytics, NASA integration and raw data exports.
       </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;" id="about-cta-buttons">
         <a href="register.html" class="sh-btn sh-btn-primary" data-i18n="about.register_btn">Register Now</a>
         <a href="login.html"    class="sh-btn sh-btn-outline" data-i18n="about.signin_btn">Sign In</a>
       </div>
@@ -157,6 +165,48 @@
 </div>
 
 <script src="../js/l18n.js"></script>
+<script>
+  // Hide Register button if user is already logged in
+  (function() {
+    const token = localStorage.getItem('jwt_token') || localStorage.getItem('token');
+    const role = localStorage.getItem('userRole');
+    if (token && role) {
+      const ctaContainer = document.getElementById('about-cta-buttons');
+      if (ctaContainer) {
+        ctaContainer.innerHTML = '<a href="login.html" class="sh-btn sh-btn-outline" data-i18n="about.signin_btn">Sign In</a>';
+      }
+    }
+  })();
+</script>
 <script src="../js/shared-nav.js"></script>
+
+<!-- Mobile Bottom Navigation -->
+<nav class="sh-mobile-nav">
+  <a href="index.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+    Dashboard
+  </a>
+  <a href="alerts.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
+    Alerts
+  </a>
+  <a href="about.html" class="active">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
+    About
+  </a>
+  <a href="profile.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+    Profile
+  </a>
+</nav>
+
+<script>
+  (function() {
+    if (window.innerWidth <= 860) document.body.classList.add('has-mobile-nav');
+    window.addEventListener('resize', function() {
+      document.body.classList.toggle('has-mobile-nav', window.innerWidth <= 860);
+    });
+  })();
+</script>
 </body>
 </html>

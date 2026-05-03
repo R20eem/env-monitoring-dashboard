@@ -995,4 +995,47 @@ body.researcher-page {
   .r-chart-row-2 { grid-template-columns: 1fr; }
   .r-stat-grid { grid-template-columns: repeat(2, 1fr); }
   .r-stat-grid-3 { grid-template-columns: repeat(2, 1fr); }
+  
+  /* Mobile optimizations */
+  .r-main { padding: 12px; }
+  .r-topbar { 
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px !important;
+    height: auto !important;
+    min-height: 60px;
+  }
+  .r-topbar-right {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .r-tab-bar {
+    overflow-x: auto;
+    padding: 8px 12px;
+  }
+  .r-tab {
+    padding: 8px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .r-content {
+    padding: 12px;
+  }
+  .r-stat-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .r-stat { padding: 12px; }
+  .r-chart-row-3, .r-chart-row-wide, .r-nasa-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .r-stat-grid { grid-template-columns: 1fr; }
+  .r-stat-grid-3 { grid-template-columns: 1fr; }
+  .r-topbar-title { font-size: 16px !important; }
+  .r-topbar-sub { font-size: 11px; }
+  .r-btn { padding: 6px 10px; font-size: 12px; }
 }

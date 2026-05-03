@@ -27,11 +27,12 @@
     - l18n.js
   -->
 
-  <!-- Role guard: researchers go to their own dashboard immediately -->
+  <!-- Role guard: researchers can view but are redirected to their own dashboard -->
   <script>
     (function () {
       var role  = localStorage.getItem('userRole');
       var token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
+      // Allow public access - only redirect researchers if they have a token
       if (role === 'researcher' && token) {
         window.location.replace('researcher.html');
       }
@@ -39,8 +40,9 @@
   </script>
 
   <link rel="stylesheet" href="../css/farmer.css">
+  <link rel="stylesheet" href="../css/shared.css">
 </head>
-<body class="farmer-page">
+<body class="farmer-page  sh-page has-mobile-nav">
 
 <div class="f-layout">
 
@@ -65,17 +67,17 @@
         </svg>
         <span data-i18n="nav.dashboard">Dashboard</span>
       </a>
-      <a href="alerts.html" class="f-nav-link" id="alerts-link">
+      <a href="alerts.html" class="f-nav-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/>
         </svg>
-        Alerts
+        <span data-i18n="nav.alerts">Alerts</span>
       </a>
       <a href="scanner.html" class="f-nav-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/>
         </svg>
-        Plant Scanner
+        <span data-i18n="nav.scanner">Plant Scanner</span>
       </a>
       <a href="blog.html" class="f-nav-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -119,19 +121,20 @@
         <div class="f-topbar-sub" data-i18n="f.topbar_sub">Dec 25 – Dec 31, 2023 · 3 active sites</div>
       </div>
       <div class="f-topbar-right">
+        <div id="lang-toggle-target"></div>
         <a href="about.html" class="f-about-link" data-i18n="nav.about_short">ℹ About</a>
-        <div class="f-nasa-pill">
-          <svg viewBox="0 0 20 20" fill="currentColor">
+        <!-- NASA icon only — tooltip on hover -->
+        <div class="f-nasa-pill" title="NASA POWER satellite data active" style="padding:5px 8px;">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="width:14px;height:14px;">
             <circle cx="10" cy="10" r="3"/>
             <path fill-rule="evenodd" d="M10 0a10 10 0 100 20A10 10 0 0010 0zm0 2a8 8 0 110 16A8 8 0 0110 2z"/>
           </svg>
-          <span data-i18n="f.nasa_pill">NASA POWER</span>
         </div>
-        <div class="f-live-pill">
+        <!-- Live dot only -->
+        <div class="f-live-pill" style="padding:5px 8px;gap:0;">
           <div class="f-live-dot" id="f-live-dot"></div>
-          <span data-i18n="f.live_pill">Live</span>
         </div>
-        <div id="f-nav-actions" style="display:flex;gap:8px;align-items:center;"></div>
+        <div id="f-nav-actions" style="display:flex;gap:6px;align-items:center;"></div>
       </div>
     </header>
 
@@ -200,19 +203,24 @@
         </div>
       </div>
 
+      <!-- SIMPLE VIEW -->
+      <div id="f-simple-view" style="display:block;"></div>
+
+      <!-- DETAILED VIEW -->
+      <div id="f-detailed-view" style="display:none;">
+
       <!-- SECTION 1: HEALTH SCORES -->
       <div class="f-section-label" data-i18n="f.section_tiles">Field health scores — click a tile to explore that site</div>
       <div class="f-tile-grid f-mb-24" id="f-tile-grid"></div>
 
       <!-- SECTION 2: CHART + INSIGHT -->
-      <div class="f-section-label">Conditions vs. risk — last 7 days</div>
-      <div class="f-chart-insight-row f-mb-24">
+      <div class="f-section-label">Risk level — last 7 days</div>
+      <div class="f-chart-insight-row f-mb-24" style="display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:stretch;">
 
-        <div class="f-card">
+        <div class="f-card" style="display:flex;flex-direction:column;">
           <div class="f-card-head">
             <div>
-              <div class="f-card-title" id="f-chart-title">Risk level & temperature — maize</div>
-              <div class="f-card-sub" data-i18n="f.chart_sub">Local risk (humidity + leaf wetness + temp) vs temperature and pest count. Dashed line = NASA regional when available.</div>
+              <div class="f-card-title" id="f-chart-title">Risk — Maize</div>
             </div>
             <div class="f-site-btns">
               <button class="f-site-btn active" onclick="selectSite('site_maize')" data-i18n="f.btn_maize">Maize</button>
@@ -221,36 +229,30 @@
             </div>
           </div>
 
-          <div style="position:relative;width:100%;height:230px;">
+          <div style="position:relative;width:100%;flex:1;min-height:220px;">
             <canvas id="f-risk-chart"
                     role="img"
-                    aria-label="Line chart showing risk level, temperature, and pest count over the last 7 days for the selected farm site.">
+                    aria-label="Line chart showing risk level and temperature over the last 7 days.">
             </canvas>
           </div>
 
-          <div class="f-chart-legend">
-            <div class="f-legend-item">
-              <div class="f-legend-swatch" style="background:#c94040;"></div>
-              <span data-i18n="f.legend_risk">Local risk level</span>
+          <div class="f-chart-legend" style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.05);display:flex;gap:20px;flex-wrap:wrap;">
+            <div class="f-legend-item" style="display:flex;align-items:center;gap:6px;">
+              <div style="width:18px;height:3px;background:#c94040;border-radius:2px;"></div>
+              <span style="font-size:12px;color:#7a8a65;">Risk &nbsp;<span style="color:#63a33e;">●</span> low &nbsp;<span style="color:#c97c1a;">●</span> mid &nbsp;<span style="color:#c94040;">●</span> high</span>
             </div>
-            <div class="f-legend-item">
-              <div class="f-legend-swatch" style="background:#3d6b22;border-top:2px dashed #3d6b22;background:transparent;"></div>
-              <span data-i18n="f.legend_temp">Avg temperature</span>
-            </div>
-            <div class="f-legend-item">
-              <div class="f-legend-box" style="background:rgba(201,124,26,0.25);border:1px solid #c97c1a;"></div>
-              <span data-i18n="f.legend_pest">Pest count</span>
-            </div>
-            <div class="f-legend-item">
-              <div class="f-legend-swatch" style="border-top:2px dashed #2d7dd6;background:transparent;"></div>
-              <span data-i18n="f.legend_nasa">NASA regional temp</span>
+            <div class="f-legend-item" style="display:flex;align-items:center;gap:6px;">
+              <div style="width:18px;height:0;border-top:2px dashed #3d6b22;"></div>
+              <span style="font-size:12px;color:#7a8a65;">Temperature (right axis)</span>
             </div>
           </div>
         </div>
 
-        <div id="f-insight-panel"></div>
+        <div id="f-insight-panel" style="min-height:0;"></div>
 
       </div>
+
+      </div><!-- end detailed view -->
 
       <!-- SECTION 3: MAP -->
       <div class="f-section-label" data-i18n="f.section_map">Satellite scouting map — click a dot to explore a site</div>
@@ -285,5 +287,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="../js/l18n.js"></script>
 <script src="../js/farmer_dashboard.js"></script>
+
+<!-- MOBILE NAV -->
+<nav class="sh-mobile-nav">
+  <a href="index.html" class="active">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+    <span data-i18n="mob.dashboard">Dashboard</span>
+  </a>
+  <a href="alerts.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
+    <span data-i18n="mob.alerts">Alerts</span>
+  </a>
+  <a href="scanner.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
+    <span data-i18n="mob.scanner">Scanner</span>
+  </a>
+  <a href="profile.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+    <span data-i18n="mob.profile">Profile</span>
+  </a>
+</nav>
+
+<script>
+  (function() {
+    if (window.innerWidth <= 860) document.body.classList.add('has-mobile-nav');
+    window.addEventListener('resize', function() {
+      document.body.classList.toggle('has-mobile-nav', window.innerWidth <= 860);
+    });
+  })();
+</script>
+
+
 </body>
 </html>

@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../fonts/fonts.css">
 </head>
 
-<body class="farmer-page">
+<body class="farmer-page sh-page has-mobile-nav">
 
 <div class="f-layout">
 
@@ -22,12 +22,12 @@
       <img src="../images/logo_transparent.png" alt="Eco Leaf">
       <div class="f-sidebar-brand">
         Eco Leaf
-        <small>Field Dashboard</small>
+        <small data-i18n="f.brand_sub">Field Dashboard</small>
       </div>
     </div>
 
     <div class="f-nav-section">
-      <div class="f-nav-label">Navigation</div>
+      <div class="f-nav-label" data-i18n="nav.navigation">Navigation</div>
 
       <a href="index.html" class="f-nav-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -36,28 +36,28 @@
           <rect x="2" y="11" width="7" height="7" rx="1.5"/>
           <rect x="11" y="11" width="7" height="7" rx="1.5"/>
         </svg>
-        Dashboard
+        <span data-i18n="nav.dashboard">Dashboard</span>
       </a>
 
       <a href="alerts.html" class="f-nav-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/>
         </svg>
-        Alerts
+        <span data-i18n="nav.alerts">Alerts</span>
       </a>
 
       <a href="scanner.html" class="f-nav-link active">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/>
         </svg>
-        Plant Scanner
+        <span data-i18n="nav.scanner">Plant Scanner</span>
       </a>
 
       <a href="blog.html" class="f-nav-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M3 5h14M3 9h10M3 13h12M3 17h8"/>
         </svg>
-        Community Blog
+        <span data-i18n="nav.blog">Community Blog</span>
       </a>
 
       <a href="profile.html" class="f-nav-link">
@@ -65,7 +65,7 @@
           <circle cx="10" cy="7" r="3"/>
           <path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>
         </svg>
-        Profile
+        <span data-i18n="nav.profile">Profile</span>
       </a>
 
     </div>
@@ -75,14 +75,14 @@
         <div class="f-avatar" id="f-avatar-initials">FA</div>
         <div class="f-user-info">
           <div class="f-user-name" id="f-user-name-display">Farmer</div>
-          <div class="f-user-role">🌾 Farmer</div>
+          <div class="f-user-role" data-i18n="auth.farmer">🌾 Farmer</div>
         </div>
       </div>
       <button class="f-logout-btn" id="f-logout-btn">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M13 15l4-5-4-5M17 10H7M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3"/>
         </svg>
-        Logout
+        <span data-i18n="nav.logout">Logout</span>
       </button>
     </div>
 
@@ -93,9 +93,9 @@
 
     <!-- TOPBAR -->
     <header class="sh-topbar">
-      <div class="sh-topbar-title">Plant Scanner</div>
+      <div class="sh-topbar-title" data-i18n="nav.scanner">Plant Scanner</div>
       <div class="sh-topbar-right">
-        <a href="about.html" class="sh-about-link">ℹ About Us</a>
+        <a href="about.html" class="sh-about-link" data-i18n="nav.about">ℹ About Us</a>
         <div id="sh-nav-actions"></div>
       </div>
     </header>
@@ -106,30 +106,30 @@
       <!-- HERO -->
       <div class="f-hero f-mb-24">
         <div class="f-hero-text">
-          <h1>Scan a Plant</h1>
-          <p>Upload a plant image, choose crop type, and get a health prediction</p>
+          <h1 data-i18n="scan.hero_h">Scan a Plant</h1>
+          <p data-i18n="scan.hero_p">Upload a plant image, choose crop type, and get a health prediction</p>
         </div>
       </div>
 
       <!-- UPLOAD CARD -->
       <div class="f-card f-mb-24">
-        <div class="f-card-title">Upload Plant Image</div>
+        <div class="f-card-title" data-i18n="scan.upload_title">Upload Plant Image</div>
 
         <form id="scanner-form" class="f-mt-12">
 
           <div class="f-form-row">
 
             <select id="crop_type" required>
-              <option value="">Select crop</option>
-              <option value="maize">Maize</option>
-              <option value="brassica">Brassica</option>
-              <option value="orchard">Orchard</option>
+              <option value="" data-i18n="scan.select_crop">Select crop</option>
+              <option value="maize" data-i18n="f.btn_maize">Maize</option>
+              <option value="brassica" data-i18n="f.btn_brassica">Brassica</option>
+              <option value="orchard" data-i18n="f.btn_orchard">Orchard</option>
             </select>
 
-            <input type="number" id="site_id" placeholder="Site ID">
+            <input type="number" id="site_id" placeholder="Site ID" data-i18n-ph="scan.site_id_ph">
 
             <label class="f-file-upload">
-              <span id="file-text">Choose Image</span>
+              <span id="file-text" data-i18n="scan.choose_image">Choose Image</span>
               <input type="file" id="scan_file" accept="image/*">
             </label>
 
@@ -140,7 +140,7 @@
           </div>
 
           <div class="f-mt-12">
-            <button type="submit" class="f-btn f-btn-primary" id="scan-btn">
+            <button type="submit" class="f-btn f-btn-primary" id="scan-btn" data-i18n="scan.btn">
               Scan Plant
             </button>
             <span id="scanner-error" style="margin-left:10px;color:red;"></span>
@@ -151,37 +151,37 @@
 
       <!-- RESULT CARD -->
       <div class="f-card f-mb-24 f-hidden" id="result-card">
-        <div class="f-card-title">Scan Result</div>
+        <div class="f-card-title" data-i18n="scan.result_title">Scan Result</div>
 
         <div class="f-result-grid f-mt-12">
-          <div><strong>Prediction:</strong> <span id="result-prediction">-</span></div>
-          <div><strong>Confidence:</strong> <span id="result-confidence">-</span></div>
-          <div><strong>Crop:</strong> <span id="result-crop">-</span></div>
-          <div><strong>Site:</strong> <span id="result-site">-</span></div>
+          <div><strong data-i18n="scan.prediction">Prediction:</strong> <span id="result-prediction">-</span></div>
+          <div><strong data-i18n="scan.confidence">Confidence:</strong> <span id="result-confidence">-</span></div>
+          <div><strong data-i18n="scan.crop">Crop:</strong> <span id="result-crop">-</span></div>
+          <div><strong data-i18n="scan.site">Site:</strong> <span id="result-site">-</span></div>
         </div>
 
         <div class="f-mt-12">
-          <strong>Reason</strong>
+          <strong data-i18n="scan.reason">Reason</strong>
           <p id="result-reason-text">-</p>
         </div>
       </div>
 
       <!-- HOW IT WORKS -->
       <div class="f-card f-mb-24">
-        <div class="f-card-title">How it works</div>
+        <div class="f-card-title" data-i18n="scan.how_title">How it works</div>
         <ul class="f-mt-12" style="color:var(--f-text-3);font-size:13px;">
-          <li>Select the crop type</li>
-          <li>Upload a clear plant or leaf image</li>
-          <li>The system checks the image using ML</li>
-          <li>The result is saved and shown below</li>
+          <li data-i18n="scan.how_1">Select the crop type</li>
+          <li data-i18n="scan.how_2">Upload a clear plant or leaf image</li>
+          <li data-i18n="scan.how_3">The system checks the image using ML</li>
+          <li data-i18n="scan.how_4">The result is saved and shown below</li>
         </ul>
       </div>
 
       <!-- RECENT SCANS -->
       <section class="scanner-card recent-scans-section">
-        <h2>My Recent Scans</h2>
+        <h2 data-i18n="scan.recent_title">My Recent Scans</h2>
         <div id="my-scans-container" class="my-scans-grid">
-          <p id="my-scans-empty" class="empty-scans-text">No scans yet</p>
+          <p id="my-scans-empty" class="empty-scans-text" data-i18n="scan.no_scans">No scans yet</p>
         </div>
       </section>
 
@@ -190,10 +190,37 @@
 
 </div>
 
-<!-- JS -->
 <script src="../js/l18n.js"></script>
 <script src="../js/scanner.js"></script>
 <script src="../js/shared-nav.js"></script>
 
+<!-- Mobile Bottom Navigation -->
+<nav class="sh-mobile-nav">
+  <a href="index.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+    <span data-i18n="mob.dashboard">Dashboard</span>
+  </a>
+  <a href="scanner.html" class="active">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
+    <span data-i18n="mob.scanner">Scanner</span>
+  </a>
+  <a href="blog.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+    <span data-i18n="mob.blog">Blog</span>
+  </a>
+  <a href="profile.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+    <span data-i18n="mob.profile">Profile</span>
+  </a>
+</nav>
+
+<script>
+  (function() {
+    if (window.innerWidth <= 860) document.body.classList.add('has-mobile-nav');
+    window.addEventListener('resize', function() {
+      document.body.classList.toggle('has-mobile-nav', window.innerWidth <= 860);
+    });
+  })();
+</script>
 </body>
 </html>
