@@ -364,8 +364,18 @@ const I18n = (() => {
     'dv.rec_brassica_3':  { en: 'Monitor weekly — lowest risk of three sites',
                             af: 'Monitor weekliks — laagste risiko van drie persele' },
 
-    /* ── SCANNER PAGE ── */
-    'scan.title':         { en: 'Plant Scanner',              af: 'Plant Skandeerder' },
+    /* ── ALERTS PAGE ── */
+    'alerts.title':         { en: 'Alerts Overview', af: 'Waarskuwings Oorsig' },
+    'alerts.hero_p':        { en: 'Monitor important warnings and protect your crops in real time', af: 'Monitor belangrike waarskuwings en beskerm jou gewasse in real time' },
+    'alerts.total':         { en: 'Total alerts', af: 'Totale waarskuwings' },
+    'alerts.critical':      { en: 'Critical', af: 'Krities' },
+    'alerts.warnings':      { en: 'Warnings', af: 'Waarskuwings' },
+    'alerts.latest':        { en: 'Latest Alert', af: 'Nuutste Waarskuwing' },
+    'alerts.all':           { en: 'All Alerts', af: 'Alle Waarskuwings' },
+    'alerts.filter_all':    { en: 'All', af: 'Alle' },
+    'alerts.filter_critical': { en: 'Critical', af: 'Krities' },
+    'alerts.filter_warning': { en: 'Warning', af: 'Waarskuwing' },
+    'alerts.loading':       { en: 'Loading latest alert...', af: 'Laai nuutste waarskuwing...' },
     'scan.hero_h':        { en: 'Scan a Plant',               af: 'Skandeer \'n Plant' },
     'scan.hero_p':        { en: 'Upload a plant image, choose crop type, and get a health prediction',
                             af: 'Laai \'n plantfoto op, kies gewastipe, en kry \'n gesondheidvoorspelling' },
@@ -495,15 +505,16 @@ const I18n = (() => {
     /* Style the button to match whatever topbar it lives in */
     /* Only farmer topbar (.f-topbar) has green background - researcher has white */
     const isGreenTopbar = !!container.closest('.f-topbar');
-    btn.style.color  = isGreenTopbar ? 'rgba(255,255,255,0.75)' : 'var(--sh-text-3, #7a8a65)';
+    btn.style.color  = isGreenTopbar ? '#fff' : 'var(--sh-text-3, #7a8a65)';
+    btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.1)' : 'var(--sh-green-50,#f4f9ed)';
 
     btn.addEventListener('mouseenter', () => {
-      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.12)' : 'var(--sh-green-50,#f4f9ed)';
+      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.2)' : 'var(--sh-green-50,#f4f9ed)';
       btn.style.color = isGreenTopbar ? '#fff' : 'var(--sh-green-700,#3b6d11)';
     });
     btn.addEventListener('mouseleave', () => {
-      btn.style.background = 'transparent';
-      btn.style.color = isGreenTopbar ? 'rgba(255,255,255,0.75)' : 'var(--sh-text-3,#7a8a65)';
+      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.1)' : 'var(--sh-green-50,#f4f9ed)';
+      btn.style.color = isGreenTopbar ? '#fff' : 'var(--sh-text-3,#7a8a65)';
     });
 
     btn.addEventListener('click', () => {

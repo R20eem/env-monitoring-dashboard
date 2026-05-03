@@ -115,21 +115,21 @@
       <!-- GREEN HERO BANNER -->
       <div class="f-hero f-mb-24">
         <div class="f-hero-text">
-          <h1>Alerts Overview</h1>
-          <p>Monitor important warnings and protect your crops in real time</p>
+          <h1 data-i18n="alerts.title">Alerts Overview</h1>
+          <p data-i18n="alerts.hero_p">Monitor important warnings and protect your crops in real time</p>
         </div>
         <div class="f-hero-right">
           <div class="f-hero-stat">
             <div class="f-hero-stat-val" id="stat-total">--</div>
-            <div class="f-hero-stat-label">Total alerts</div>
+            <div class="f-hero-stat-label" data-i18n="alerts.total">Total alerts</div>
           </div>
           <div class="f-hero-stat">
             <div class="f-hero-stat-val" id="stat-critical">--</div>
-            <div class="f-hero-stat-label">Critical</div>
+            <div class="f-hero-stat-label" data-i18n="alerts.critical">Critical</div>
           </div>
           <div class="f-hero-stat">
             <div class="f-hero-stat-val" id="stat-warning">--</div>
-            <div class="f-hero-stat-label">Warnings</div>
+            <div class="f-hero-stat-label" data-i18n="alerts.warnings">Warnings</div>
           </div>
         </div>
       </div>
@@ -138,21 +138,21 @@
       <div class="alerts-section">
         <div class="alerts-section-title">
           <span class="latest-dot"></span>
-          Latest Alert
+          <span data-i18n="alerts.latest">Latest Alert</span>
         </div>
         <div id="main-alert">
-          <p>Loading latest alert...</p>
+          <p data-i18n="alerts.loading">Loading latest alert...</p>
         </div>
       </div>
 
       <!-- ALL ALERTS -->
       <div class="alerts-section">
         <div class="alerts-filter-row">
-          <div class="alerts-section-title">All Alerts</div>
+          <div class="alerts-section-title" data-i18n="alerts.all">All Alerts</div>
           <div class="alerts-filters">
-            <button class="alert-filter-btn active" data-filter="all">All</button>
-            <button class="alert-filter-btn" data-filter="critical">Critical</button>
-            <button class="alert-filter-btn" data-filter="warning">Warning</button>
+            <button class="alert-filter-btn active" data-filter="all" data-i18n="alerts.filter_all">All</button>
+            <button class="alert-filter-btn" data-filter="critical" data-i18n="alerts.filter_critical">Critical</button>
+            <button class="alert-filter-btn" data-filter="warning" data-i18n="alerts.filter_warning">Warning</button>
           </div>
         </div>
         <div id="alerts-list">
@@ -173,19 +173,19 @@
 <nav class="sh-mobile-nav">
   <a href="index.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
-    Dashboard
+    <span data-i18n="mob.dashboard">Dashboard</span>
   </a>
   <a href="alerts.html" class="active">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
-    Alerts
+    <span data-i18n="mob.alerts">Alerts</span>
   </a>
   <a href="scanner.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
-    Scanner
+    <span data-i18n="mob.scanner">Scanner</span>
   </a>
   <a href="profile.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
-    Profile
+    <span data-i18n="mob.profile">Profile</span>
   </a>
 </nav>
 
