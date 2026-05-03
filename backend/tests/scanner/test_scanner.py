@@ -2,10 +2,20 @@
 File: test_scanner.py
 
 Purpose:
-Tests the scanner endpoints.
+Tests the ML scanner endpoints.
+
+Responsibilities:
+- Validate image upload
+- Check prediction response
+- Test error handling and validation
+- Ensure correct data structure
 
 Layer:
-Backend Testing
+Backend (Testing)
+
+Related:
+- scanner routes
+- ML model service
 """
 
 from io import BytesIO
