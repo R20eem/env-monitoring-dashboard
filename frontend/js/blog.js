@@ -555,7 +555,7 @@ document.getElementById('login-btn').addEventListener('click', async () => {
     loadPosts();
 
   } catch (err) {
-    errEl.textContent = 'Could not reach the server. Is the backend running?';
+    errEl.textContent = I18n.t('blog.server_unreachable');
     console.error(err);
   }
 });
@@ -626,7 +626,7 @@ function renderPosts() {
   
   if (!allPosts || allPosts.length === 0) {
     console.log('Blog: No posts to render');
-    listEl.innerHTML = '<p style="color:var(--text-mid);padding:20px 0;">No posts available</p>';
+    listEl.innerHTML = `<p style="color:var(--text-mid);padding:20px 0;">${I18n.t('blog.no_posts')}</p>`;
     return;
   }
 
@@ -743,11 +743,11 @@ document.getElementById('submit-post').addEventListener('click', async () => {
   errEl.textContent = '';
     if (!title)   { errEl.textContent = I18n.t('blog.title_req'); return; }
     if (!content) { errEl.textContent = I18n.t('blog.content_req'); return; }
-  if (!token)   { errEl.textContent = 'Please sign in first.'; return; }
+  if (!token)   { errEl.textContent = I18n.t('blog.signin_first'); return; }
 
   const btn = document.getElementById('submit-post');
   btn.disabled = true;
-  btn.textContent = 'Posting…';
+  btn.textContent = I18n.t('blog.posting');
 
   try {
     const res  = await fetch(`${API_BASE}/posts`, {
@@ -756,16 +756,16 @@ document.getElementById('submit-post').addEventListener('click', async () => {
       body: JSON.stringify({ title, content }),
     });
     const data = await res.json();
-    if (!res.ok) { errEl.textContent = data.detail || 'Could not create post.'; return; }
+    if (!res.ok) { errEl.textContent = data.detail || I18n.t('blog.create_err'); return; }
     document.getElementById('post-title').value   = '';
     document.getElementById('post-content').value = '';
     await loadPosts();
   } catch (err) {
-    errEl.textContent = 'Server error. Please try again.';
+    errEl.textContent = I18n.t('blog.server_err');
     console.error(err);
   } finally {
     btn.disabled    = false;
-    btn.textContent = 'Post';
+    btn.textContent = I18n.t('blog.post_btn');
   }
 });
 
@@ -893,12 +893,12 @@ document.getElementById('submit-comment').addEventListener('click', async () => 
   const token   = getToken();
 
   errEl.textContent = '';
-  if (!content) { errEl.textContent = 'Comment cannot be empty.'; return; }
-  if (!token)   { errEl.textContent = 'Please sign in first.'; return; }
+  if (!content) { errEl.textContent = I18n.t('blog.comment_empty'); return; }
+  if (!token)   { errEl.textContent = I18n.t('blog.signin_first'); return; }
 
   const btn = document.getElementById('submit-comment');
   btn.disabled    = true;
-  btn.textContent = 'Posting…';
+  btn.textContent = I18n.t('blog.posting');
 
   try {
     const res  = await fetch(`${API_BASE}/posts/${openPostId}/comments`, {
@@ -907,18 +907,18 @@ document.getElementById('submit-comment').addEventListener('click', async () => 
       body: JSON.stringify({ content }),
     });
     const data = await res.json();
-    if (!res.ok) { errEl.textContent = data.detail || 'Could not post comment.'; return; }
+    if (!res.ok) { errEl.textContent = data.detail || I18n.t('blog.comment_err'); return; }
     document.getElementById('modal-comment-input').value = '';
     await loadComments(openPostId);
     const p = allPosts.find(p => p.id === openPostId);
     if (p) p.comments_count += 1;
     renderPosts();
   } catch (err) {
-    errEl.textContent = 'Server error.';
+    errEl.textContent = I18n.t('blog.server_err_short');
     console.error(err);
   } finally {
     btn.disabled    = false;
-    btn.textContent = 'Add Comment';
+    btn.textContent = I18n.t('blog.comment_btn');
   }
 });
 

@@ -16,10 +16,26 @@ const resultReason     = document.getElementById('result-reason-text');
 
 const myScansContainer = document.getElementById('my-scans-container');
 
+function t(key, fallback) {
+  return typeof I18n !== 'undefined' ? I18n.t(key) : fallback;
+}
+
+document.addEventListener('languageChanged', () => {
+  loadMyScans();
+  if (fileInput.files.length === 0) {
+    fileText.textContent = t('scan.choose_image', "Choose Image");
+  }
+  if (scanBtn.disabled) {
+    scanBtn.textContent = t('scan.scanning', 'Scanning...');
+  } else {
+    scanBtn.textContent = t('scan.btn', 'Scan Plant');
+  }
+});
+
 /* ── preview uploaded image ── */
 fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
-  fileText.textContent = file ? file.name : "Choose Image";
+  fileText.textContent = file ? file.name : t('scan.choose_image', "Choose Image");
 
   if (!file) {
     imagePreview.classList.add('f-hidden');
@@ -73,7 +89,7 @@ async function loadMyScans() {
   const token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
 
   if (!token) {
-    myScansContainer.innerHTML = '<p class="empty-scans-text">Log in to see your scan history</p>';
+    myScansContainer.innerHTML = `<p class="empty-scans-text">${t('scan.login_history', 'Log in to see your scan history')}</p>`;
     return;
   }
 
@@ -85,12 +101,12 @@ async function loadMyScans() {
     const scans = await res.json();
 
     if (!res.ok) {
-      myScansContainer.innerHTML = '<p class="empty-scans-text">Could not load your scans</p>';
+      myScansContainer.innerHTML = `<p class="empty-scans-text">${t('scan.load_err', 'Could not load your scans')}</p>`;
       return;
     }
 
     if (!Array.isArray(scans) || scans.length === 0) {
-      myScansContainer.innerHTML = '<p class="empty-scans-text">No scans yet</p>';
+      myScansContainer.innerHTML = `<p class="empty-scans-text">${t('scan.no_scans', 'No scans yet')}</p>`;
       return;
     }
 
@@ -99,23 +115,23 @@ async function loadMyScans() {
       const card = document.createElement('div');
       card.className = 'scan-history-card';
       card.innerHTML = `
-        <img src="${scan.image_url}" alt="scan image" class="scan-history-img">
+        <img src="${scan.image_url}" alt="${t('scan.image_alt', 'Scan image')}" class="scan-history-img">
         <div class="scan-history-body">
           <div class="scan-history-top">
             <span class="${badgeClass(scan.prediction)}">${scan.prediction}</span>
             <span class="scan-time">${formatScanDate(scan.created_at)}</span>
           </div>
-          <p><strong>Crop:</strong> ${scan.crop_type}</p>
-          <p><strong>Site:</strong> ${scan.site_id}</p>
-          <p><strong>Confidence:</strong> ${Math.round(scan.confidence * 100)}%</p>
-          <p><strong>Reason:</strong> ${scan.reason}</p>
+        <p><strong>${t('scan.crop', 'Crop:')}</strong> ${scan.crop_type}</p>
+        <p><strong>${t('scan.site', 'Site:')}</strong> ${scan.site_id}</p>
+        <p><strong>${t('scan.confidence', 'Confidence:')}</strong> ${Math.round(scan.confidence * 100)}%</p>
+        <p><strong>${t('scan.reason', 'Reason:')}</strong> ${scan.reason}</p>
         </div>
       `;
       myScansContainer.appendChild(card);
     });
 
   } catch (err) {
-    myScansContainer.innerHTML = '<p class="empty-scans-text">Could not connect to scan history</p>';
+    myScansContainer.innerHTML = `<p class="empty-scans-text">${t('scan.err_conn', 'Could not connect to the scanner service.')}</p>`;
   }
 }
 
@@ -166,11 +182,11 @@ form.addEventListener('submit', async (e) => {
   const token    = localStorage.getItem('token') || localStorage.getItem('jwt_token');
 
   if (!cropType || !siteId || !file) {
-    errorEl.textContent = 'Please complete all fields and choose an image.';
+    errorEl.textContent = t('scan.err_fields', 'Please complete all fields and choose an image.');
     return;
   }
   if (!token) {
-    errorEl.textContent = 'You need to log in first before scanning.';
+    errorEl.textContent = t('scan.err_login', 'You need to log in first before scanning.');
     return;
   }
 
@@ -180,7 +196,7 @@ form.addEventListener('submit', async (e) => {
   formData.append('file',      file);
 
   scanBtn.disabled    = true;
-  scanBtn.textContent = 'Scanning...';
+  scanBtn.textContent = t('scan.scanning', 'Scanning...');
 
   try {
     const res  = await fetch(`${API_BASE}/api/scanner/upload`, {
@@ -192,7 +208,7 @@ form.addEventListener('submit', async (e) => {
     const data = await res.json();
 
     if (!res.ok) {
-      errorEl.textContent = data.detail || 'Scan failed.';
+      errorEl.textContent = data.detail || t('scan.err_failed', 'Scan failed.');
       return;
     }
 
@@ -234,10 +250,10 @@ form.addEventListener('submit', async (e) => {
     setTimeout(() => loadMyScans(), 30000);
 
   } catch (err) {
-    errorEl.textContent = 'Could not connect to the scanner service.';
+    errorEl.textContent = t('scan.err_conn', 'Could not connect to the scanner service.');
   } finally {
     scanBtn.disabled    = false;
-    scanBtn.textContent = 'Scan Plant';
+    scanBtn.textContent = t('scan.btn', 'Scan Plant');
   }
 });
 

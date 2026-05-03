@@ -97,13 +97,14 @@
     <!-- TOPBAR -->
     <header class="f-topbar">
       <div class="f-topbar-left">
-        <div class="f-topbar-title">Alerts</div>
-        <div class="f-topbar-sub">Simple warnings to protect your crops</div>
+        <div class="f-topbar-title" data-i18n="nav.alerts">Alerts</div>
+        <div class="f-topbar-sub" data-i18n="alerts.topbar_sub">Simple warnings to protect your crops</div>
       </div>
       <div class="f-topbar-right">
+        <div id="lang-toggle-target"></div>
         <div class="f-live-pill">
           <div class="f-live-dot"></div>
-          Live
+          <span data-i18n="f.live_pill">Live</span>
         </div>
       </div>
     </header>
@@ -156,7 +157,7 @@
           </div>
         </div>
         <div id="alerts-list">
-          <p>Loading alerts...</p>
+        <p data-i18n="alerts.loading_alerts">Loading alerts...</p>
         </div>
       </div>
 

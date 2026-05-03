@@ -192,6 +192,7 @@ const I18n = (() => {
     'blog.farmer':         { en: 'farmer',                af: 'boer' },
     'blog.researcher':    { en: 'researcher',            af: 'navorser' },
     'blog.by':             { en: 'By',                    af: 'Deur' },
+    'blog.read_more':      { en: 'Read more →',           af: 'Lees meer →' },
     'blog.signin_comment': { en: 'Sign in to leave a comment.', af: 'Teken in om \'n opmerking te los.' },
     'blog.signin_post':    { en: 'Sign in to post',           af: 'Teken in om te plaas' },
     'blog.welcome':        { en: 'Welcome back!',              af: 'Welkom terug!' },
@@ -205,6 +206,8 @@ const I18n = (() => {
     'blog.comment_empty':  { en: 'Comment cannot be empty.',   af: 'Opmerking mag nie leeg wees nie.' },
     'blog.comment_err':    { en: 'Could not post comment.',    af: 'Kon nie opmerking plaas nie.' },
     'blog.server_err_short': { en: 'Server error.',            af: 'Bediener fout.' },
+    'blog.posting': { en: 'Posting...', af: 'Plaas tans...' },
+    'blog.server_unreachable': { en: 'Could not reach the server. Is the backend running?', af: 'Kon nie die bediener bereik nie. Loop die backend?' },
 
     /* ── PROFILE PAGE ── */
     'profile.title':      { en: 'Profile',      af: 'Profiel' },
@@ -376,6 +379,30 @@ const I18n = (() => {
     'alerts.filter_critical': { en: 'Critical', af: 'Krities' },
     'alerts.filter_warning': { en: 'Warning', af: 'Waarskuwing' },
     'alerts.loading':       { en: 'Loading latest alert...', af: 'Laai nuutste waarskuwing...' },
+    'alerts.topbar_sub':    { en: 'Simple warnings to protect your crops', af: 'Eenvoudige waarskuwings om jou gewasse te beskerm' },
+    'alerts.loading_alerts':{ en: 'Loading alerts...', af: 'Laai waarskuwings...' },
+    'alerts.empty_healthy': { en: '✅ No alerts — your crops look healthy!', af: '✅ Geen waarskuwings — jou gewasse lyk gesond!' },
+    'alerts.empty_other':   { en: 'No other alerts to show.', af: 'Geen ander waarskuwings om te wys nie.' },
+    'alerts.failed':        { en: '❌ Failed to load alerts. Please try again.', af: '❌ Kon nie waarskuwings laai nie. Probeer asseblief weer.' },
+    'alerts.normal':        { en: 'Normal', af: 'Normaal' },
+    'alerts.field': { en: 'Field', af: 'Veld' },
+    'alerts.unknown_crop': { en: 'Unknown crop', af: 'Onbekende gewas' },
+    'alerts.confidence': { en: 'confidence', af: 'sekerheid' },
+    'alerts.humidity': { en: 'humidity', af: 'humiditeit' },
+    'alerts.healthy_plant': { en: 'Healthy Plant', af: 'Gesonde Plant' },
+    'alerts.disease_detected': { en: 'Disease Detected', af: 'Siekte Bespeur' },
+    'alerts.scan_result': { en: 'Scan Result', af: 'Skandeer Uitslag' },
+    'alerts.disease_risk': { en: 'Disease Risk', af: 'Siekterisiko' },
+    'alerts.high_risk': { en: 'High Risk Detected', af: 'Hoë Risiko Bespeur' },
+    'alerts.warning_condition': { en: 'Warning Condition', af: 'Waarskuwingstoestand' },
+    'alerts.normal_condition': { en: 'Normal Condition', af: 'Normale Toestand' },
+    'alerts.advice_disease_critical': { en: 'Your plant may be diseased. Please inspect it immediately.', af: 'Jou plant mag siek wees. Ondersoek dit asseblief onmiddellik.' },
+    'alerts.advice_disease_warning': { en: 'Monitor your plant closely over the next few days.', af: 'Monitor jou plant noukeurig oor die volgende paar dae.' },
+    'alerts.advice_disease_healthy': { en: 'Your plant looks healthy. Keep up good care.', af: 'Jou plant lyk gesond. Hou aan met goeie sorg.' },
+    'alerts.advice_unhealthy': { en: 'Your plant may be unhealthy. Please check it and take action.', af: 'Jou plant mag ongesond wees. Gaan dit na en neem aksie.' },
+    'alerts.advice_critical': { en: 'Immediate attention required.', af: 'Onmiddellike aandag word vereis.' },
+    'alerts.advice_warning': { en: 'Monitor conditions closely.', af: 'Monitor toestande noukeurig.' },
+    'alerts.advice_normal': { en: 'Everything looks fine.', af: 'Alles lyk reg.' },
     'scan.hero_h':        { en: 'Scan a Plant',               af: 'Skandeer \'n Plant' },
     'scan.hero_p':        { en: 'Upload a plant image, choose crop type, and get a health prediction',
                             af: 'Laai \'n plantfoto op, kies gewastipe, en kry \'n gesondheidvoorspelling' },
@@ -397,6 +424,14 @@ const I18n = (() => {
     'scan.how_4':         { en: 'The result is saved and shown below', af: 'Die uitslag word gestoor en hieronder gewys' },
     'scan.recent_title':  { en: 'My Recent Scans',            af: 'My Onlangse Skanderings' },
     'scan.no_scans':      { en: 'No scans yet',               af: 'Nog geen skanderings nie' },
+    'scan.login_history': { en: 'Log in to see your scan history', af: 'Teken in om jou skandeergeskiedenis te sien' },
+    'scan.load_err':      { en: 'Could not load your scans',       af: 'Kon nie jou skanderings laai nie' },
+    'scan.scanning':      { en: 'Scanning...', af: 'Skandeer tans...' },
+    'scan.err_fields':    { en: 'Please complete all fields and choose an image.', af: 'Voltooi asseblief alle velde en kies \'n foto.' },
+    'scan.err_login':     { en: 'You need to log in first before scanning.', af: 'Jy moet eers inteken voor jy kan skandeer.' },
+    'scan.err_failed':    { en: 'Scan failed.', af: 'Skandering het misluk.' },
+    'scan.err_conn':      { en: 'Could not connect to the scanner service.', af: 'Kon nie met die skandeerdiens koppel nie.' },
+    'scan.image_alt':     { en: 'Scan image', af: 'Skandeerfoto' },
 
     /* ── SCAN INSIGHTS (farmer dashboard) ── */
     'f.scan_title':       { en: 'your plant scans',           af: 'jou plant skanderings' },
@@ -460,15 +495,19 @@ const I18n = (() => {
 
   /* ── TOGGLE BUTTON ──────────────────────────────────────── */
   /*
-    Injects a pill button into whichever topbar-right exists on the page.
-    Works for farmer (f-topbar-right), researcher (r-topbar-right),
-    and shared-layout (sh-topbar-right) pages.
+    Injects a pill button into the page topbar.
+    Works for farmer, researcher, and shared layouts.
+    Prefer an explicit placeholder if available.
   */
   function injectToggleBtn() {
     const selectors = [
+      '#lang-toggle-target',
       '.f-topbar-right',
       '.r-topbar-right',
       '.sh-topbar-right',
+      '.f-topbar',
+      '.r-topbar',
+      '.sh-topbar',
     ];
 
     let container = null;
@@ -488,11 +527,9 @@ const I18n = (() => {
     btn.style.cssText = [
       'display:inline-flex',
       'align-items:center',
-      'gap:5px',
+      'gap:6px',
       'padding:6px 13px',
       'border-radius:20px',
-      'border:1.5px solid currentColor',
-      'background:transparent',
       'cursor:pointer',
       'font-size:12px',
       'font-weight:700',
@@ -502,19 +539,20 @@ const I18n = (() => {
       'font-family:inherit',
     ].join(';');
 
-    /* Style the button to match whatever topbar it lives in */
-    /* Only farmer topbar (.f-topbar) has green background - researcher has white */
-    const isGreenTopbar = !!container.closest('.f-topbar');
-    btn.style.color  = isGreenTopbar ? '#fff' : 'var(--sh-text-3, #7a8a65)';
-    btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.1)' : 'var(--sh-green-50,#f4f9ed)';
+    /* Detect green topbar by checking if the PAGE has a farmer/green topbar,
+       not by traversing ancestors of the container (which fails for target divs) */
+    const isGreenTopbar = !!document.querySelector('.f-topbar');
+    const isWhiteTopbar = !!document.querySelector('.sh-topbar') || !!document.querySelector('.r-topbar');
+
+    btn.style.color      = isGreenTopbar ? '#fff'                        : 'var(--sh-green-800,#27500a)';
+    btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.18)'      : 'var(--sh-green-100,#eaf3de)';
+    btn.style.border     = isGreenTopbar ? '1.5px solid rgba(255,255,255,0.4)' : '1.5px solid var(--sh-green-400,#97c459)';
 
     btn.addEventListener('mouseenter', () => {
-      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.2)' : 'var(--sh-green-50,#f4f9ed)';
-      btn.style.color = isGreenTopbar ? '#fff' : 'var(--sh-green-700,#3b6d11)';
+      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.30)' : 'var(--sh-green-200,#c0dd97)';
     });
     btn.addEventListener('mouseleave', () => {
-      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.1)' : 'var(--sh-green-50,#f4f9ed)';
-      btn.style.color = isGreenTopbar ? '#fff' : 'var(--sh-text-3,#7a8a65)';
+      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.18)' : 'var(--sh-green-100,#eaf3de)';
     });
 
     btn.addEventListener('click', () => {
