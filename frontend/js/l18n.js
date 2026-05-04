@@ -196,6 +196,7 @@ const I18n = (() => {
     'blog.signin_comment': { en: 'Sign in to leave a comment.', af: 'Teken in om \'n opmerking te los.' },
     'blog.signin_post':    { en: 'Sign in to post',           af: 'Teken in om te plaas' },
     'blog.welcome':        { en: 'Welcome back!',              af: 'Welkom terug!' },
+    'blog.signed_in':      { en: 'Signed in as',              af: 'Ingeskryf as' },
     'blog.fill_fields':    { en: 'Please fill in all fields.', af: 'Vul asseblief alle velde in.' },
     'blog.login_err':      { en: 'Login failed.',              af: 'Teken in het misluk.' },
     'blog.title_req':      { en: 'Title is required.',         af: 'Titel is nodig.' },
