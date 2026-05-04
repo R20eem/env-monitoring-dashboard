@@ -486,7 +486,8 @@ function updateAuthUI() {
     createBox.classList.remove('hidden');
     authCardTitle.textContent = I18n.t('blog.welcome');
     const icon = user.role === 'farmer' ? '🌾' : '🔬';
-    userBadge.textContent = `${icon} Signed in as ${user.role}`;
+    const roleLabel = user.role === 'farmer' ? I18n.t('blog.farmer') : I18n.t('blog.researcher');
+    userBadge.textContent = `${icon} ${I18n.t('blog.signed_in')} ${roleLabel}`;
   } else {
     authForm.classList.remove('hidden');
     loggedInInfo.classList.add('hidden');
@@ -594,7 +595,20 @@ async function loadPosts() {
     loadingEl.classList.add('hidden');
 
     if (Array.isArray(data) && data.length > 0) {
-      allPosts = data;
+      // Merge translations from SAMPLE_POSTS for matching API posts
+      allPosts = data.map(apiPost => {
+        const samplePost = SAMPLE_POSTS.find(sp => sp.title_en === apiPost.title || sp.title_af === apiPost.title);
+        if (samplePost) {
+          return {
+            ...apiPost,
+            title_en: samplePost.title_en,
+            title_af: samplePost.title_af,
+            content_en: samplePost.content_en,
+            content_af: samplePost.content_af
+          };
+        }
+        return apiPost;
+      });
       console.log('Blog: Using posts from API, count:', data.length);
     } else {
       allPosts = SAMPLE_POSTS;
@@ -680,7 +694,7 @@ function renderPosts() {
         <button class="action-btn comment-btn" data-id="${post.id}">
           💬 ${post.comments_count}
         </button>
-        <button class="read-more-btn" data-id="${post.id}">Read more →</button>
+        <button class="read-more-btn" data-id="${post.id}">${I18n.t('blog.read_more')}</button>
       </div>
     `;
 
@@ -824,6 +838,20 @@ async function loadComments(postId) {
 
     if (res.ok) {
       comments = await res.json();
+
+      // Flatten sample comments and merge translations for backend-loaded comments
+      const allSampleComments = Object.values(SAMPLE_COMMENTS).flat();
+      comments = comments.map(apiComment => {
+        const sample = allSampleComments.find(c => c.content_en === apiComment.content || c.content_af === apiComment.content);
+        if (sample) {
+          return {
+            ...apiComment,
+            content_en: sample.content_en,
+            content_af: sample.content_af
+          };
+        }
+        return apiComment;
+      });
     }
 
     if (!comments || comments.length === 0) {
