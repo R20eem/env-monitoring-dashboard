@@ -1,3 +1,30 @@
+<!--
+    File: login.html
+
+    Purpose:
+    Main HTML template for user authentication (Sign In page).
+    Allows farmers and researchers to log into the system.
+
+    Responsibilities:
+    - Provide login form (role, email, password, optional org code)
+    - Dynamically show organization code field for researchers
+    - Send login request to backend authentication endpoints
+    - Handle authentication errors and display feedback
+    - Store JWT token and user role in localStorage
+    - Redirect users to appropriate dashboard (farmer or researcher)
+
+    Layer:
+    Frontend (HTML Template + Inline JavaScript Logic)
+
+    Related:
+    - style.css (global styles and buttons)
+    - auth.css (authentication page styling)
+    - l18n.js (multi-language support)
+    - backend auth endpoints:
+        /auth/farmers/login
+        /auth/researchers/login
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

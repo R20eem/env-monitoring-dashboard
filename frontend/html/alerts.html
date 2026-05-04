@@ -4,8 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alerts - Eco Leaf</title>
+  <!--
+    File: alerts.html
 
-  <!-- Role guard: researchers go to their own dashboard immediately -->
+    Purpose:
+    Main HTML template for the farmer alerts page.
+    Displays real-time crop warnings from sensor data and plant scans.
+
+    Responsibilities:
+    - Display alerts layout with sidebar navigation
+    - Render the latest alert as a featured card
+    - Show all alerts as filterable pill rows (Critical / Warning)
+    - Include role guard to redirect researchers to their own dashboard
+
+    Layer:
+    Frontend (HTML Template)
+
+    Related:
+    - alerts.js
+    - farmer.css
+    - scanner.js (saves scan results that appear here)
+-->
+
+  <!-- researchers go to their own dashboard immediately -->
   <script>
     (function () {
       var role  = localStorage.getItem('userRole');
@@ -25,7 +46,7 @@
 
 <div class="f-layout">
 
-  <!-- ══ SIDEBAR ══ -->
+  <!-- SIDEBAR -->
   <aside class="f-sidebar">
     <div class="f-sidebar-logo">
       <img src="../images/logo_transparent.png" alt="Eco Leaf">
@@ -91,7 +112,7 @@
   </aside>
 
 
-  <!-- ══ MAIN ══ -->
+  <!--  MAIN -->
   <div class="f-main">
 
     <!-- TOPBAR -->

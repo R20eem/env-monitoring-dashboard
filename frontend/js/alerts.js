@@ -1,3 +1,26 @@
+/**
+ * File: alerts.js
+ *
+ * Purpose:
+ * Handles loading, filtering, and rendering of alerts for the farmer alerts page.
+ * combines sensor alerts from the backend with scan results from localStorage.
+ *
+ * Responsibilities:
+ * - Fetch alerts from backend API and localStorage
+ * - Filter out normal/healthy alerts — only show Critical and Warning
+ * - Render the latest alert as a large featured card
+ * - Render remaining alerts as pill rows
+ * - Handle filter buttons (All / Critical / Warning)
+ * - Update stats counters in the hero banner
+ *
+ * Layer:
+ * Frontend (JS)
+ *
+ * Related:
+ * - alerts.html
+ * - farmer.css
+ * - scanner.js
+ */
 const API_BASE = "http://127.0.0.1:8000";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -52,9 +75,8 @@ async function loadAlerts() {
 
     const allAlerts = [...localAlerts, ...apiAlerts];
 
-    // Only show critical and warning — exclude normal
     const filteredAlerts = allAlerts.filter(a => {
-    // always exclude normal/healthy — only show actionable alerts
+    // always exclude normal/healthy only show actionable alerts 
     if (a.status === "normal") return false;
 
     return (
@@ -93,7 +115,7 @@ function renderAlerts(alerts) {
     return;
   }
 
-  /* ── LATEST ALERT — featured card ── */
+  /*  LATEST ALERT — featured card */
   const first    = alerts[0];
   const firstSev = getStatusClass(first);
 
@@ -113,7 +135,7 @@ function renderAlerts(alerts) {
     </div>
   `;
 
-  /* ── ALL OTHER ALERTS — pill rows (hide normal by default) ── */
+  // all alerts pill rows 
   const pills = alerts.slice(1).map(a => {
     const sev     = getStatusClass(a);
     const display = sev === "normal" ? "none" : "flex";
@@ -151,9 +173,6 @@ function buildChips(a) {
   `;
 }
 
-/* ===============================
-   BUILD READINGS (pill row)
-================================ */
 function buildPillReadings(a) {
   if (a.type === "scan_result") {
     const conf = a.confidence != null ? `${Math.round(a.confidence * 100)}%` : "–";
@@ -234,5 +253,5 @@ function formatTime(ts) {
 
 function showError() {
   document.getElementById("main-alert").innerHTML =
-    `<div class="alert-empty">${t('alerts.failed', '❌ Failed to load alerts. Please try again.')}</div>`;
+    `<div class="alert-empty">${t('alerts.failed', 'Failed to load alerts. Please try again.')}</div>`;
 }

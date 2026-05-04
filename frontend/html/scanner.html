@@ -4,6 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Scanner — Eco Leaf</title>
+  <!--
+    File: scanner.html
+
+    Purpose:
+    Main HTML template for the plant scanning feature.
+    allows farmers to upload plant images and receive health predictions.
+
+    Responsibilities:
+    - Display scanner interface with sidebar and navigation
+    - Provide form for selecting crop type, site ID, and image upload
+    - Show scan results (prediction, confidence, reason) in a result card
+    - Display recent scan history for the logged-in user
+    - Provide visual guidance ("How it works" section)
+
+    Layer:
+    Frontend (HTML Template)
+
+    Related:
+    - scanner.css 
+    - farmer.css
+    - shared.css
+    - fonts.css
+    - scanner.js (handles scanning logic and API communication)
+    - shared-nav.js (navigation and user state)
+    - alerts.js (receives scan results saved as alerts)
+    - l18n.js (language feature)
+-->
 
   <link rel="stylesheet" href="../css/farmer.css">
   <link rel="stylesheet" href="../css/shared.css">
@@ -12,10 +39,11 @@
 </head>
 
 <body class="farmer-page sh-page has-mobile-nav">
+<div id="result-overlay"></div>
 
 <div class="f-layout">
 
-  <!-- ═════════ SIDEBAR ═════════ -->
+  <!-- SIDEBAR -->
   <aside class="f-sidebar">
 
     <div class="f-sidebar-logo">
@@ -88,7 +116,7 @@
 
   </aside>
 
-  <!-- ═════════ MAIN ═════════ -->
+  <!-- MAIN -->
   <div class="f-main">
 
     <!-- TOPBAR -->
@@ -103,7 +131,6 @@
     <!-- CONTENT -->
     <main class="f-content">
 
-      <!-- HERO -->
       <div class="f-hero f-mb-24">
         <div class="f-hero-text">
           <h1 data-i18n="scan.hero_h">Scan a Plant</h1>
@@ -111,6 +138,29 @@
         </div>
       </div>
 
+      
+      <!-- HOW IT WORKS -->
+      <div class="f-card f-mb-24">
+        <div class="f-card-title">How it works</div>
+        <ul class="f-mt-12" style="color:var(--f-text-3);font-size:13px;">
+          <li>Select the crop type</li>
+          <li>Upload a clear plant or leaf image</li>
+          <li>The system checks the image using ML</li>
+          <li>The result is saved and shown below</li>
+        </ul>
+      </div>
+
+      <!-- RESULT CARD -->
+      <div class="f-card f-mb-24 f-hidden" id="result-card">
+        <div class="f-card-title">Scan Result</div>
+
+        <div class="f-result-grid f-mt-12">
+          <div><strong>Prediction:</strong> <span id="result-prediction">-</span></div>
+          <div><strong>Crop:</strong> <span id="result-crop">-</span></div>
+          <div><strong>Site:</strong> <span id="result-site">-</span></div>
+        </div>
+
+      </div>
       <!-- UPLOAD CARD -->
       <div class="f-card f-mb-24">
         <div class="f-card-title" data-i18n="scan.upload_title">Upload Plant Image</div>
@@ -189,6 +239,7 @@
   </div>
 
 </div>
+
 
 <script src="../js/l18n.js"></script>
 <script src="../js/scanner.js"></script>
