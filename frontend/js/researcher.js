@@ -72,11 +72,6 @@ document.getElementById('r-logout-btn').addEventListener('click', () => {
   window.location.href = 'login.html';
 });
 
-// ── EXPORT ───────────────────────────────────────────────────
-document.getElementById('r-export-btn').addEventListener('click', () => {
-  window.open(`${API_BASE}/api/researcher/dashboard/data/export`, '_blank');
-});
-
 // ── TAB SWITCHING ────────────────────────────────────────────
 const tabs   = document.querySelectorAll('.r-tab');
 const panels = document.querySelectorAll('.r-panel');
@@ -297,6 +292,38 @@ function renderOvPestChart(data) {
       tension: 0.4, fill: true
     }]},
     options: lineOpts()
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+// EXPORT CARD
+// ════════════════════════════════════════════════════════════
+function initExportCard() {
+  const btn = document.getElementById('exp-download-btn');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    const site      = document.getElementById('exp-site').value;
+    const status    = document.getElementById('exp-status').value;
+    const startRaw  = document.getElementById('exp-start').value;
+    const endRaw    = document.getElementById('exp-end').value;
+    const msgEl     = document.getElementById('exp-status-msg');
+
+    const params = new URLSearchParams();
+    if (site)     params.set('site_id',    site);
+    if (status)   params.set('status',     status);
+
+    if (startRaw) params.set('start_date', `${startRaw} 00:00:00`);
+    if (endRaw)   params.set('end_date',   `${endRaw} 23:59:59`);
+
+    const url = `${API_BASE}/api/researcher/dashboard/data/export?${params.toString()}`;
+
+    msgEl.textContent = 'Preparing download...';
+    msgEl.style.color = 'var(--r-text-3)';
+
+    window.open(url, '_blank');
+
+    setTimeout(() => { msgEl.textContent = ''; }, 3000);
   });
 }
 
@@ -593,12 +620,7 @@ function initTables() {
   renderHealthTable();
 
   document.getElementById('crit-site').addEventListener('change', e => renderCritTable(e.target.value));
-
-  document.getElementById('crit-export-btn').addEventListener('click', () => {
-    const site = document.getElementById('crit-site').value;
-    const data = filterBySite(G.all, site).filter(r=>r.status==='critical');
-    downloadCSV(data, 'critical_events.csv');
-  });
+  initExportCard();
 }
 
 function renderCritTable(site) {
