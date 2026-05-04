@@ -63,6 +63,9 @@
   // Note: Sign out is only available in the sidebar, not in the topbar
   const navActions = document.getElementById('sh-nav-actions');
   if (navActions) {
+    const langToggle = document.getElementById('lang-toggle');
+    const hasLangToggle = langToggle && navActions.contains(langToggle);
+
     // Use i18n if available, else fall back to English
     const _t = (key, fallback) => (typeof I18n !== 'undefined' ? I18n.t(key) : fallback);
     if (isLogged) {
@@ -75,6 +78,10 @@
         <a href="login.html"    class="sh-btn sh-btn-outline">${_t('nav.signin','Sign In')}</a>
         <a href="register.html" class="sh-btn sh-btn-primary">${_t('nav.register','Register')}</a>
       `;
+    }
+
+    if (hasLangToggle) {
+      navActions.insertBefore(langToggle, navActions.firstChild);
     }
   }
 

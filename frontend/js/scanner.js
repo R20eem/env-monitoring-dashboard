@@ -109,7 +109,7 @@ async function loadMyScans() {
       myScansContainer.innerHTML = `<p class="empty-scans-text">${t('scan.no_scans', 'No scans yet')}</p>`;
       return;
     }
-  
+
     myScansContainer.innerHTML = '';
     scans.forEach(scan => {
       const card = document.createElement('div');
@@ -256,5 +256,6 @@ form.addEventListener('submit', async (e) => {
     scanBtn.textContent = t('scan.btn', 'Scan Plant');
   }
 });
+
 
 loadMyScans();

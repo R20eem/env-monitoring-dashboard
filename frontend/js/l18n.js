@@ -196,6 +196,7 @@ const I18n = (() => {
     'blog.signin_comment': { en: 'Sign in to leave a comment.', af: 'Teken in om \'n opmerking te los.' },
     'blog.signin_post':    { en: 'Sign in to post',           af: 'Teken in om te plaas' },
     'blog.welcome':        { en: 'Welcome back!',              af: 'Welkom terug!' },
+    'blog.signed_in':      { en: 'Signed in as',              af: 'Ingeskryf as' },
     'blog.fill_fields':    { en: 'Please fill in all fields.', af: 'Vul asseblief alle velde in.' },
     'blog.login_err':      { en: 'Login failed.',              af: 'Teken in het misluk.' },
     'blog.title_req':      { en: 'Title is required.',         af: 'Titel is nodig.' },
@@ -501,13 +502,18 @@ const I18n = (() => {
   */
   function injectToggleBtn() {
     const selectors = [
-      '#lang-toggle-target',
+      '.topbar-actions',
+      '#f-nav-actions',
+      '#sh-nav-actions',
+      '#r-nav-actions',
       '.f-topbar-right',
       '.r-topbar-right',
       '.sh-topbar-right',
+      '#lang-toggle-target',
       '.f-topbar',
       '.r-topbar',
       '.sh-topbar',
+      '.app-topbar',
     ];
 
     let container = null;
@@ -537,22 +543,23 @@ const I18n = (() => {
       'transition:background 0.18s, color 0.18s',
       'white-space:nowrap',
       'font-family:inherit',
+      'z-index:9999'
     ].join(';');
 
     /* Detect green topbar by checking if the PAGE has a farmer/green topbar,
        not by traversing ancestors of the container (which fails for target divs) */
-    const isGreenTopbar = !!document.querySelector('.f-topbar');
-    const isWhiteTopbar = !!document.querySelector('.sh-topbar') || !!document.querySelector('.r-topbar');
+    // const isGreenTopbar = !!document.querySelector('.f-topbar') && !document.querySelector('.app-topbar');
+    // const isWhiteTopbar = !!document.querySelector('.sh-topbar') || !!document.querySelector('.r-topbar') || !!document.querySelector('.app-topbar');
 
-    btn.style.color      = isGreenTopbar ? '#fff'                        : 'var(--sh-green-800,#27500a)';
-    btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.18)'      : 'var(--sh-green-100,#eaf3de)';
-    btn.style.border     = isGreenTopbar ? '1.5px solid rgba(255,255,255,0.4)' : '1.5px solid var(--sh-green-400,#97c459)';
+    btn.style.color = 'var(--sh-green-800, #27500a)';
+    btn.style.background = 'var(--sh-green-100, #eaf3de)';
+    btn.style.border = '1.5px solid var(--sh-green-400, #97c459)';
 
     btn.addEventListener('mouseenter', () => {
-      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.30)' : 'var(--sh-green-200,#c0dd97)';
+      btn.style.background= 'var(--sh-green-200,#c0dd97)';
     });
     btn.addEventListener('mouseleave', () => {
-      btn.style.background = isGreenTopbar ? 'rgba(255,255,255,0.18)' : 'var(--sh-green-100,#eaf3de)';
+      btn.style.background = 'var(--sh-green-100,#eaf3de)';
     });
 
     btn.addEventListener('click', () => {
