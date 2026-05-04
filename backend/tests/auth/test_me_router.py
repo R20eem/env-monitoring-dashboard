@@ -38,3 +38,37 @@ def test_me_rejects_invalid_token(client):
 
     assert response.status_code == 401
     assert response.json()["detail"] == "Invalid or expired token"
+
+
+def test_change_password_farmer_success(client, farmer_auth_headers, farmer_data):
+    new_pw = "NewStrong9$"
+    res = client.put(
+        "/auth/change-password",
+        headers=farmer_auth_headers,
+        json={"current_password": farmer_data["password"], "new_password": new_pw},
+    )
+    assert res.status_code == 200
+    assert res.json()["message"] == "Password updated successfully"
+
+    old_login = client.post(
+        "/auth/farmers/login",
+        json={"email": farmer_data["email"], "password": farmer_data["password"]},
+    )
+    assert old_login.status_code == 401
+
+    new_login = client.post(
+        "/auth/farmers/login",
+        json={"email": farmer_data["email"], "password": new_pw},
+    )
+    assert new_login.status_code == 200
+    assert "access_token" in new_login.json()
+
+
+def test_change_password_rejects_wrong_current(client, farmer_auth_headers):
+    res = client.put(
+        "/auth/change-password",
+        headers=farmer_auth_headers,
+        json={"current_password": "wrong-password", "new_password": "AnotherStr9$"},
+    )
+    assert res.status_code == 400
+    assert res.json()["detail"] == "Current password is incorrect"
