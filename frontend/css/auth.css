@@ -26,7 +26,6 @@ body {
 
 .auth-logo img {
     height: 80px;
-    /* The logo is dark on a transparent background, so no filter needed here */
 }
 
 .auth-card h2 {
@@ -107,4 +106,13 @@ body {
 /* Utility class for hiding elements */
 .hidden {
     display: none;
+}
+
+.auth-form .password-field {
+    margin-bottom: 16px;
+}
+
+.auth-form .password-field .password-field-input {
+    margin-bottom: 0;
+    padding-right: 2.75rem;
 }

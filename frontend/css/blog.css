@@ -321,6 +321,24 @@
   margin-bottom: 10px;
   transition: border-color 0.2s;
 }
+
+.sidebar-card .password-field {
+  margin-bottom: 10px;
+}
+
+.sidebar-card .password-field .password-field-input {
+  margin-bottom: 0;
+  padding-right: 2.75rem;
+}
+
+.sidebar-card .password-toggle {
+  color: var(--sh-text-2);
+}
+
+.sidebar-card .password-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--sh-text-1);
+}
 .sidebar-card select:focus,
 .sidebar-card input:focus {
   outline: none;

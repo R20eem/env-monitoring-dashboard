@@ -2,11 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 from app.database import get_db
-from app.core.security import decode_access_token
+from app.core.security import decode_access_token, hash_password, verify_password
 from app.schemas.common import MeResponse, TokenResponse
 from app.repositories.farmer_repository import get_farmer_by_email
 from app.repositories.researcher_repository import get_researcher_by_email
@@ -18,6 +18,11 @@ class UpdateProfileRequest(BaseModel):
     first_name:     Optional[str] = None
     last_name:      Optional[str] = None
     connection_end: Optional[str] = None
+
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str = Field(..., min_length=1)
+    new_password: str = Field(..., min_length=8, max_length=128)
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
@@ -129,4 +134,33 @@ def update_profile(
     db.refresh(user)
 
     return {"message": "Profile updated successfully"}
-    
+
+
+@router.put("/change-password")
+def change_password(
+    body: ChangePasswordRequest,
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth2_scheme),
+):
+    try:
+        email, role = decode_access_token(token)
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    if role == "farmer":
+        user = get_farmer_by_email(db, email)
+    elif role == "researcher":
+        user = get_researcher_by_email(db, email)
+    else:
+        user = None
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if not verify_password(body.current_password, user.hashed_password):
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+
+    user.hashed_password = hash_password(body.new_password)
+    db.commit()
+
+    return {"message": "Password updated successfully"}
