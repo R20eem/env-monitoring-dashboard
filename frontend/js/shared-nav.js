@@ -118,10 +118,14 @@
 
   // ── ACTIVE NAV LINK ──────────────────────────────────────────
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.sh-nav-link').forEach(link => {
+  document.querySelectorAll('.sh-nav-link, .f-nav-link, .sh-mobile-nav a').forEach(link => {
     const href = link.getAttribute('href');
-    if (href && href !== '#' && href.includes(currentPage)) {
-      link.classList.add('active');
+    if (href && href !== '#') {
+      if (href.includes(currentPage)) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
     }
   });
 

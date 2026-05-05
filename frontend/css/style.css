@@ -335,12 +335,27 @@ body.dashboard-layout {
 .sidebar-logo img {
     height: 90px;
     filter: brightness(0) invert(1); /* Keeps your logo white */
-    height: 100px !important; /* Forces it to always be exactly 60px tall */
+    height: 120px !important; /* Forces it to always be exactly 120px tall */
     width: auto; /* Prevents it from looking stretched or squished */
     max-width: 100%; /* Keeps it from breaking out of the sidebar */
     display: block;
     margin: 0 auto; /* Perfectly centers it in the sidebar */
     object-fit: contain; /* Ensures the whole logo is always visible */
+}
+
+/* Increase the logo size for other sidebar variations too */
+.f-sidebar-logo img, .sh-sidebar-logo img, .r-sidebar-logo img {
+    height: 120px !important;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Increase text contrast for Navigation Label */
+.f-nav-label, .sh-nav-label, .r-nav-label {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 700 !important;
 }
 
 .sidebar-nav {
@@ -516,6 +531,22 @@ body.dashboard-layout {
     /* Shrink Content Padding */
     .app-content {
         padding: 20px;
+    }
+
+    /* Mobile navigation layout fixes so texts don't slide and buttons are visible */
+    .sh-mobile-nav {
+        display: flex !important;
+        justify-content: space-around !important;
+        padding: 10px 5px 20px !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+    }
+    .sh-mobile-nav a {
+        font-size: 11px !important;
+        padding: 6px 2px !important;
+        min-width: 60px !important;
+        text-align: center;
+        white-space: nowrap;
     }
 }
 
@@ -699,38 +730,4 @@ body.dashboard-layout {
 .modal-box {
   background: white;
   padding: 28px;
-  border-radius: 16px;
-  width: 360px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-
-/* EDIT PROFILE BUTTON */
-.edit-profile-btn {
-  display: block;
-  margin: 25px auto 0;
-
-  padding: 10px 20px; /* smaller size */
-
-  background: var(--sh-green-50); /* same as box */
-  color: var(--sh-text-1); /* dark text */
-
-  border: 1px solid var(--sh-green-400); /* subtle border */
-  border-radius: 10px;
-
-  font-size: 14px;
-  font-weight: 500;
-
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-/* Hover */
-.edit-profile-btn:hover {
-  background: var(--sh-green-100);
-}
-
-/* Click */
-.edit-profile-btn:active {
-  transform: scale(0.98);
-}
+  border-radius: 16px}

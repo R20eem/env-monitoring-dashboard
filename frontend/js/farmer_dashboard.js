@@ -150,8 +150,8 @@ function setupUser() {
     const hasViewToggle = viewToggle && navActions.contains(viewToggle);
 
     if (token && role) {
-      // Logged in: show dashboard link only, no sign out in topbar
-      navActions.innerHTML = `<a href="index.html" class="f-btn f-btn-ghost">Dashboard</a>`;
+      // Logged in: no extra buttons in topbar
+      navActions.innerHTML = ``;
     } else {
       // Not logged in: show sign in and register
       navActions.innerHTML = `

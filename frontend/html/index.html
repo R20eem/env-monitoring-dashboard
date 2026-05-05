@@ -121,6 +121,7 @@
         <div class="f-topbar-sub" data-i18n="f.topbar_sub">Dec 25 – Dec 31, 2023 · 3 active sites</div>
       </div>
       <div class="f-topbar-right">
+      <div id="f-nav-actions" style="display: flex; gap: 10px; align-items: center;"></div>
         <div id="lang-toggle-target"></div>
         <a href="about.html" class="f-about-link" data-i18n="nav.about_short">ℹ About</a>
         <!-- NASA icon only — tooltip on hover -->
@@ -134,7 +135,6 @@
         <div class="f-live-pill" style="padding:5px 8px;gap:0;">
           <div class="f-live-dot" id="f-live-dot"></div>
         </div>
-        <div id="f-nav-actions" style="display:flex;gap:6px;align-items:center;"></div>
       </div>
     </header>
 
@@ -162,7 +162,14 @@
           </div>
         </div>
       </div>
-            <!-- SECTION: SCAN INSIGHTS -->
+
+      <!-- SIMPLE VIEW -->
+      <div id="f-simple-view" style="display:block;"></div>
+
+      <!-- DETAILED VIEW -->
+      <div id="f-detailed-view" style="display:none;">
+
+      <!-- SECTION: SCAN INSIGHTS -->
       <div class="f-section-label">my scan insights</div>
 
       <div class="f-card f-mb-24" id="scan-summary-card">
@@ -202,12 +209,6 @@
 
         </div>
       </div>
-
-      <!-- SIMPLE VIEW -->
-      <div id="f-simple-view" style="display:block;"></div>
-
-      <!-- DETAILED VIEW -->
-      <div id="f-detailed-view" style="display:none;">
 
       <!-- SECTION 1: HEALTH SCORES -->
       <div class="f-section-label" data-i18n="f.section_tiles">Field health scores — click a tile to explore that site</div>
@@ -252,8 +253,6 @@
 
       </div>
 
-      </div><!-- end detailed view -->
-
       <!-- SECTION 3: MAP -->
       <div class="f-section-label" data-i18n="f.section_map">Satellite scouting map — click a dot to explore a site</div>
       <div class="f-card f-mb-24">
@@ -263,22 +262,26 @@
             <div class="f-card-sub" data-i18n="f.map_sub">Pulsing dot = elevated pest or alert risk · Dashed ellipse = NASA low soil-moisture zone</div>
           </div>
         </div>
-        <div class="f-map-area">
+        <div class="f-map-area" style="background-color: #f0f4eb; background-image: linear-gradient(rgba(141, 178, 114, 0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(141, 178, 114, 0.25) 1px, transparent 1px); background-size: 20px 20px; border-radius: 12px; position: relative; overflow: hidden; min-height: 280px; border: 2px solid #dbe6d1; box-shadow: inset 0 0 20px rgba(141, 178, 114, 0.1);">
           <div class="f-map-tooltip" id="f-map-tooltip"></div>
           <svg class="f-map-svg" id="f-farm-map" viewBox="0 0 600 250"
-               aria-label="Farm site map showing Maize, Orchard and Brassica with health status dots"></svg>
+               aria-label="Farm site map showing Maize, Orchard and Brassica with health status dots" style="position: relative; z-index: 1; width: 100%; height: 100%;"></svg>
         </div>
-        <div class="f-map-legend">
-          <div class="f-map-legend-item"><div class="f-map-dot" style="background:#63a33e;"></div><span data-i18n="f.map_good">Good (80+)</span></div>
-          <div class="f-map-legend-item"><div class="f-map-dot" style="background:#c97c1a;"></div><span data-i18n="f.map_attention">Attention (65–79)</span></div>
-          <div class="f-map-legend-item"><div class="f-map-dot" style="background:#c94040;"></div><span data-i18n="f.map_critical">Critical / alert active</span></div>
-          <div class="f-map-legend-item"><div class="f-map-dot" style="background:#aaa;opacity:0.5;"></div><span data-i18n="f.map_nasa">Low soil moisture (NASA)</span></div>
+        <div class="f-map-legend" style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; padding: 0;">
+          <div class="f-map-legend-item" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><div class="f-map-dot" style="background:#63a33e; width: 10px; height: 10px; border-radius: 50%;"></div><span data-i18n="f.map_good" style="font-size: 13px; color: #555; font-weight: 500;">Good (80+)</span></div>
+          <div class="f-map-legend-item" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><div class="f-map-dot" style="background:#c97c1a; width: 10px; height: 10px; border-radius: 50%;"></div><span data-i18n="f.map_attention" style="font-size: 13px; color: #555; font-weight: 500;">Attention (65–79)</span></div>
+          <div class="f-map-legend-item" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><div class="f-map-dot" style="background:#c94040; width: 10px; height: 10px; border-radius: 50%;"></div><span data-i18n="f.map_critical" style="font-size: 13px; color: #555; font-weight: 500;">Critical / alert active</span></div>
+          <div class="f-map-legend-item" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><div class="f-map-dot" style="background:transparent; border: 2px dashed #888; width: 12px; height: 12px; border-radius: 50%;"></div><span data-i18n="f.map_nasa" style="font-size: 13px; color: #555; font-weight: 500;">Low soil moisture (NASA)</span></div>
         </div>
       </div>
 
       <!-- SECTION 4: CALENDAR -->
       <div class="f-section-label" data-i18n="f.section_cal">Smart action calendar — Dec 25 to Dec 31</div>
-      <div class="f-cal-grid f-mb-24" id="f-cal-grid"></div>
+      <div class="f-card f-mb-24">
+        <div class="f-cal-grid" id="f-cal-grid"></div>
+      </div>
+
+      </div><!-- end detailed view -->
 
     </main>
   </div>
@@ -301,6 +304,10 @@
   <a href="scanner.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
     <span data-i18n="mob.scanner">Scanner</span>
+  </a>
+  <a href="blog.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+    <span data-i18n="mob.blog">Blog</span>
   </a>
   <a href="profile.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
