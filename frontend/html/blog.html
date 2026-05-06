@@ -12,6 +12,17 @@
     .sh-sidebar::before { z-index:0 !important; }
     .sh-sidebar > * { position:relative; z-index:1; }
   </style>
+
+  <style>
+    /* Hide sidebar on mobile, show bottom nav instead */
+    @media (max-width: 860px) {
+      .f-sidebar { display: none !important; }
+      .sh-sidebar { display: none !important; }
+      .f-main { margin-left: 0 !important; width: 100% !important; }
+      .sh-main { margin-left: 0 !important; width: 100% !important; }
+      .f-layout { flex-direction: column !important; }
+    }
+  </style>
 </head>
 <body class="sh-page has-mobile-nav">
 
@@ -199,9 +210,9 @@
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
     <span>Blog</span>
   </a>
-  <a href="about.html">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
-    <span>About</span>
+  <a href="profile.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+    <span>Profile</span>
   </a>
 </nav>
 

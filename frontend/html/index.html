@@ -47,6 +47,17 @@
     body.farmer-page { display:block !important; overflow:hidden !important; }
     body.farmer-page .f-layout { display:flex !important; }
   </style>
+
+  <style>
+    /* Hide sidebar on mobile, show bottom nav instead */
+    @media (max-width: 860px) {
+      .f-sidebar { display: none !important; }
+      .sh-sidebar { display: none !important; }
+      .f-main { margin-left: 0 !important; width: 100% !important; }
+      .sh-main { margin-left: 0 !important; width: 100% !important; }
+      .f-layout { flex-direction: column !important; }
+    }
+  </style>
 </head>
 <body class="farmer-page has-mobile-nav">
 

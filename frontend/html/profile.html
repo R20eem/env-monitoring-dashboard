@@ -12,6 +12,17 @@
     .sh-sidebar::before { z-index:0 !important; }
     .sh-sidebar > * { position:relative; z-index:1; }
   </style>
+
+  <style>
+    /* Hide sidebar on mobile, show bottom nav instead */
+    @media (max-width: 860px) {
+      .f-sidebar { display: none !important; }
+      .sh-sidebar { display: none !important; }
+      .f-main { margin-left: 0 !important; width: 100% !important; }
+      .sh-main { margin-left: 0 !important; width: 100% !important; }
+      .f-layout { flex-direction: column !important; }
+    }
+  </style>
 </head>
 <body class="sh-page has-mobile-nav">
 
@@ -45,8 +56,8 @@
     </a>
     <!-- <a href="about.html" class="sh-nav-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13.5px;font-weight:500;position:relative;z-index:2;">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
-      <span data-i18n="nav.about">About Us</span> -->
-    </a>
+      <span data-i18n="nav.about">About Us</span>
+    </a> -->
   </nav>
 
   <div class="sh-sidebar-bottom" style="padding:16px 14px 20px;border-top:1px solid rgba(255,255,255,0.06);position:relative;z-index:2;">
