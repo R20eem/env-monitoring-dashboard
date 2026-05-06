@@ -1,3 +1,36 @@
+"""
+File: researcher_dashboard_router.py
+
+Purpose:
+Handles all HTTP endpoints for the researcher dashboard, providing
+filtered access to sensor data, trend charts, status summaries,
+CSV export, and alert history.
+
+Responsibilities:
+- Return a dashboard summary with latest values for the top cards
+  and warning banner on the researcher overview page
+- Return historical trend data for the researcher charts, with
+  optional filters for site and date range
+- Return status counts (normal, warning, critical) across all readings
+- Return filtered sensor data for the researcher data tables page
+- Stream filtered sensor data as a downloadable CSV file for export
+- Return alert history from the alert_log table with optional filters
+  for site, date range, and severity level
+- Validate filter inputs including date format and allowed status
+  and severity values before passing them to the repository
+
+Layer:
+Backend (Router / API)
+
+Related:
+- sensor_reading_repository.py (all sensor data queries)
+- alert_log_repository.py (alert history queries)
+- schemas/sensor_reading.py (response models for data and trends)
+- schemas/alert_log.py (response model for alert history)
+- researcher.js (frontend charts, filters, and data tables)
+- alerts.js (frontend alert history view)
+- main.py (registers this router with the FastAPI app)
+"""
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 

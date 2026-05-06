@@ -1,3 +1,32 @@
+"""
+File: researcher_auth.py
+
+Purpose:
+Handles HTTP endpoints for researcher registration and login,
+connecting incoming requests to the researcher authentication
+service and returning appropriate responses or errors.
+
+Responsibilities:
+- Accept and validate researcher registration data including
+  organisation code and connection end date, and pass it to
+  the service layer to create a new researcher account
+- Accept researcher login credentials including email, org code,
+  and password, and return a signed JWT token if correct
+- Return clear HTTP error responses if registration fails
+  (e.g. email already exists) or login fails (wrong credentials)
+
+Layer:
+Backend (Router / API)
+
+Related:
+- researcher_auth_service.py (handles registration and login logic)
+- schemas/researcher_auth.py (validates request body for register and login)
+- schemas/common.py (TokenResponse and MeResponse used as return types)
+- researcher_repository.py (database queries called by the service)
+- core/security.py (password hashing and JWT token creation)
+- auth.js (frontend that sends login and register requests)
+- main.py (registers this router with the FastAPI app)
+"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 

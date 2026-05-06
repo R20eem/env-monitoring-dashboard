@@ -1,3 +1,32 @@
+"""
+File: dashboard_router.py
+
+Purpose:
+Exposes API endpoints that provide the farmer dashboard with the most
+recent sensor readings and alert flags for each monitored site.
+
+Responsibilities:
+- Return the latest reading per site for each sensor field including
+  temperature, humidity, leaf wetness, pest count, and rainfall
+- Return the latest alert flags per site including pest action,
+  pest outbreak, disease moderate, and disease high
+- Return a full site summary with all fields combined, used as the
+  main data source for the farmer dashboard
+- Map database field names to response schema field names before
+  returning data to the frontend
+
+Layer:
+Backend (Router / API)
+
+Related:
+- sensor_reading_repository.py (all database queries called by this router)
+- schemas/sensor_reading.py (response models used to validate output)
+- farmer_dashboard.js (frontend that calls these endpoints to populate
+  the farmer dashboard status cards and alerts)
+- main.py (registers this router with the FastAPI app)
+- database.py (provides the database session via get_db dependency)
+"""
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
  

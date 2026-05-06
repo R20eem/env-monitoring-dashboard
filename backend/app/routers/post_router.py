@@ -1,3 +1,36 @@
+"""
+File: post_router.py
+
+Purpose:
+Handles all HTTP endpoints for the community blog feature, including
+creating posts, fetching the feed, liking and unliking posts, and
+adding and retrieving comments.
+
+Responsibilities:
+- Allow authenticated farmers and researchers to create new posts
+- Return all posts for the community feed, including author name,
+  role, like count, and comment count per post
+- Return a single post by id for detailed post view
+- Allow authenticated users to like and unlike posts, returning
+  the updated like count after each action
+- Allow authenticated users to add comments to posts
+- Return all comments for a specific post ordered by oldest first
+- Decode and validate the JWT token on all protected endpoints
+  to confirm who is making the request before saving anything
+
+Layer:
+Backend (Router / API)
+
+Related:
+- post_service.py (handles business logic for posts, likes, comments)
+- post_repository.py (database queries called by the service)
+- schemas/post.py (validates request bodies and response shapes)
+- core/security.py (decode_access_token used to identify the user)
+- farmer_repository.py (looks up farmer from the decoded token)
+- researcher_repository.py (looks up researcher from the decoded token)
+- blog.js (frontend that calls all these endpoints for the community blog)
+- main.py (registers this router with the FastAPI app)
+"""
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
