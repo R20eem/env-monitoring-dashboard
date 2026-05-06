@@ -1,3 +1,26 @@
+"""
+File: post_comment.py
+
+Purpose:
+Defines the database model for the post_comments table, which stores
+comments left by farmers and researchers under community blog posts.
+
+Responsibilities:
+- Map the post_comments table using SQLAlchemy ORM
+- Store the comment content, author identity, and role for each comment
+- Link each comment back to its parent post using post_id
+- Track when each comment was created for ordered display
+
+Layer:
+Backend (Database Model)
+
+Related:
+- post.py (the parent post that comments belong to)
+- post_like.py (similar structure for likes on posts)
+- post_service.py (handles comment creation and retrieval logic)
+- post_router.py (exposes GET /posts/{post_id}/comments endpoint)
+- blog.js (frontend fetches and displays comments under each post)
+"""
 from datetime import datetime
 from sqlalchemy import String, Text, DateTime, Integer
 from sqlalchemy.orm import Mapped, mapped_column

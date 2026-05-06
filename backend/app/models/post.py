@@ -1,3 +1,29 @@
+"""
+File: post.py
+
+Purpose:
+Defines the database model for the posts table, which stores
+all blog posts created by farmers and researchers in the
+community blog section of the app.
+
+Responsibilities:
+- Map the posts table using SQLAlchemy ORM
+- Store the post title, content, and author information
+- Track author role alongside author id since farmers and
+  researchers are stored in separate tables
+- Record when each post was created for ordered display in the feed
+
+Layer:
+Backend (Database Model)
+
+Related:
+- post_comment.py (comments that belong to a post)
+- post_like.py (likes that belong to a post)
+- post_service.py (handles post creation and retrieval logic)
+- post_router.py (exposes GET /posts and POST /posts endpoints)
+- blog.js (frontend fetches and renders posts in the community feed)
+"""
+
 from datetime import datetime
 from sqlalchemy import String, Text, DateTime, Integer
 from sqlalchemy.orm import Mapped, mapped_column
