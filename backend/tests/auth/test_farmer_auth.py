@@ -1,3 +1,36 @@
+"""
+File: test_farmer_auth.py
+
+Purpose:
+Contains all automated tests for the farmer registration and login
+endpoints, covering both successful flows and expected failure cases.
+
+Responsibilities:
+- Test that a farmer can register successfully and the correct
+  id, email, and role are returned
+- Test that registering with a duplicate email returns a 400 error
+- Test that invalid email format, invalid experience level, and
+  weak passwords (missing uppercase, lowercase, number, or special
+  character) all return 422 validation errors
+- Test that a registered farmer can log in successfully and receive
+  a valid JWT token with the correct token type
+- Test that login fails with the correct 401 error when the password
+  is wrong or the email does not exist
+- Test that login with an invalid email format returns a 422 error
+
+Layer:
+Backend (Tests / Auth)
+
+Related:
+- farmer_auth.py in routers (the endpoints being tested)
+- farmer_auth_service.py (business logic being exercised by the tests)
+- farmer_repository.py (database layer used during test execution)
+- schemas/farmer_auth.py (validation rules tested by the weak
+  password and invalid input test cases)
+- conftest.py (provides the client and farmer_data fixtures used
+  across all tests in this file)
+"""
+
 def test_register_farmer_success(client, farmer_data):
     response = client.post("/auth/farmers/register", json=farmer_data)
 
