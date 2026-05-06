@@ -5,31 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Scanner — Eco Leaf</title>
   <!--
-    File: scanner.html
+  File: scanner.html
 
-    Purpose:
-    Main HTML template for the plant scanning feature.
-    allows farmers to upload plant images and receive health predictions.
+  Purpose:
+  Main HTML template for the plant scanner page.
+  Allows farmers to upload a plant image and receive an ML-based
+  health prediction (disease, pest, or healthy classification).
 
-    Responsibilities:
-    - Display scanner interface with sidebar and navigation
-    - Provide form for selecting crop type, site ID, and image upload
-    - Show scan results (prediction, confidence, reason) in a result card
-    - Display recent scan history for the logged-in user
-    - Provide visual guidance ("How it works" section)
+  Responsibilities:
+  - Provide upload form (crop type, site ID, plant image)
+  - Display image preview before scanning
+  - Show scan result card with prediction, confidence, and reason
+  - Render the user's recent scan history with severity badges
+  - Apply severity styling (normal / warning / critical) to results
+  - Include sidebar navigation and mobile bottom navigation
+  - Support i18n (English / Afrikaans) via data-i18n attributes
+  - Meet WCAG AA accessibility requirements (aria-labels, alt text,
+    proper form labels, sufficient colour contrast)
 
-    Layer:
-    Frontend (HTML Template)
+  Layer:
+  Frontend (HTML Template)
 
-    Related:
-    - scanner.css 
-    - farmer.css
-    - shared.css
-    - fonts.css
-    - scanner.js (handles scanning logic and API communication)
-    - shared-nav.js (navigation and user state)
-    - alerts.js (receives scan results saved as alerts)
-    - l18n.js (language feature)
+  Related:
+  - scanner.js (upload, API communication, result handling)
+  - scanner.css (page-specific styling)
+  - farmer.css (shared farmer dashboard layout)
+  - shared.css (shared layout components)
+  - alerts.html (uses scan results saved by scanner.js)
 -->
 
   <link rel="stylesheet" href="../css/farmer.css">
@@ -39,15 +41,14 @@
 </head>
 
 <body class="farmer-page sh-page has-mobile-nav">
-<div id="result-overlay"></div>
 
 <div class="f-layout">
 
-  <!-- SIDEBAR -->
+  <!-- ═════════ SIDEBAR ═════════ -->
   <aside class="f-sidebar">
 
     <div class="f-sidebar-logo">
-      <img src="../images/logo_transparent.png" alt="Eco Leaf">
+      <img src="../images/logo_transparent.png" alt="">
       <div class="f-sidebar-brand">
         Eco Leaf
         <small data-i18n="f.brand_sub">Field Dashboard</small>
@@ -116,7 +117,7 @@
 
   </aside>
 
-  <!-- MAIN -->
+  <!-- ═════════ MAIN ═════════ -->
   <div class="f-main">
 
     <!-- TOPBAR -->
@@ -131,6 +132,7 @@
     <!-- CONTENT -->
     <main class="f-content">
 
+      <!-- HERO -->
       <div class="f-hero f-mb-24">
         <div class="f-hero-text">
           <h1 data-i18n="scan.hero_h">Scan a Plant</h1>
@@ -138,29 +140,6 @@
         </div>
       </div>
 
-      
-      <!-- HOW IT WORKS -->
-      <div class="f-card f-mb-24">
-        <div class="f-card-title">How it works</div>
-        <ul class="f-mt-12" style="color:var(--f-text-3);font-size:13px;">
-          <li>Select the crop type</li>
-          <li>Upload a clear plant or leaf image</li>
-          <li>The system checks the image using ML</li>
-          <li>The result is saved and shown below</li>
-        </ul>
-      </div>
-
-      <!-- RESULT CARD -->
-      <div class="f-card f-mb-24 f-hidden" id="result-card">
-        <div class="f-card-title">Scan Result</div>
-
-        <div class="f-result-grid f-mt-12">
-          <div><strong>Prediction:</strong> <span id="result-prediction">-</span></div>
-          <div><strong>Crop:</strong> <span id="result-crop">-</span></div>
-          <div><strong>Site:</strong> <span id="result-site">-</span></div>
-        </div>
-
-      </div>
       <!-- UPLOAD CARD -->
       <div class="f-card f-mb-24">
         <div class="f-card-title" data-i18n="scan.upload_title">Upload Plant Image</div>
@@ -169,24 +148,24 @@
 
           <div class="f-form-row">
 
-            <select id="crop_type" required>
+            <select id="crop_type" required aria-label="Select crop type">
               <option value="" data-i18n="scan.select_crop">Select crop</option>
               <option value="maize" data-i18n="f.btn_maize">Maize</option>
               <option value="brassica" data-i18n="f.btn_brassica">Brassica</option>
               <option value="orchard" data-i18n="f.btn_orchard">Orchard</option>
             </select>
 
-            <input type="number" id="site_id" placeholder="Site ID" data-i18n-ph="scan.site_id_ph">
-
-            <label class="f-file-upload">
+            <input type="number" id="site_id" placeholder="Site ID" aria-label="Site ID number" data-i18n-ph="scan.site_id_ph">
+            
+            <label class="f-file-upload" for="scan_file">
               <span id="file-text" data-i18n="scan.choose_image">Choose Image</span>
-              <input type="file" id="scan_file" accept="image/*">
+              <input type="file" id="scan_file" accept="image/*" aria-label="Upload plant image">
             </label>
 
           </div>
 
           <div class="f-mt-12">
-            <img id="image-preview" class="f-hidden" style="max-width:220px;border-radius:10px;">
+            <img id="image-preview" class="f-hidden" alt="Preview of the plant image you selected" style="max-width:220px;border-radius:10px;">
           </div>
 
           <div class="f-mt-12">
@@ -240,7 +219,6 @@
 
 </div>
 
-
 <script src="../js/l18n.js"></script>
 <script src="../js/scanner.js"></script>
 <script src="../js/shared-nav.js"></script>
@@ -250,6 +228,10 @@
   <a href="index.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
     <span data-i18n="mob.dashboard">Dashboard</span>
+  </a>
+  <a href="alerts.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
+    <span data-i18n="mob.alerts">Alerts</span>
   </a>
   <a href="scanner.html" class="active">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>

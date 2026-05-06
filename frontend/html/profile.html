@@ -4,6 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile — Eco Leaf</title>
+  <!--
+    File: profile.html
+
+    Purpose:
+    Main HTML template for the user profile page.
+    Displays account details and allows users (farmers and researchers)
+    to edit their information and change their password.
+
+    Responsibilities:
+    - Display user details (name, email, role, member since date)
+    - Show role-specific fields (researcher end date, etc.)
+    - Provide Edit Profile modal with first name and last name inputs
+    - Provide Change Password modal with current/new/confirm fields
+    - Toggle password visibility via accessible show/hide buttons
+    - Include sidebar navigation and mobile bottom navigation
+    - Support i18n (English / Afrikaans) via data-i18n attributes
+    - Meet WCAG AA accessibility requirements (proper form labels,
+      aria-labels, sufficient colour contrast, semantic headings)
+
+    Layer:
+    Frontend (HTML Template)
+
+    Related:
+    - profile.js (loads user data, handles edit and password updates)
+    - profile.css (page-specific styling)
+    - shared.css (shared layout components)
+    - style.css (global styling)
+    - password-toggle.js (show/hide password functionality)
+    - login.html (redirects here when sign-out is triggered)
+-->
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/shared.css">
   <link rel="stylesheet" href="../css/profile.css">
@@ -12,7 +42,7 @@
 
   <aside class="sh-sidebar">
     <div class="sh-sidebar-logo">
-      <img src="../images/logo_transparent.png" alt="Eco Leaf">
+      <img src="../images/logo_transparent.png" alt="">
       <div class="sh-brand">Eco Leaf<small>Environmental Monitor</small></div>
     </div>
 
@@ -52,7 +82,7 @@
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h11M10 5l5 5-5 5"/></svg>
       Sign In
     </a>
-    <a href="#" class="sh-nav-link" id="sh-logout-btn" style="color:rgba(255,120,120,0.8);">
+    <a href="#" class="sh-nav-link" id="sh-logout-btn" style="color:#ff9999;">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 15l4-5-4-5M17 10H7M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3"/></svg>
       Logout
     </a>
@@ -102,22 +132,23 @@
       <div class="prof-modal-box">
 
         <div class="prof-modal-header">
-          <h3>Edit Profile</h3>
+          <h2>Edit Profile</h2>
           <button id="close-btn" class="prof-modal-close">✕</button>
         </div>
 
         <div class="prof-modal-body">
           <div class="prof-input-group">
-            <label>First Name</label>
+            <label for="edit-first">First Name</label>
             <input id="edit-first" class="prof-input" placeholder="First name">
           </div>
+
           <div class="prof-input-group">
-            <label>Last Name</label>
+            <label for="edit-last">Last Name</label>
             <input id="edit-last" class="prof-input" placeholder="Last name">
           </div>
-          <!-- Researcher only — shown by JS -->
+
           <div class="prof-input-group" id="edit-end-group" style="display:none;">
-            <label>Research End Date</label>
+            <label for="edit-end">Research End Date</label>
             <input id="edit-end" class="prof-input" type="date">
           </div>
         </div>
@@ -137,7 +168,7 @@
       <div class="prof-modal-box">
 
         <div class="prof-modal-header">
-          <h3>Change password</h3>
+          <h2>Change password</h2>
           <button type="button" id="pass-close-btn" class="prof-modal-close">✕</button>
         </div>
 
@@ -196,19 +227,23 @@
 <nav class="sh-mobile-nav">
   <a href="index.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
-    Dashboard
+    <span data-i18n="mob.dashboard">Dashboard</span>
+  </a>
+  <a href="alerts.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
+    <span data-i18n="mob.alerts">Alerts</span>
+  </a>
+  <a href="scanner.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
+    <span data-i18n="mob.scanner">Scanner</span>
   </a>
   <a href="blog.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
-    Blog
-  </a>
-  <a href="about.html">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
-    About
+    <span data-i18n="mob.blog">Blog</span>
   </a>
   <a href="profile.html" class="active">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
-    Profile
+    <span data-i18n="mob.profile">Profile</span>
   </a>
 </nav>
 
