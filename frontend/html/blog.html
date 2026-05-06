@@ -146,7 +146,13 @@
               <option value="researcher" data-i18n="auth.researcher">🔬 Researcher</option>
             </select>
             <input type="email" id="login-email" data-i18n-ph="auth.email_ph" placeholder="Email" />
-            <input type="password" id="login-password" data-i18n-ph="auth.password_label" placeholder="Password" />
+            <div class="password-field">
+              <input type="password" id="login-password" class="password-field-input" data-i18n-ph="auth.password_label" placeholder="Password" autocomplete="current-password" />
+              <button type="button" class="password-toggle" aria-pressed="false" aria-label="Show password" aria-controls="login-password">
+                <span class="password-toggle__show" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                <span class="password-toggle__hide" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></span>
+              </button>
+            </div>
             <input type="text" id="login-orgcode" data-i18n-ph="auth.org_ph" placeholder="Org code (researchers only)" class="hidden" />
             <span id="login-error" class="form-error"></span>
             <button class="sh-btn sh-btn-primary full-w" id="login-btn" data-i18n="blog.login_btn">Sign In</button>
@@ -200,6 +206,7 @@
 </div>
 
 <script src="../js/l18n.js"></script>
+<script src="../js/password-toggle.js"></script>
 <script src="../js/blog.js"></script>
 <script src="../js/shared-nav.js"></script>
 

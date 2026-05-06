@@ -14,6 +14,16 @@ const saveBtn    = document.getElementById("save-btn");
 const editBtn    = document.getElementById("edit-btn");
 const feedback   = document.getElementById("edit-feedback");
 
+const passModal     = document.getElementById("pass-modal");
+const changePassBtn = document.getElementById("change-pass-btn");
+const passCloseBtn  = document.getElementById("pass-close-btn");
+const passCancelBtn = document.getElementById("pass-cancel-btn");
+const passSaveBtn   = document.getElementById("pass-save-btn");
+const passCurrent   = document.getElementById("pass-current");
+const passNew       = document.getElementById("pass-new");
+const passConfirm   = document.getElementById("pass-confirm");
+const passFeedback  = document.getElementById("pass-feedback");
+
 /* ── format date for <input type="date"> ── */
 function formatDateForInput(dateString) {
   if (!dateString) return "";
@@ -116,6 +126,110 @@ function closeEditModal() {
   modal.style.display = "none";
 }
 
+function resetPassFields() {
+  if (!passCurrent || !passNew || !passConfirm) return;
+  passCurrent.value = "";
+  passNew.value = "";
+  passConfirm.value = "";
+  passCurrent.type = "password";
+  passNew.type = "password";
+  passConfirm.type = "password";
+  document.querySelectorAll("#pass-modal .password-toggle").forEach(function (btn) {
+    btn.setAttribute("aria-pressed", "false");
+    var showLabel = btn.getAttribute("data-label-show") || "Show password";
+    btn.setAttribute("aria-label", showLabel);
+  });
+}
+
+function showPassFeedback(msg, type) {
+  if (!passFeedback) return;
+  passFeedback.textContent = msg;
+  passFeedback.className = `prof-feedback prof-feedback--${type}`;
+}
+
+function openPassModal() {
+  if (!passModal) return;
+  resetPassFields();
+  if (passFeedback) {
+    passFeedback.textContent = "";
+    passFeedback.className = "prof-feedback";
+  }
+  passModal.style.display = "flex";
+}
+
+function closePassModal() {
+  if (passModal) passModal.style.display = "none";
+}
+
+async function savePassword() {
+  if (!passCurrent || !passNew || !passConfirm || !passSaveBtn) return;
+  const token = localStorage.getItem("token") || localStorage.getItem("jwt_token");
+  const cur = passCurrent.value;
+  const nw = passNew.value;
+  const cf = passConfirm.value;
+
+  if (passFeedback) {
+    passFeedback.textContent = "";
+    passFeedback.className = "prof-feedback";
+  }
+
+  if (!cur || !nw || !cf) {
+    showPassFeedback("Please fill in all password fields.", "error");
+    return;
+  }
+  if (nw.length < 8) {
+    showPassFeedback("New password must be at least 8 characters.", "error");
+    return;
+  }
+  if (nw !== cf) {
+    showPassFeedback("New password and confirmation do not match.", "error");
+    return;
+  }
+
+  passSaveBtn.textContent = "Updating...";
+  passSaveBtn.disabled = true;
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/change-password`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ current_password: cur, new_password: nw }),
+    });
+    const data = await res.json().catch(function () {
+      return {};
+    });
+
+    if (!res.ok) {
+      const detail = data.detail;
+      const msg =
+        typeof detail === "string"
+          ? detail
+          : Array.isArray(detail)
+            ? detail.map(function (d) {
+                return d.msg || d.type || "";
+              }).join(" ") || "Update failed."
+            : "Update failed. Please try again.";
+      showPassFeedback(msg, "error");
+      return;
+    }
+
+    showPassFeedback("Password updated successfully.", "success");
+    resetPassFields();
+    setTimeout(function () {
+      closePassModal();
+    }, 1000);
+  } catch (err) {
+    console.error(err);
+    showPassFeedback("Could not connect. Please try again.", "error");
+  } finally {
+    passSaveBtn.textContent = "Update password";
+    passSaveBtn.disabled = false;
+  }
+}
+
 /* ── load profile from backend ── */
 async function loadProfile() {
   const token = localStorage.getItem("token") || localStorage.getItem("jwt_token");
@@ -215,6 +329,17 @@ if (saveBtn)   saveBtn.addEventListener("click", saveProfile);
 if (modal) {
   modal.addEventListener("click", (e) => {
     if (e.target === modal) closeEditModal();
+  });
+}
+
+if (changePassBtn) changePassBtn.addEventListener("click", openPassModal);
+if (passCloseBtn) passCloseBtn.addEventListener("click", closePassModal);
+if (passCancelBtn) passCancelBtn.addEventListener("click", closePassModal);
+if (passSaveBtn) passSaveBtn.addEventListener("click", savePassword);
+
+if (passModal) {
+  passModal.addEventListener("click", (e) => {
+    if (e.target === passModal) closePassModal();
   });
 }
 
