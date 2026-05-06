@@ -1,3 +1,46 @@
+"""
+File: conftest.py
+
+Purpose:
+Provides shared test fixtures used across all test files in the
+backend test suite, including the test client, database setup,
+demo data, authentication tokens, and helper objects.
+
+Responsibilities:
+- Set up a separate SQLite test database for each test function
+  so tests never touch the real database and always start clean
+- Override the get_db dependency so the app uses the test database
+  during tests instead of the production one
+- Tear down and recreate all tables before and after each test
+  to ensure tests are fully isolated from each other
+- Provide a farmer_data fixture with valid registration data for
+  use across farmer auth and scanner tests
+- Provide a researcher_data fixture with valid registration data
+  for use across researcher auth and dashboard tests
+- Provide farmer_token and researcher_token fixtures that register
+  and log in the demo users and return their JWT tokens
+- Provide farmer_auth_headers and researcher_auth_headers fixtures
+  that wrap the tokens in the correct Authorization header format
+  ready to pass into protected endpoint requests
+- Provide a created_post fixture that creates a demo blog post
+  as a logged in farmer for use in post and comment tests
+- Provide test image fixtures for scanner upload tests including
+  a standard fake image and a large image for size limit testing
+
+Layer:
+Backend (Tests / Configuration)
+
+Related:
+- app/main.py (the FastAPI app used to create the test client)
+- app/database.py (Base and get_db overridden by this file)
+- all test files in backend/tests (use the fixtures defined here)
+- farmer_auth.py in routers (register and login endpoints called
+  by farmer_token fixture)
+- researcher_auth.py in routers (register and login endpoints called
+  by researcher_token fixture)
+- post_router.py (used by created_post fixture to create a demo post)
+"""
+
 import os
 import sys
 import io
