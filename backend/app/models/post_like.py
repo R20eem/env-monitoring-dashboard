@@ -1,3 +1,27 @@
+"""
+File: post_like.py
+
+Purpose:
+Defines the database model for the post_likes table, which tracks
+which users have liked which blog posts.
+
+Responsibilities:
+- Map the post_likes table using SQLAlchemy ORM
+- Store one row per like, linking a user to a post
+- Track the user role alongside the user id since farmers and
+  researchers are stored in separate tables
+- Record when each like was created
+
+Layer:
+Backend (Database Model)
+
+Related:
+- post.py (the post being liked)
+- post_comment.py (similar structure for comments on posts)
+- post_service.py (handles like and unlike logic)
+- post_router.py (exposes POST /posts/{post_id}/like endpoint)
+- blog.js (frontend updates like count after user interaction)
+"""
 from datetime import datetime
 from sqlalchemy import String, DateTime, Integer
 from sqlalchemy.orm import Mapped, mapped_column
