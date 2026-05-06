@@ -136,9 +136,9 @@ def predict_with_rf(crop_type: str, image_path: str):
         confidence = 0.75
 
     reason_map = {
-        "healthy": "model matched healthy patterns",
-        "pest_risk": "model matched pest damage patterns",
-        "disease_risk": "model matched disease patterns",
+        "healthy": "Your crop looks healthy. No signs of pest damage or disease were found in the image.",
+        "pest_risk": "The image shows signs that may indicate pest activity. Check your crops closely and consider setting more traps.",
+        "disease_risk": "The image shows patterns that may indicate disease. Monitor your crops closely and consider seeking advice.",
     }
 
     return prediction, round(confidence, 2), reason_map.get(prediction, "prediction done")
@@ -167,9 +167,9 @@ def predict_with_brassica_cnn(image_path: str):
     confidence = float(np.max(probs))
 
     reason_map = {
-        "healthy": "cnn detected healthy brassica",
-        "pest_risk": "cnn detected pest damage",
-        "disease_risk": "cnn detected disease patterns",
+        "healthy": "Your crop looks healthy. No signs of pest damage or disease were found in the image.",
+        "pest_risk": "The image shows signs that may indicate pest activity. Check your crops closely and consider setting more traps.",
+        "disease_risk": "The image shows patterns that may indicate disease. Monitor your crops closely and consider seeking advice.",
     }
 
     return prediction, round(confidence, 2), reason_map[prediction]
