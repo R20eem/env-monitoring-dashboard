@@ -1,3 +1,33 @@
+"""
+File: seed_blog.py
+
+Purpose:
+Seeds the database with demo farmer, researcher, and blog post data
+so the community blog page has realistic content to display during
+development and testing.
+
+Responsibilities:
+- Create all database tables if they do not already exist
+- Check if posts already exist before seeding to prevent duplicates
+- Create a demo farmer account and a demo researcher account with
+  hashed passwords for safe storage
+- Create a set of realistic demo blog posts authored by both the
+  demo farmer and demo researcher, covering topics relevant to the
+  system such as frost damage, soil analysis, and irrigation
+- Roll back the database if anything goes wrong during seeding
+
+Layer:
+Backend (Seed / Database Population)
+
+Related:
+- farmer.py in models (demo farmer created by this script)
+- researcher.py in models (demo researcher created by this script)
+- post.py in models (demo posts created by this script)
+- core/security.py (hash_password used to safely store demo passwords)
+- seed_sensor_readings.py (separate seed script for sensor data)
+- database.py (provides the engine and session used to run the seed)
+"""
+
 from app.database import SessionLocal, engine, Base
 from app.models.farmer import Farmer
 from app.models.researcher import Researcher

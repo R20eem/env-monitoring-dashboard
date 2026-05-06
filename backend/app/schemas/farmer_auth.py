@@ -1,3 +1,31 @@
+"""
+File: farmer_auth.py (schemas)
+
+Purpose:
+Defines the request schemas for farmer registration and login,
+including input validation rules to ensure data is clean and
+consistent before it reaches the service layer.
+
+Responsibilities:
+- Validate farmer registration input including name length, email
+  format, experience level, location, and password strength
+- Restrict experience to a fixed set of allowed values using Literal
+  so only valid options can be submitted
+- Enforce password rules requiring at least one uppercase letter,
+  one lowercase letter, one number, and one special character
+- Validate farmer login input including email format and password
+  length
+
+Layer:
+Backend (Schema / Data Validation)
+
+Related:
+- farmer_auth.py in routers (uses these schemas as request body types)
+- farmer_auth_service.py (receives the validated data from the router)
+- farmer_repository.py (creates the farmer record in the database)
+- schemas/common.py (TokenResponse and MeResponse returned after auth)
+- auth.js (frontend that sends registration and login form data)
+"""
 import re
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import Literal

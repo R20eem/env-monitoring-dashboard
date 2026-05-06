@@ -1,3 +1,37 @@
+
+"""
+File: researcher_auth.py (schemas)
+
+Purpose:
+Defines the request schemas for researcher registration and login,
+including input validation rules to ensure data is clean and
+consistent before it reaches the service layer.
+
+Responsibilities:
+- Validate researcher registration input including name length, email
+  format, organisation code format, connection end date, and password
+  strength
+- Enforce that the organisation code is exactly 4 digits using a
+  regex validator on both registration and login
+- Enforce password rules requiring at least one uppercase letter,
+  one lowercase letter, one number, and one special character
+- Validate researcher login input including email, org code format,
+  and password length
+
+Layer:
+Backend (Schema / Data Validation)
+
+Related:
+- researcher_auth.py in routers (uses these schemas as request body
+  types for register and login endpoints)
+- researcher_auth_service.py (receives the validated data from
+  the router and handles the business logic)
+- researcher_repository.py (creates the researcher record in the
+  database after validation passes)
+- schemas/common.py (TokenResponse and MeResponse returned after auth)
+- auth.js (frontend that sends researcher registration and login data)
+"""
+
 import re
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
