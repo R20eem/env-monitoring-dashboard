@@ -115,8 +115,15 @@ body.farmer-page {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 0;
   background-image: radial-gradient(circle at 20% 80%, rgba(99,153,34,0.15) 0%, transparent 60%);
   pointer-events: none;
+}
+.f-sidebar-logo,
+.f-nav-section,
+.f-sidebar-bottom {
+  position: relative;
+  z-index: 1;
 }
 .f-sidebar-logo {
   padding: 28px 24px 20px;

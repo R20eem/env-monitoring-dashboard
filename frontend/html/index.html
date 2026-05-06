@@ -39,10 +39,28 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="../css/farmer.css">
+  <link rel="stylesheet" href="../css/Farmer.css">
   <link rel="stylesheet" href="../css/shared.css">
+  <style>
+    /* Fix: sidebar content must sit above the ::before overlay */
+    .f-sidebar-logo,
+    .f-nav-section,
+    .f-sidebar-bottom {
+      position: relative;
+      z-index: 1;
+    }
+    /* Fix: shared.css body.sh-page sets display:flex which fights farmer layout */
+    body.farmer-page.sh-page {
+      display: block;
+      overflow: hidden;
+    }
+    /* Fix: shared.css hides .sh-sidebar at ≤860px — farmer uses .f-sidebar, keep it */
+    @media (max-width: 860px) {
+      .f-sidebar { display: flex !important; }
+    }
+  </style>
 </head>
-<body class="farmer-page  sh-page has-mobile-nav">
+<body class="farmer-page sh-page has-mobile-nav">
 
 <div class="f-layout">
 
@@ -58,31 +76,31 @@
 
     <div class="f-nav-section">
       <div class="f-nav-label" data-i18n="nav.navigation">Navigation</div>
-      <a href="index.html" class="f-nav-link active">
+      <a href="index.html" class="f-nav-link active" id="dashboard-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/>
         </svg>
         <span data-i18n="nav.dashboard">Dashboard</span>
       </a>
-      <a href="alerts.html" class="f-nav-link">
+      <a href="alerts.html" class="f-nav-link" id="alerts-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/>
         </svg>
         <span data-i18n="nav.alerts">Alerts</span>
       </a>
-      <a href="scanner.html" class="f-nav-link">
+      <a href="scanner.html" class="f-nav-link" id="scanner-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/>
         </svg>
         <span data-i18n="nav.scanner">Plant Scanner</span>
       </a>
-      <a href="blog.html" class="f-nav-link">
+      <a href="blog.html" class="f-nav-link" id="blog-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M3 5h14M3 9h10M3 13h12M3 17h8"/>
         </svg>
         <span data-i18n="nav.blog">Community Blog</span>
       </a>
-      <a href="profile.html" class="f-nav-link">
+      <a href="profile.html" class="f-nav-link" id="profile-link">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
           <circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>
         </svg>
