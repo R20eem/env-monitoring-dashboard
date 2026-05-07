@@ -534,7 +534,7 @@ function renderSimpleView() {
         <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#7a8a65;">
           <span>${T('sv.pest_activity')}</span>${pestDots}
         </div>
-        <div style="margin-top:10px;font-size:11px;color:#a8b89a;">${T('sv.tap_details')}</div>
+        <div style="margin-top:10px;font-size:14px;color:#656e5c;">${T('sv.tap_details')}</div>
       </div>
     `;
   }).join('');
