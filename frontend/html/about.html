@@ -4,27 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us — Eco Leaf</title>
-  <!--
-    File: about.html
-    
-    Purpose:
-    HTML template for the About Us page.
-    Provides information about the Eco Leaf platform and its features.
-    
-    Responsibilities:
-    - Display about page layout with sidebar navigation
-    - Show platform features and mission information
-    - Include registration and login call-to-action
-    - Integrate l18n.js for internationalization support
-    
-    Layer:
-    Frontend (HTML Template)
-    
-    Related:
-    - shared.css
-    - style.css
-    - l18n.js
-  -->
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/shared.css">
 </head>
@@ -58,6 +37,10 @@
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
       <span data-i18n="nav.profile">Profile</span>
     </a>
+    <!-- <a href="about.html" class="sh-nav-link active">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
+      <span data-i18n="nav.about">About Us</span>
+    </a> -->
   </nav>
 
   <div class="sh-sidebar-bottom">
@@ -80,11 +63,11 @@
 </aside>
 
 <div class="sh-main">
+  <!-- ✅ FIXED: was missing closing </header> tag — broke entire page layout -->
   <header class="sh-topbar">
     <div class="sh-topbar-title" data-i18n="about.title">About Us</div>
     <div class="sh-topbar-right">
       <a href="about.html" class="sh-about-link active" data-i18n="nav.about">ℹ About Us</a>
-      <div id="sh-nav-actions"></div>
     </div>
   </header>
 
@@ -166,7 +149,6 @@
 
 <script src="../js/l18n.js"></script>
 <script>
-  // Hide Register button if user is already logged in
   (function() {
     const token = localStorage.getItem('jwt_token') || localStorage.getItem('token');
     const role = localStorage.getItem('userRole');
@@ -180,24 +162,28 @@
 </script>
 <script src="../js/shared-nav.js"></script>
 
-<!-- Mobile Bottom Navigation -->
+<!-- ✅ CONSISTENT Mobile Bottom Navigation — all 5 key pages -->
 <nav class="sh-mobile-nav">
   <a href="index.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
-    Dashboard
+    <span>Dashboard</span>
   </a>
   <a href="alerts.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
-    Alerts
+    <span>Alerts</span>
   </a>
-  <a href="about.html" class="active">
+  <a href="scanner.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
+    <span>Scanner</span>
+  </a>
+  <a href="blog.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+    <span>Blog</span>
+  </a>
+  <!-- <a href="about.html" class="active">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
-    About
-  </a>
-  <a href="profile.html">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
-    Profile
-  </a>
+    <span>About</span>
+  </a> -->
 </nav>
 
 <script>

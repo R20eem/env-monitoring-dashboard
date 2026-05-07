@@ -84,14 +84,14 @@
 /* show amber for pest risk and warning */
 .scan-badge--warning {
   background: rgba(201,124,26,0.12);
-  color: var(--fd-amber, #c97c1a);
+  color: var(--fd-amber, #7a4600);
   border-color: rgba(201,124,26,0.25);
 }
 
 /* show red for disease and critial */
 .scan-badge--critical {
   background: rgba(201,64,64,0.12);
-  color: var(--fd-red, #c94040);
+  color: var(--fd-red, #8a1c1c);
   border-color: rgba(201,64,64,0.25);
 }
 
@@ -101,7 +101,7 @@
 }
 
 .empty-scans-text {
-  color: var(--sh-text-3);
+  color: #4a5c35;
   font-size: 14px;
   margin: 0;
 }
@@ -113,12 +113,12 @@
 }
 
 #result-card.result-card--warning {
-  border-left: 4px solid var(--fd-amber, #c97c1a);
+  border-left: 4px solid var(--fd-amber, #7a4600);
   background: var(--fd-amber-bg, #fdf3e3);
 }
 
 #result-card.result-card--critical {
-  border-left: 4px solid var(--fd-red, #c94040);
+  border-left: 4px solid var(--fd-red, #8a1c1c);
   background: var(--fd-red-bg, #fdf0f0);
 }
 

@@ -124,7 +124,7 @@ body.researcher-page {
 }
 
 .r-sidebar-logo img {
-  height: 44px;
+  height: 56px;
   width: auto;
   filter: brightness(0) invert(1);
   object-fit: contain;
@@ -155,10 +155,10 @@ body.researcher-page {
 
 .r-nav-label {
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
+  color: #ffffff;
   padding: 0 8px;
   margin-bottom: 6px;
 }
@@ -991,7 +991,11 @@ body.researcher-page {
 
 @media (max-width: 860px) {
   :root { --r-sidebar-w: 0px; }
-  .r-sidebar { display: none; }
+  .r-layout { flex-direction: column; }
+  .r-sidebar {
+    display: none;
+  }
+  .r-main { padding-bottom: 86px; }
   .r-chart-row-2 { grid-template-columns: 1fr; }
   .r-stat-grid { grid-template-columns: repeat(2, 1fr); }
   .r-stat-grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -1002,9 +1006,9 @@ body.researcher-page {
     flex-direction: column; 
     align-items: flex-start;
     gap: 10px;
-    padding: 12px !important;
+    padding: 12px 16px !important;
     height: auto !important;
-    min-height: 60px;
+    min-height: 64px;
   }
   .r-topbar-right {
     flex-wrap: wrap;

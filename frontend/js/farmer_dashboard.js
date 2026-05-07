@@ -150,8 +150,8 @@ function setupUser() {
     const hasViewToggle = viewToggle && navActions.contains(viewToggle);
 
     if (token && role) {
-      // Logged in: show dashboard link only, no sign out in topbar
-      navActions.innerHTML = `<a href="index.html" class="f-btn f-btn-ghost">Dashboard</a>`;
+      // Logged in: no extra buttons in topbar
+      navActions.innerHTML = ``;
     } else {
       // Not logged in: show sign in and register
       navActions.innerHTML = `
@@ -586,7 +586,7 @@ function renderSimpleView() {
         <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#7a8a65;">
           <span>${T('sv.pest_activity')}</span>${pestDots}
         </div>
-        <div style="margin-top:10px;font-size:11px;color:#a8b89a;">${T('sv.tap_details')}</div>
+        <div style="margin-top:10px;font-size:14px;color:#656e5c;">${T('sv.tap_details')}</div>
       </div>
     `;
   }).join('');
