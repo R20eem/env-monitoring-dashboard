@@ -93,6 +93,10 @@
           <div class="r-status-dot"></div>
           <span data-i18n="r.live">Live</span>
         </div>
+        <button class="r-btn r-btn-primary" id="r-export-btn">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3v11M5 9l5 5 5-5M3 17h14"/></svg>
+          <span data-i18n="r.export">Export</span>
+        </button>
       </div>
     </header>
 
@@ -115,12 +119,12 @@
 
         <div class="r-section-head">
           <div>
-            <h2>Research Overview</h2>
-            <p>Summary statistics and alert status across all monitored sites</p>
+            <h2 data-i18n="r.ov_title">Research Overview</h2>
+            <p data-i18n="r.ov_sub">Summary statistics and alert status across all monitored sites</p>
           </div>
           <div class="r-flex r-gap-10">
             <select class="r-select" id="ov-site-filter">
-              <option value="all">All Sites</option>
+              <option value="all" data-i18n="r.all_sites">All Sites</option>
             </select>
           </div>
         </div>
@@ -128,24 +132,24 @@
         <!-- Stat Cards -->
         <div class="r-stat-grid">
           <div class="r-stat" style="--accent: var(--r-green-500);">
-            <div class="r-stat-label">Total Readings</div>
+            <div class="r-stat-label" data-i18n="r.stat_total">Total Readings</div>
             <div class="r-stat-value" id="s-total">—</div>
-            <div class="r-stat-sub">across all sites</div>
+            <div class="r-stat-sub" data-i18n="r.stat_total_sub">across all sites</div>
           </div>
           <div class="r-stat" style="--accent: var(--r-red-500);">
-            <div class="r-stat-label">Critical Alerts</div>
+            <div class="r-stat-label" data-i18n="r.stat_critical">Critical Alerts</div>
             <div class="r-stat-value" id="s-critical">—</div>
             <div class="r-stat-sub danger" id="s-critical-pct">—</div>
           </div>
           <div class="r-stat" style="--accent: var(--r-amber-500);">
-            <div class="r-stat-label">Warning Events</div>
+            <div class="r-stat-label" data-i18n="r.stat_warning">Warning Events</div>
             <div class="r-stat-value" id="s-warning">—</div>
             <div class="r-stat-sub warn" id="s-warning-pct">—</div>
           </div>
           <div class="r-stat" style="--accent: var(--r-teal-500);">
-            <div class="r-stat-label">Avg Pest Count</div>
+            <div class="r-stat-label" data-i18n="r.stat_pest">Avg Pest Count</div>
             <div class="r-stat-value" id="s-avg-pest">—</div>
-            <div class="r-stat-sub">traps per reading</div>
+            <div class="r-stat-sub" data-i18n="r.stat_pest_sub">traps per reading</div>
           </div>
         </div>
 
@@ -155,8 +159,8 @@
           <div class="r-chart-card">
             <div class="r-card-head">
               <div>
-                <div class="r-card-title">Alert Type Distribution</div>
-                <div class="r-card-sub">Breakdown by alert category across all readings</div>
+                <div class="r-card-title" data-i18n="r.alert_dist_title">Alert Type Distribution</div>
+                <div class="r-card-sub" data-i18n="r.alert_dist_sub">Breakdown by alert category across all readings</div>
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:28px; flex-wrap:wrap;">
@@ -170,12 +174,12 @@
           <div class="r-chart-card" style="display:flex; flex-direction:column;">
             <div class="r-card-head">
               <div>
-                <div class="r-card-title">Latest Site Status</div>
-                <div class="r-card-sub">Most recent reading per site</div>
+                <div class="r-card-title" data-i18n="r.site_status_title">Latest Site Status</div>
+                <div class="r-card-sub" data-i18n="r.site_status_sub">Most recent reading per site</div>
               </div>
             </div>
             <div id="site-status-list" style="flex:1; display:flex; flex-direction:column; gap:10px;">
-              <div class="r-loading"><div class="r-spinner"></div>Loading...</div>
+              <div class="r-loading"><div class="r-spinner"></div><span data-i18n="r.loading">Loading...</span></div>
             </div>
           </div>
 
@@ -185,11 +189,11 @@
         <div class="r-chart-card r-mb-16">
           <div class="r-card-head">
             <div>
-              <div class="r-card-title">Pest Population — 30 Day Overview</div>
-              <div class="r-card-sub">Average daily pest trap count, all sites</div>
+              <div class="r-card-title" data-i18n="r.pest_ov_title">Pest Population — 30 Day Overview</div>
+              <div class="r-card-sub" data-i18n="r.pest_ov_sub">Average daily pest trap count, all sites</div>
             </div>
             <select class="r-select" id="ov-chart-site">
-              <option value="all">All Sites</option>
+              <option value="all" data-i18n="r.all_sites">All Sites</option>
             </select>
           </div>
           <div style="position:relative; width:100%; height:220px;">
@@ -206,18 +210,18 @@
 
         <div class="r-section-head">
           <div>
-            <h2>Trend Analysis</h2>
-            <p>Time-series and dual-axis charts for identifying seasonal patterns and correlations</p>
+            <h2 data-i18n="r.tr_title">Trend Analysis</h2>
+            <p data-i18n="r.tr_sub">Time-series and dual-axis charts for identifying seasonal patterns and correlations</p>
           </div>
           <div class="r-flex r-gap-10">
             <select class="r-select" id="tr-site-filter">
-              <option value="all">All Sites</option>
+              <option value="all" data-i18n="r.all_sites">All Sites</option>
             </select>
             <select class="r-select" id="tr-range">
-              <option value="30">Last 30 days</option>
-              <option value="90">Last 90 days</option>
-              <option value="180">Last 180 days</option>
-              <option value="365">Full year</option>
+              <option value="30" data-i18n="r.tr_last30">Last 30 days</option>
+              <option value="90" data-i18n="r.tr_last90">Last 90 days</option>
+              <option value="180" data-i18n="r.tr_last180">Last 180 days</option>
+              <option value="365" data-i18n="r.tr_fullyear">Full year</option>
             </select>
           </div>
         </div>
@@ -226,7 +230,7 @@
         <div class="r-chart-card r-mb-16">
           <div class="r-card-head">
             <div>
-              <div class="r-card-title">Pest Population Time-Series</div>
+              <div class="r-card-title" data-i18n="r.pest_ts_title">Pest Population Time-Series</div>
               <div class="r-card-sub" id="tr-pest-sub">X: timestamp · Y: pest_trap_count · color-coded by site_id</div>
             </div>
           </div>
@@ -240,8 +244,8 @@
         <div class="r-chart-card r-mb-16">
           <div class="r-card-head">
             <div>
-              <div class="r-card-title">Disease Risk vs. Rainfall (Dual-Axis)</div>
-              <div class="r-card-sub">Bars: wx_rain_mm_hr · Line: alert_disease_high — visualises how rainfall precedes outbreaks</div>
+              <div class="r-card-title" data-i18n="r.disease_rain_title">Disease Risk vs. Rainfall (Dual-Axis)</div>
+              <div class="r-card-sub" data-i18n="r.disease_rain_sub">Bars: wx_rain_mm_hr · Line: alert_disease_high — visualises how rainfall precedes outbreaks</div>
             </div>
           </div>
           <div style="position:relative; width:100%; height:260px;">
@@ -254,8 +258,8 @@
           <div class="r-chart-card">
             <div class="r-card-head">
               <div>
-                <div class="r-card-title">Temperature Over Time</div>
-                <div class="r-card-sub">air_temperature_c by site</div>
+                <div class="r-card-title" data-i18n="r.temp_title">Temperature Over Time</div>
+                <div class="r-card-sub" data-i18n="r.temp_sub">air_temperature_c by site</div>
               </div>
             </div>
             <div style="position:relative; width:100%; height:200px;">
@@ -265,8 +269,8 @@
           <div class="r-chart-card">
             <div class="r-card-head">
               <div>
-                <div class="r-card-title">Humidity Over Time</div>
-                <div class="r-card-sub">relative_humidity_pct by site</div>
+                <div class="r-card-title" data-i18n="r.humid_title">Humidity Over Time</div>
+                <div class="r-card-sub" data-i18n="r.humid_sub">relative_humidity_pct by site</div>
               </div>
             </div>
             <div style="position:relative; width:100%; height:200px;">
@@ -284,8 +288,8 @@
 
         <div class="r-section-head">
           <div>
-            <h2>Correlations & Patterns</h2>
-            <p>Scatter plots, correlation matrices and thermal window analysis</p>
+            <h2 data-i18n="r.corr_title">Correlations & Patterns</h2>
+            <p data-i18n="r.corr_sub">Scatter plots, correlation matrices and thermal window analysis</p>
           </div>
         </div>
 
@@ -294,8 +298,8 @@
           <div class="r-chart-card">
             <div class="r-card-head">
               <div>
-                <div class="r-card-title">Pest Activity vs. Temperature</div>
-                <div class="r-card-sub">X: air_temperature_c · Y: pest_trap_count — identifies the thermal window</div>
+                <div class="r-card-title" data-i18n="r.scatter_title">Pest Activity vs. Temperature</div>
+                <div class="r-card-sub" data-i18n="r.scatter_sub">X: air_temperature_c · Y: pest_trap_count — identifies the thermal window</div>
               </div>
             </div>
             <div style="position:relative; width:100%; height:260px;">
@@ -307,12 +311,12 @@
           <div class="r-chart-card">
             <div class="r-card-head">
               <div>
-                <div class="r-card-title">Environmental Correlation Matrix</div>
-                <div class="r-card-sub">Pearson r between temperature, humidity, leaf wetness & pest count</div>
+                <div class="r-card-title" data-i18n="r.corrmatrix_title">Environmental Correlation Matrix</div>
+                <div class="r-card-sub" data-i18n="r.corrmatrix_sub">Pearson r between temperature, humidity, leaf wetness & pest count</div>
               </div>
             </div>
             <div class="r-corr-wrap r-mt-12" id="corr-matrix-wrap">
-              <div class="r-loading"><div class="r-spinner"></div>Computing correlations...</div>
+              <div class="r-loading"><div class="r-spinner"></div><span data-i18n="r.computing_corr">Computing correlations...</span></div>
             </div>
           </div>
         </div>
@@ -321,11 +325,11 @@
         <div class="r-chart-card r-mb-16">
           <div class="r-card-head">
             <div>
-              <div class="r-card-title">Vibration Level Analysis</div>
-              <div class="r-card-sub">vibration_level over time — identify if mechanical vibration correlates with false-positive pest readings</div>
+              <div class="r-card-title" data-i18n="r.vib_title">Vibration Level Analysis</div>
+              <div class="r-card-sub" data-i18n="r.vib_sub">vibration_level over time — identify if mechanical vibration correlates with false-positive pest readings</div>
             </div>
             <select class="r-select" id="vib-site">
-              <option value="all">All Sites</option>
+              <option value="all" data-i18n="r.all_sites">All Sites</option>
             </select>
           </div>
           <div style="position:relative; width:100%; height:220px;">
@@ -340,38 +344,10 @@
       ══════════════════════════════════════════ -->
       <div class="r-panel" id="tab-tables">
 
-                <!-- Export Bar -->
-        <div class="r-chart-card r-mb-16" style="padding: 14px 20px;">
-          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-            <div style="font-family:var(--r-font-display); font-size:13px; font-weight:700; color:var(--r-text-1); margin-right:4px;">
-              Export Data
-            </div>
-            <select class="r-select" id="exp-site" style="flex:1; min-width:110px;">
-              <option value="">All Sites</option>
-              <option value="site_maize">Maize</option>
-              <option value="site_brassica">Brassica</option>
-              <option value="site_orchard">Orchard</option>
-            </select>
-            <select class="r-select" id="exp-status" style="flex:1; min-width:110px;">
-              <option value="">All Statuses</option>
-              <option value="normal">Normal</option>
-              <option value="warning">Warning</option>
-              <option value="critical">Critical</option>
-            </select>
-            <input type="date" id="exp-start" class="r-select" style="flex:1; min-width:130px;">
-            <input type="date" id="exp-end" class="r-select" style="flex:1; min-width:130px;">
-            <button class="r-btn r-btn-primary" id="exp-download-btn">
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M10 3v11M5 9l5 5 5-5M3 17h14"/></svg>
-              Download CSV
-            </button>
-            <span id="exp-status-msg" style="font-size:12px; color:var(--r-text-3);"></span>
-          </div>
-        </div>
-
         <div class="r-section-head">
           <div>
-            <h2>Data Tables</h2>
-            <p>Critical event logs, site risk rankings and sensor health diagnostics</p>
+            <h2 data-i18n="r.tables_title">Data Tables</h2>
+            <p data-i18n="r.tables_sub">Critical event logs, site risk rankings and sensor health diagnostics</p>
           </div>
         </div>
 
@@ -379,33 +355,37 @@
         <div class="r-table-card r-mb-16">
           <div class="r-table-head">
             <div>
-              <div class="r-card-title">Critical Event Log</div>
-              <div class="r-card-sub">Rows where status = 'critical' — exact conditions leading to system-wide alerts</div>
+              <div class="r-card-title" data-i18n="r.crit_log_title">Critical Event Log</div>
+              <div class="r-card-sub" data-i18n="r.crit_log_sub">Rows where status = 'critical' — exact conditions leading to system-wide alerts</div>
             </div>
             <div class="r-flex r-gap-10">
               <select class="r-select" id="crit-site">
-                <option value="all">All Sites</option>
+                <option value="all" data-i18n="r.all_sites">All Sites</option>
               </select>
+              <button class="r-btn r-btn-outline" id="crit-export-btn">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3v11M5 9l5 5 5-5M3 17h14"/></svg>
+                <span data-i18n="r.csv">CSV</span>
+              </button>
             </div>
           </div>
           <div class="r-table-scroll">
             <table class="r-table">
               <thead>
                 <tr>
-                  <th>Timestamp</th>
-                  <th>Site</th>
-                  <th>Status</th>
-                  <th>Pest Count</th>
-                  <th>Temp °C</th>
-                  <th>Humidity %</th>
-                  <th>Leaf Wetness</th>
-                  <th>Rain mm/hr</th>
-                  <th>Pest Outbreak</th>
-                  <th>Disease High</th>
+                  <th data-i18n="r.th_timestamp">Timestamp</th>
+                  <th data-i18n="r.th_site">Site</th>
+                  <th data-i18n="r.th_status">Status</th>
+                  <th data-i18n="r.th_pest_count">Pest Count</th>
+                  <th data-i18n="r.th_temp">Temp °C</th>
+                  <th data-i18n="r.th_humidity">Humidity %</th>
+                  <th data-i18n="r.th_leaf">Leaf Wetness</th>
+                  <th data-i18n="r.th_rain">Rain mm/hr</th>
+                  <th data-i18n="r.th_outbreak">Pest Outbreak</th>
+                  <th data-i18n="r.th_disease">Disease High</th>
                 </tr>
               </thead>
               <tbody id="crit-table-body">
-                <tr><td colspan="10"><div class="r-loading"><div class="r-spinner"></div>Loading...</div></td></tr>
+                <tr><td colspan="10"><div class="r-loading"><div class="r-spinner"></div><span data-i18n="r.loading">Loading...</span></div></td></tr>
               </tbody>
             </table>
           </div>
@@ -415,26 +395,26 @@
         <div class="r-table-card r-mb-16">
           <div class="r-table-head">
             <div>
-              <div class="r-card-title">Site Risk Ranking</div>
-              <div class="r-card-sub">Ranked by outbreak frequency — site_orchard typically has significantly higher rates</div>
+              <div class="r-card-title" data-i18n="r.risk_rank_title">Site Risk Ranking</div>
+              <div class="r-card-sub" data-i18n="r.risk_rank_sub">Ranked by outbreak frequency — site_orchard typically has significantly higher rates</div>
             </div>
           </div>
           <div class="r-table-scroll">
             <table class="r-table">
               <thead>
                 <tr>
-                  <th>Rank</th>
-                  <th>Site ID</th>
-                  <th>Avg Pest Count</th>
-                  <th>Max Pest Count</th>
-                  <th>Total Outbreaks</th>
-                  <th>High Disease Days</th>
-                  <th>Risk Level</th>
-                  <th>Relative Risk</th>
+                  <th data-i18n="r.th_rank">Rank</th>
+                  <th data-i18n="r.th_site_id">Site ID</th>
+                  <th data-i18n="r.th_avg_pest">Avg Pest Count</th>
+                  <th data-i18n="r.th_max_pest">Max Pest Count</th>
+                  <th data-i18n="r.th_outbreaks">Total Outbreaks</th>
+                  <th data-i18n="r.th_disease_days">High Disease Days</th>
+                  <th data-i18n="r.th_risk_level">Risk Level</th>
+                  <th data-i18n="r.th_rel_risk">Relative Risk</th>
                 </tr>
               </thead>
               <tbody id="risk-table-body">
-                <tr><td colspan="8"><div class="r-loading"><div class="r-spinner"></div>Computing...</div></td></tr>
+                <tr><td colspan="8"><div class="r-loading"><div class="r-spinner"></div><span data-i18n="r.computing">Computing...</span></div></td></tr>
               </tbody>
             </table>
           </div>
@@ -444,24 +424,24 @@
         <div class="r-table-card">
           <div class="r-table-head">
             <div>
-              <div class="r-card-title">Sensor Health Diagnostics</div>
-              <div class="r-card-sub">Missing / NaN value counts per field — ensures data integrity before analysis</div>
+              <div class="r-card-title" data-i18n="r.sensor_health_title">Sensor Health Diagnostics</div>
+              <div class="r-card-sub" data-i18n="r.sensor_health_sub">Missing / NaN value counts per field — ensures data integrity before analysis</div>
             </div>
           </div>
           <div class="r-table-scroll">
             <table class="r-table">
               <thead>
                 <tr>
-                  <th>Site</th>
-                  <th>Field</th>
-                  <th>Total Rows</th>
-                  <th>Missing Values</th>
-                  <th>Missing %</th>
-                  <th>Health</th>
+                  <th data-i18n="r.th_site">Site</th>
+                  <th data-i18n="r.th_field">Field</th>
+                  <th data-i18n="r.th_total_rows">Total Rows</th>
+                  <th data-i18n="r.th_missing">Missing Values</th>
+                  <th data-i18n="r.th_missing_pct">Missing %</th>
+                  <th data-i18n="r.th_health">Health</th>
                 </tr>
               </thead>
               <tbody id="health-table-body">
-                <tr><td colspan="6"><div class="r-loading"><div class="r-spinner"></div>Running diagnostics...</div></td></tr>
+                <tr><td colspan="6"><div class="r-loading"><div class="r-spinner"></div><span data-i18n="r.running_diag">Running diagnostics...</span></div></td></tr>
               </tbody>
             </table>
           </div>
@@ -476,8 +456,8 @@
 
         <div class="r-section-head">
           <div>
-            <h2>Advanced Research Features</h2>
-            <p>Diurnal heatmaps, Leaf Wetness Duration and vibration correlation — researcher-only analysis tools</p>
+            <h2 data-i18n="r.adv_title">Advanced Research Features</h2>
+            <p data-i18n="r.adv_sub">Diurnal heatmaps, Leaf Wetness Duration and vibration correlation — researcher-only analysis tools</p>
           </div>
         </div>
 
@@ -485,15 +465,15 @@
         <div class="r-chart-card r-mb-16">
           <div class="r-card-head">
             <div>
-              <div class="r-card-title">Diurnal Activity Heatmap</div>
-              <div class="r-card-sub">Hour of Day × Day of Week · colored by avg pest_trap_count — identifies nocturnal vs diurnal pest behaviour</div>
+              <div class="r-card-title" data-i18n="r.diurnal_title">Diurnal Activity Heatmap</div>
+              <div class="r-card-sub" data-i18n="r.diurnal_sub">Hour of Day × Day of Week · colored by avg pest_trap_count — identifies nocturnal vs diurnal pest behaviour</div>
             </div>
             <select class="r-select" id="diurnal-site">
-              <option value="all">All Sites</option>
+              <option value="all" data-i18n="r.all_sites">All Sites</option>
             </select>
           </div>
           <div class="r-heatmap-wrap r-mt-12" id="diurnal-heatmap-wrap">
-            <div class="r-loading"><div class="r-spinner"></div>Building heatmap...</div>
+            <div class="r-loading"><div class="r-spinner"></div><span data-i18n="r.building_heatmap">Building heatmap...</span></div>
           </div>
         </div>
 
@@ -503,23 +483,23 @@
           <div class="r-chart-card">
             <div class="r-card-head">
               <div>
-                <div class="r-card-title">Leaf Wetness Duration (LWD)</div>
-                <div class="r-card-sub">Consecutive hours leaf_wetness_0_1 ≥ 0.8 — primary driver for crop diseases</div>
+                <div class="r-card-title" data-i18n="r.lwd_title">Leaf Wetness Duration (LWD)</div>
+                <div class="r-card-sub" data-i18n="r.lwd_sub">Consecutive hours leaf_wetness_0_1 ≥ 0.8 — primary driver for crop diseases</div>
               </div>
             </div>
             <div class="r-lwd-bar-wrap r-mt-12" id="lwd-bars">
-              <div class="r-loading"><div class="r-spinner"></div>Calculating LWD...</div>
+              <div class="r-loading"><div class="r-spinner"></div><span data-i18n="r.calc_lwd">Calculating LWD...</span></div>
             </div>
             <div class="r-nasa-insight r-mt-12" style="background: var(--r-green-50); border-color: var(--r-green-400); border-left-color: var(--r-green-500); color: var(--r-text-2);">
-              <strong style="color: var(--r-green-700);">Insight:</strong> LWD &gt; 6 consecutive hours is the epidemiological threshold for most fungal infections. Sites exceeding this regularly should be flagged for fungicide application.
+              <strong style="color: var(--r-green-700);" data-i18n="r.lwd_insight_label">Insight:</strong> <span data-i18n="r.lwd_insight">LWD &gt; 6 consecutive hours is the epidemiological threshold for most fungal infections. Sites exceeding this regularly should be flagged for fungicide application.</span>
             </div>
           </div>
 
           <div class="r-chart-card">
             <div class="r-card-head">
               <div>
-                <div class="r-card-title">Vibration vs. Pest Count</div>
-                <div class="r-card-sub">Scatter: vibration_level × pest_trap_count — flags potential false-positive readings</div>
+                <div class="r-card-title" data-i18n="r.vibscatter_title">Vibration vs. Pest Count</div>
+                <div class="r-card-sub" data-i18n="r.vibscatter_sub">Scatter: vibration_level × pest_trap_count — flags potential false-positive readings</div>
               </div>
             </div>
             <div style="position:relative; width:100%; height:220px;">
@@ -533,8 +513,8 @@
         <div class="r-chart-card r-mb-16">
           <div class="r-card-head">
             <div>
-              <div class="r-card-title">Alert Breakdown by Site</div>
-              <div class="r-card-sub">Pest Action · Pest Outbreak · Disease Moderate · Disease High — distinguishes insect-based vs fungal/pathogenic threats</div>
+              <div class="r-card-title" data-i18n="r.alert_breakdown_title">Alert Breakdown by Site</div>
+              <div class="r-card-sub" data-i18n="r.alert_breakdown_sub">Pest Action · Pest Outbreak · Disease Moderate · Disease High — distinguishes insect-based vs fungal/pathogenic threats</div>
             </div>
           </div>
           <div style="position:relative; width:100%; height:260px;">
@@ -551,12 +531,12 @@
 
         <div class="r-section-head">
           <div>
-            <h2>NASA Data Integration</h2>
-            <p>NASA POWER API — regional contextual data overlaid with ground-truth sensor readings</p>
+            <h2 data-i18n="r.nasa_title">NASA Data Integration</h2>
+            <p data-i18n="r.nasa_sub">NASA POWER API — regional contextual data overlaid with ground-truth sensor readings</p>
           </div>
           <button class="r-btn r-btn-outline" id="nasa-refresh-btn">
             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h5M16 16v-5h-5M4 9a7 7 0 0114 0M16 11a7 7 0 01-14 0"/></svg>
-            Refresh NASA
+            <span data-i18n="r.nasa_refresh">Refresh NASA</span>
           </button>
         </div>
 
@@ -564,39 +544,39 @@
         <div class="r-nasa-card r-mb-16">
           <div class="r-nasa-title">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="3"/><path fill-rule="evenodd" d="M10 0a10 10 0 100 20A10 10 0 0010 0zm0 2a8 8 0 110 16A8 8 0 0110 2z"/></svg>
-            NASA POWER API — Prediction Of Worldwide Energy Resources
+            <span data-i18n="r.nasa_api_title">NASA POWER API — Prediction Of Worldwide Energy Resources</span>
           </div>
-          <div class="r-nasa-sub">Regional data for lat/lon of monitored sites · Updated daily</div>
+          <div class="r-nasa-sub" data-i18n="r.nasa_api_sub">Regional data for lat/lon of monitored sites · Updated daily</div>
           <div class="r-nasa-grid">
             <div class="r-nasa-metric">
-              <div class="r-nasa-metric-label">Regional Temp (T2M)</div>
+              <div class="r-nasa-metric-label" data-i18n="r.nasa_t2m">Regional Temp (T2M)</div>
               <div class="r-nasa-metric-value" id="nasa-t2m">—</div>
-              <div class="r-nasa-metric-unit">°C at 2m height</div>
+              <div class="r-nasa-metric-unit" data-i18n="r.nasa_t2m_unit">°C at 2m height</div>
             </div>
             <div class="r-nasa-metric">
-              <div class="r-nasa-metric-label">Solar Radiation</div>
+              <div class="r-nasa-metric-label" data-i18n="r.nasa_solar">Solar Radiation</div>
               <div class="r-nasa-metric-value" id="nasa-allsky">—</div>
-              <div class="r-nasa-metric-unit">W/m² (ALLSKY_SFC_SW_DWN)</div>
+              <div class="r-nasa-metric-unit" data-i18n="r.nasa_solar_unit">W/m² (ALLSKY_SFC_SW_DWN)</div>
             </div>
             <div class="r-nasa-metric">
-              <div class="r-nasa-metric-label">Surface Soil Moisture</div>
+              <div class="r-nasa-metric-label" data-i18n="r.nasa_soil">Surface Soil Moisture</div>
               <div class="r-nasa-metric-value" id="nasa-prectot">—</div>
-              <div class="r-nasa-metric-unit">PRECTOTCORR mm/day</div>
+              <div class="r-nasa-metric-unit" data-i18n="r.nasa_soil_unit">PRECTOTCORR mm/day</div>
             </div>
             <div class="r-nasa-metric">
-              <div class="r-nasa-metric-label">Growing Degree Days</div>
+              <div class="r-nasa-metric-label" data-i18n="r.nasa_gdd">Growing Degree Days</div>
               <div class="r-nasa-metric-value" id="nasa-gdd">—</div>
-              <div class="r-nasa-metric-unit">GDD (base 10°C)</div>
+              <div class="r-nasa-metric-unit" data-i18n="r.nasa_gdd_unit">GDD (base 10°C)</div>
             </div>
             <div class="r-nasa-metric">
-              <div class="r-nasa-metric-label">Wind Speed</div>
+              <div class="r-nasa-metric-label" data-i18n="r.nasa_wind">Wind Speed</div>
               <div class="r-nasa-metric-value" id="nasa-wind">—</div>
-              <div class="r-nasa-metric-unit">m/s at 10m</div>
+              <div class="r-nasa-metric-unit" data-i18n="r.nasa_wind_unit">m/s at 10m</div>
             </div>
             <div class="r-nasa-metric">
-              <div class="r-nasa-metric-label">Relative Humidity (RH2M)</div>
+              <div class="r-nasa-metric-label" data-i18n="r.nasa_rh">Relative Humidity (RH2M)</div>
               <div class="r-nasa-metric-value" id="nasa-rh2m">—</div>
-              <div class="r-nasa-metric-unit">% at 2m</div>
+              <div class="r-nasa-metric-unit" data-i18n="r.nasa_rh_unit">% at 2m</div>
             </div>
           </div>
         </div>
@@ -605,16 +585,16 @@
         <div class="r-chart-card r-mb-16" style="background: #0f2040; border-color: rgba(55,138,221,0.2);">
           <div class="r-card-head">
             <div>
-              <div class="r-card-title" style="color: #93c5fd;">Truth vs. Trend — Local Sensor vs. NASA Regional Temperature</div>
-              <div class="r-card-sub" style="color: rgba(255,255,255,0.4);">Local air_temperature_c vs NASA T2M — divergence may indicate a microclimate or a failing sensor</div>
+              <div class="r-card-title" style="color: #93c5fd;" data-i18n="r.nasa_overlay_title">Truth vs. Trend — Local Sensor vs. NASA Regional Temperature</div>
+              <div class="r-card-sub" style="color: rgba(255,255,255,0.4);" data-i18n="r.nasa_overlay_sub">Local air_temperature_c vs NASA T2M — divergence may indicate a microclimate or a failing sensor</div>
             </div>
           </div>
           <div class="r-legend">
             <div class="r-legend-item" style="color:rgba(255,255,255,0.5);">
-              <div class="r-legend-dot" style="background:#97c459;"></div> Local sensor
+              <div class="r-legend-dot" style="background:#97c459;"></div> <span data-i18n="r.nasa_local">Local sensor</span>
             </div>
             <div class="r-legend-item" style="color:rgba(255,255,255,0.5);">
-              <div class="r-legend-dot" style="background:#378add;"></div> NASA T2M (regional)
+              <div class="r-legend-dot" style="background:#378add;"></div> <span data-i18n="r.nasa_regional">NASA T2M (regional)</span>
             </div>
           </div>
           <div style="position:relative; width:100%; height:240px;">
@@ -625,23 +605,23 @@
         <!-- NASA insights -->
         <div class="r-nasa-row-2">
           <div class="r-nasa-card">
-            <div class="r-nasa-title">NDVI Crop Health Index</div>
-            <div class="r-nasa-sub">From MODIS satellite — "greenness" proxy for crop health</div>
+            <div class="r-nasa-title" data-i18n="r.nasa_ndvi_title">NDVI Crop Health Index</div>
+            <div class="r-nasa-sub" data-i18n="r.nasa_ndvi_sub">From MODIS satellite — "greenness" proxy for crop health</div>
             <div class="r-nasa-metric r-mb-16">
-              <div class="r-nasa-metric-label">Estimated NDVI (regional avg)</div>
+              <div class="r-nasa-metric-label" data-i18n="r.nasa_ndvi_label">Estimated NDVI (regional avg)</div>
               <div class="r-nasa-metric-value" id="nasa-ndvi">—</div>
-              <div class="r-nasa-metric-unit">0 = bare soil · 1 = dense vegetation</div>
+              <div class="r-nasa-metric-unit" data-i18n="r.nasa_ndvi_unit">0 = bare soil · 1 = dense vegetation</div>
             </div>
-            <div class="r-nasa-insight">
+            <div class="r-nasa-insight" data-i18n="r.nasa_ndvi_insight">
               If <strong>NDVI drops</strong> while <strong>pest_trap_count rises</strong>, it confirms pests are actively damaging the crop. NDVI below <strong>0.4</strong> combined with critical status warrants immediate intervention.
             </div>
           </div>
 
           <div class="r-nasa-card">
-            <div class="r-nasa-title">Multi-Source Risk Table</div>
-            <div class="r-nasa-sub">Sensor status × NASA soil moisture × NDVI → combined risk</div>
+            <div class="r-nasa-title" data-i18n="r.nasa_risk_title">Multi-Source Risk Table</div>
+            <div class="r-nasa-sub" data-i18n="r.nasa_risk_sub">Sensor status × NASA soil moisture × NDVI → combined risk</div>
             <div id="nasa-risk-table" style="margin-top:4px;">
-              <div class="r-loading" style="color:rgba(255,255,255,0.4);"><div class="r-spinner"></div>Loading...</div>
+              <div class="r-loading" style="color:rgba(255,255,255,0.4);"><div class="r-spinner"></div><span data-i18n="r.nasa_loading">Loading...</span></div>
             </div>
           </div>
         </div>
@@ -650,8 +630,8 @@
         <div class="r-chart-card r-mb-16 r-mt-12" style="background: #0f2040; border-color: rgba(55,138,221,0.2); margin-top: 16px;">
           <div class="r-card-head">
             <div>
-              <div class="r-card-title" style="color:#93c5fd;">Growing Degree Days (GDD) — Pest Life Cycle Predictor</div>
-              <div class="r-card-sub" style="color:rgba(255,255,255,0.4);">GDD accumulated from NASA T2M — predicts when pest populations will hit outbreak phase</div>
+              <div class="r-card-title" style="color:#93c5fd;" data-i18n="r.nasa_gdd_title">Growing Degree Days (GDD) — Pest Life Cycle Predictor</div>
+              <div class="r-card-sub" style="color:rgba(255,255,255,0.4);" data-i18n="r.nasa_gdd_sub">GDD accumulated from NASA T2M — predicts when pest populations will hit outbreak phase</div>
             </div>
           </div>
           <div style="position:relative; width:100%; height:220px;">
@@ -679,10 +659,10 @@
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
     Blog
   </a>
-  <a href="about.html">
+  <!-- <a href="about.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
     About
-  </a>
+  </a> -->
   <a href="profile.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
     Profile
