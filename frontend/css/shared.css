@@ -26,18 +26,6 @@
    Used by: index.html, blog.html, about.html, profile.html
    ============================================================ */
 
-/*
-  ── SYSTEM FONT STACK (no external requests — fast & fully offline) ──
-  Display / headings : "Trebuchet MS" ships on Windows XP+, macOS 10.0+,
-    iOS & Android. Bold, geometric feel — close in spirit to Syne.
-    Fallback chain adds ui-rounded (Apple SF Rounded), then safe sans.
-  Body copy          : system-ui resolves to the OS native UI font
-    (SF Pro on Apple, Segoe UI on Windows, Roboto on Android/Chrome OS).
-    Feels native, loads instantly, great at small sizes.
-  Monospace          : ui-monospace → "Cascadia Code" / "Menlo" / "Consolas"
-    depending on platform — all high-quality, zero download.
-*/
-
 :root {
   --sh-green-900: #173404;
   --sh-green-800: #27500a;
@@ -53,12 +41,12 @@
   --sh-border-md: rgba(0,0,0,0.12);
   --sh-text-1:    #111a08;
   --sh-text-2:    #3d4a2a;
-  --sh-text-3:    #5a6b48;
+  --sh-text-3:    #7a8a65;
   --sh-text-4:    #a8b89a;
   --sh-red:       #e24b4a;
   --sh-amber:     #ef9f27;
-  --sh-sidebar-w: 220px;
-  --sh-topbar-h:  60px;
+  --sh-sidebar-w: 230px;
+  --sh-topbar-h:  64px;
   --sh-font-display: 'Trebuchet MS', ui-rounded, 'Arial Rounded MT Bold', Arial, sans-serif;
   --sh-font-body:    system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   --sh-font-mono:    ui-monospace, 'Cascadia Code', 'Menlo', 'Consolas', 'Courier New', monospace;
@@ -72,7 +60,8 @@ body.sh-page {
   color: var(--sh-text-1);
   min-height: 100vh;
   display: flex;
-  overflow-x: hidden;
+  overflow-x: clip;
+  line-height: normal;
 }
 
 /* ── SIDEBAR ── */
@@ -97,7 +86,7 @@ body.sh-page {
 }
 
 .sh-sidebar-logo {
-  padding: 22px 20px 18px;
+  padding: 28px 24px 20px;
   border-bottom: 1px solid rgba(255,255,255,0.07);
   display: flex;
   align-items: center;
@@ -105,7 +94,7 @@ body.sh-page {
 }
 
 .sh-sidebar-logo img {
-  height: 40px;
+  height: 56px;
   width: auto;
   filter: brightness(0) invert(1);
   object-fit: contain;
@@ -123,7 +112,7 @@ body.sh-page {
   display: block;
   font-size: 9px;
   font-weight: 400;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.3);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 1px;
@@ -131,18 +120,18 @@ body.sh-page {
 
 .sh-nav {
   flex: 1;
-  padding: 16px 12px;
+  padding: 20px 14px 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
 .sh-nav-label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 9px;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
+  color: #ffffff;
   padding: 8px 10px 4px;
 }
 
@@ -152,7 +141,7 @@ body.sh-page {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 8px;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.6);
   text-decoration: none;
   font-size: 13.5px;
   font-weight: 500;
@@ -177,7 +166,7 @@ body.sh-page {
 }
 
 .sh-sidebar-bottom {
-  padding: 14px 12px 18px;
+  padding: 16px 14px 20px;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 
@@ -200,13 +189,13 @@ body.sh-page {
   font-family: var(--sh-font-display);
   font-size: 11px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--sh-green-200);
   flex-shrink: 0;
 }
 
 .sh-user-info { flex: 1; min-width: 0; }
-.sh-user-name { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.95); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sh-user-role { font-size: 9px; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.06em; }
+.sh-user-name { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sh-user-role { font-size: 9px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.06em; }
 
 /* ── MAIN AREA ── */
 .sh-main {
@@ -225,7 +214,7 @@ body.sh-page {
   display: flex;
   align-items: center;
   padding: 0 28px;
-  gap: 12px;
+  gap: 16px;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -278,7 +267,7 @@ body.sh-page {
 .sh-btn-primary:hover { background: var(--sh-green-800); }
 .sh-btn-outline { background: transparent; color: var(--sh-green-700); border: 1.5px solid var(--sh-green-400); }
 .sh-btn-outline:hover { background: var(--sh-green-50); }
-.sh-btn-ghost { background: transparent; color: #2d3a1c; border: 1px solid var(--sh-border-md); }
+.sh-btn-ghost { background: transparent; color: var(--sh-text-3); border: 1px solid var(--sh-border-md); }
 .sh-btn-ghost:hover { background: var(--sh-surface); }
 
 /* ── CONTENT ── */
@@ -339,75 +328,28 @@ body.sh-page {
 .sh-mb-16  { margin-bottom: 16px; }
 .sh-mb-24  { margin-bottom: 24px; }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 860px) {
-  :root { --sh-sidebar-w: 0px; }
-  .sh-sidebar { display: none; }
-  .sh-grid-2, .sh-grid-3 { grid-template-columns: 1fr; }
-  
-  /* Mobile optimizations - fix white bar issue */
-  .sh-main { 
-    width: 100%; 
-    min-height: 100vh;
-    margin-left: 0;
-  }
-  .sh-topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px 16px !important;
-    height: auto !important;
-    min-height: 56px;
-  }
-  .sh-topbar-right {
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: flex-start;
-  }
-  .sh-content {
-    padding: 16px;
-  }
-  .sh-hero {
-    padding: 20px 16px;
-  }
-  .sh-hero h1 {
-    font-size: 24px;
-  }
-  .sh-card {
-    padding: 16px;
-  }
-  .sh-grid-2, .sh-grid-3 {
-    gap: 12px;
-  }
-  
-  /* Mobile bottom navigation bar */
-  .sh-mobile-nav {
-    display: flex !important;
-  }
-}
-
-@media (max-width: 500px) {
-  .sh-topbar-title { font-size: 18px; }
-  .sh-topbar-sub { font-size: 12px; }
-  .sh-btn { padding: 8px 14px; font-size: 13px; }
-  .sh-hero h1 { font-size: 20px; }
-  .sh-card-title { font-size: 16px; }
-}
-
-/* Mobile bottom navigation - hidden by default */
+/* ── MOBILE BOTTOM NAV — hidden by default, shown ≤860px ── */
+/*
+  ✅ FIX: Changed from display:none → display:flex so it's always in the DOM
+  and visible on mobile. The sidebar hides itself at ≤860px, the mobile nav
+  takes over. Each page has exactly 5 identical nav items so navigation
+  is consistent across all pages.
+*/
 .sh-mobile-nav {
-  display: none;
+  display: none;           /* hidden on desktop */
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
-  background: var(--sh-green-900);
+  height: 64px;
+  background: rgba(23, 52, 4, 0.97);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 1000;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 10px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  justify-content: space-around;  /* ✅ evenly space 5 items */
+  align-items: stretch;
+  padding: 0;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.06), 0 -8px 24px rgba(0,0,0,0.18);
 }
 
 .sh-mobile-nav a {
@@ -415,37 +357,111 @@ body.sh-page {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
-  color: rgba(255,255,255,0.6);
+  padding: 8px 4px 10px;
+  color: rgba(255,255,255,0.45);
   text-decoration: none;
-  font-size: 11px;
+  font-size: 10px;
+  font-family: var(--sh-font-body);
+  font-weight: 500;
+  letter-spacing: 0.02em;
   gap: 4px;
-  border-radius: 8px;
+  flex: 1;
+  min-width: 0;
+  transition: color 0.15s, background 0.15s;
+  border-top: 2px solid transparent;
+}
+
+.sh-mobile-nav a:hover {
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.04);
 }
 
 .sh-mobile-nav a.active {
   color: var(--sh-green-400);
+  border-top-color: var(--sh-green-400);
+  background: rgba(99,153,34,0.08);
 }
 
 .sh-mobile-nav a svg {
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 }
 
-/* Add padding to content when mobile nav is visible */
+/* Add bottom padding to content so it clears the nav bar */
 body.sh-page.has-mobile-nav .sh-content {
   padding-bottom: 80px;
 }
+body.sh-page.has-mobile-nav .f-content {
+  padding-bottom: 80px;
+}
 
-/* Visually hidden but accessible to screen readers */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  :root { --sh-sidebar-w: 0px; }
+
+  .sh-sidebar { display: none; }
+  .sh-grid-2, .sh-grid-3 { grid-template-columns: 1fr; }
+
+  .sh-main {
+    width: 100%;
+    min-height: 100vh;
+    margin-left: 0;
+  }
+
+  .sh-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto !important;
+    min-height: 56px;
+    padding: 12px 16px !important;
+    gap: 8px;
+  }
+
+  .sh-topbar-right {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sh-content {
+    padding: 16px;
+  }
+
+  .sh-hero {
+    padding: 20px 16px;
+  }
+
+  .sh-hero h1 {
+    font-size: 24px;
+  }
+
+  .sh-card {
+    padding: 16px;
+  }
+
+  .sh-grid-2, .sh-grid-3 {
+    gap: 12px;
+  }
+
+  /* ✅ Show the mobile nav on small screens */
+  .sh-mobile-nav {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .sh-topbar-title { font-size: 18px; }
+  .sh-btn { padding: 8px 14px; font-size: 13px; }
+  .sh-hero h1 { font-size: 20px; }
+  .sh-card-title { font-size: 16px; }
+
+  .sh-mobile-nav a {
+    font-size: 9px;
+    gap: 3px;
+  }
+
+  .sh-mobile-nav a svg {
+    width: 18px;
+    height: 18px;
+  }
 }

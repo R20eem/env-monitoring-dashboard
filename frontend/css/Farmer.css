@@ -53,9 +53,9 @@
   --fd-100: #eaf5d8;
   --fd-50:  #f4faea;
 
-  --fd-amber:    #c97c1a;
+  --fd-amber:    #7a4600;
   --fd-amber-bg: #fdf3e3;
-  --fd-red:      #c94040;
+  --fd-red:      #8a1c1c;
   --fd-red-bg:   #fdf0f0;
   --fd-blue:     #2d7dd6;
   --fd-blue-bg:  #e8f2fc;
@@ -67,7 +67,7 @@
   --f-text-1:    #111a08;
   --f-text-2:    #3d4a2a;
   --f-text-3:    #5a6b48;
-  --f-text-4:    #a8b89a;
+  --f-text-4:    #5a6e48;
 
   --f-sidebar-w: 230px;
   --f-topbar-h:  64px;
@@ -115,8 +115,15 @@ body.farmer-page {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 0;
   background-image: radial-gradient(circle at 20% 80%, rgba(99,153,34,0.15) 0%, transparent 60%);
   pointer-events: none;
+}
+.f-sidebar-logo,
+.f-nav-section,
+.f-sidebar-bottom {
+  position: relative;
+  z-index: 1;
 }
 .f-sidebar-logo {
   padding: 28px 24px 20px;
@@ -126,8 +133,7 @@ body.farmer-page {
   gap: 10px;
 }
 .f-sidebar-logo img {
-  height: 44px;
-  width: auto;
+  height: auto;
   filter: brightness(0) invert(1);
   object-fit: contain;
 }
@@ -141,7 +147,7 @@ body.farmer-page {
 }
 .f-sidebar-brand small {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   color: #d4e5b8;
   letter-spacing: 0.08em;
@@ -150,13 +156,12 @@ body.farmer-page {
 }
 .f-nav-section { padding: 20px 14px 0; }
 .f-nav-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #b8d195;
   padding: 0 8px;
-  margin-bottom: 6px;
 }
 .f-nav-link {
   display: flex;
@@ -212,7 +217,7 @@ body.farmer-page {
 }
 .f-user-info { flex: 1; min-width: 0; }
 .f-user-name { font-size: 12px; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.f-user-role { font-size: 10px; color: #c0dd97; text-transform: uppercase; letter-spacing: 0.06em; }
+.f-user-role { font-size: 12px; color: #c0dd97; text-transform: uppercase; letter-spacing: 0.06em; }
 .f-logout-btn {
   display: flex;
   align-items: center;
@@ -258,11 +263,12 @@ body.farmer-page {
   font-weight: 700;
   color: var(--f-text-1);
 }
-.f-topbar-sub { font-size: 11px; color: var(--f-text-3); margin-top: 1px; }
+.f-topbar-sub { font-size: 12px; color: var(--f-text-3); margin-top: 1px; }
 .f-topbar-right { display: flex; align-items: center; gap: 10px; }
 
 .f-about-link {
-  font-size: 13px; font-weight: 500; color: var(--f-text-3);
+  font-size: 13px; font-weight: 500; color: #3b5a20;
+  font-weight: 600;
   text-decoration: none; padding: 6px 12px; border-radius: 8px;
   transition: background 0.15s, color 0.15s;
 }
@@ -317,7 +323,7 @@ body.farmer-page {
    SECTION LABEL
 ══════════════════════════════ */
 .f-section-label {
-  font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--f-text-3);
   margin-bottom: 12px; margin-top: 24px;
 }
@@ -346,7 +352,7 @@ body.farmer-page {
   font-size: 22px; font-weight: 700;
   margin-bottom: 6px; line-height: 1.2;
 }
-.f-hero-text p { font-size: 13px; opacity: 0.65; max-width: 400px; }
+.f-hero-text p { font-size: 13px; opacity: 0.88; max-width: 400px; }
 .f-hero-right { display: flex; gap: 12px; flex-shrink: 0; }
 .f-hero-stat {
   text-align: center;
@@ -360,7 +366,7 @@ body.farmer-page {
   color: var(--fd-300); line-height: 1;
 }
 .f-hero-stat-label {
-  font-size: 11px; opacity: 0.85;
+  font-size: 12px; opacity: 0.85;
   text-transform: uppercase; letter-spacing: 0.07em; margin-top: 4px;
 }
 
@@ -389,7 +395,7 @@ body.farmer-page {
   height: 3px; border-radius: var(--f-radius-lg) var(--f-radius-lg) 0 0;
 }
 .f-tile-site {
-  font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--f-text-3);
   margin-bottom: 8px; margin-top: 4px;
 }
@@ -429,7 +435,7 @@ body.farmer-page {
   margin-bottom: 14px; gap: 12px;
 }
 .f-card-title { font-family: var(--f-font-display); font-size: 13px; font-weight: 700; color: var(--f-text-1); }
-.f-card-sub   { font-size: 11px; color: var(--f-text-3); margin-top: 2px; }
+.f-card-sub   { font-size: 12px; color: var(--f-text-3); margin-top: 2px; }
 
 .f-site-btns { display: flex; gap: 5px; flex-wrap: wrap; }
 .f-site-btn {
@@ -442,7 +448,7 @@ body.farmer-page {
 .f-site-btn.active { background: var(--fd-700); color: #fff; border-color: var(--fd-700); }
 
 .f-chart-legend { display: flex; gap: 14px; margin-top: 10px; flex-wrap: wrap; }
-.f-legend-item  { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--f-text-3); }
+.f-legend-item  { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--f-text-3); }
 .f-legend-swatch { width: 22px; height: 3px; border-radius: 2px; }
 .f-legend-box    { width: 10px; height: 10px; border-radius: 2px; }
 
@@ -462,7 +468,7 @@ body.farmer-page {
   background: var(--f-card); border-radius: var(--f-radius-sm);
   padding: 9px 11px; border: 1px solid var(--f-border);
 }
-.f-metric-mini-label { font-size: 10px; color: var(--f-text-3); margin-bottom: 3px; }
+.f-metric-mini-label { font-size: 12px; color: var(--f-text-3); margin-bottom: 3px; }
 .f-metric-mini-val   { font-family: var(--f-font-mono); font-size: 15px; font-weight: 500; color: var(--f-text-1); }
 
 /* ══════════════════════════════
@@ -481,7 +487,7 @@ body.farmer-page {
   min-width: 140px; box-shadow: var(--f-shadow-md); color: var(--f-text-2);
 }
 .f-map-legend { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
-.f-map-legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--f-text-3); }
+.f-map-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--f-text-3); }
 .f-map-dot { width: 8px; height: 8px; border-radius: 50%; }
 
 .f-site-pulse { animation: f-pulse-ring 1.8s ease-in-out infinite; }
@@ -505,7 +511,7 @@ body.farmer-page {
 .f-cal-day.today  { border-color: var(--fd-500); background: var(--fd-50); }
 .f-cal-day.future { opacity: 0.75; }
 .f-cal-dow {
-  font-size: 9px; font-weight: 600; letter-spacing: 0.06em;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--f-text-4); margin-bottom: 3px;
 }
 .f-cal-num {
@@ -565,46 +571,21 @@ body.farmer-page {
   :root { --f-sidebar-w: 0px; }
   .f-layout { flex-direction: column; }
   .f-sidebar {
-    display: flex;
-    width: 100%;
-    height: 72px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 90;
-    padding: 0 10px;
-    background: rgba(24,52,4,0.98);
-    box-shadow: 0 -14px 30px rgba(0,0,0,0.14);
-    align-items: center;
-    overflow: hidden;
+    display: none;
   }
-  .f-sidebar::before { display: none; }
-  .f-sidebar-logo, .f-sidebar-bottom, .f-nav-label { display: none; }
-  .f-nav-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-  }
-  .f-nav-link {
-    flex: 1;
-    justify-content: center;
-    padding: 10px 6px;
-    font-size: 11px;
-    min-width: 0;
-    margin-bottom: 0;
-  }
-  .f-nav-link span {
-    display: block;
-    font-size: 10px;
-    line-height: 1.1;
-  }
-  .f-nav-link svg { width: 18px; height: 18px; }
-  .f-nav-link.active::before { display: none; }
   .f-main { padding-bottom: 86px; }
+  .f-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto !important;
+    min-height: 64px;
+    padding: 12px 16px !important;
+    gap: 10px;
+  }
+  .f-topbar-right {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .f-tile-grid { grid-template-columns: 1fr; }
   .f-cal-grid  { grid-template-columns: repeat(4, 1fr); }
   .f-content   { padding: 16px; }
@@ -627,7 +608,7 @@ body.farmer-page {
 
 .alerts-section-title {
   font-family: var(--f-font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -670,7 +651,7 @@ body.farmer-page {
 
 .alert-filter-btn {
   font-family: var(--f-font-mono);
-  font-size: 11px;
+  font-size: 12px;
   padding: 4px 12px;
   border-radius: 999px;
   border: 0.5px solid var(--f-border-md);
@@ -735,7 +716,7 @@ body.farmer-page {
 
 .alert-main-site {
   font-family: var(--f-font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -773,7 +754,7 @@ body.farmer-page {
 
 .alert-main-note {
   font-family: var(--f-font-mono);
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 8px;
 }
 
@@ -803,7 +784,7 @@ body.farmer-page {
 
 .badge {
   font-family: var(--f-font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -898,7 +879,7 @@ body.farmer-page {
 /* Readings */
 .alert-pill-readings {
   font-family: var(--f-font-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--f-text-3);
   min-width: 150px;
   text-align: right;
