@@ -1,11 +1,42 @@
 """
-Seed script: loads pest_monitoring.csv into the sensor_readings table.
+File: seed_sensor_readings.py
 
-Run from the backend/ directory using:
-    python3 -m app.seed.seed_sensor_readings
+Purpose:
+Loads the pest_monitoring CSV dataset into the database, applying
+validation and alert threshold logic to each row before storing it
+in the sensor_readings and alert_log tables.
 
-The CSV has hundreds of thousands of rows so this uses batch inserts.
-Safe to rerun since it clears the tables first.
+Responsibilities:
+- Clear existing sensor_readings, alert_log, and site_metadata rows
+  before seeding to ensure a clean state on every run
+- Seed the site_metadata table with the three monitored sites:
+  site_maize, site_brassica, and site_orchard
+- Read each row from the CSV and parse sensor values including
+  temperature, humidity, leaf wetness, pest count, and rainfall
+- Skip rows with values outside valid ranges to filter out corrupt
+  or unrealistic sensor data before storing
+- Skip duplicate rows where the same site and timestamp already
+  exist in the current batch
+- Apply the alert threshold rules to each valid row to compute
+  status (normal, warning, critical) and alert flags before storing,
+  so the dashboard can retrieve already-processed results at runtime
+- Insert rows into the database in batches of 1000 to handle the
+  large CSV dataset efficiently without running out of memory
+- Write triggered alert events to the alert_log table alongside
+  the sensor readings
+
+Layer:
+Backend (Seed / Database Population)
+
+Related:
+- sensor_reading.py in models (the table being populated)
+- alert_log.py in models (alert events written during seeding)
+- site_metadata.py in models (site metadata seeded by this script)
+- seed_blog.py (separate seed script for demo users and blog posts)
+- sensor_reading_repository.py (queries the data populated here)
+- researcher_dashboard_router.py (exposes this data to researchers)
+- farmer_dashboard.js (displays the pre-calculated alerts and status
+  populated by this script on the farmer dashboard)
 """
 import csv
 import os

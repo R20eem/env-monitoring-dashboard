@@ -1,3 +1,40 @@
+"""
+File: post_service.py
+
+Purpose:
+Handles the business logic for the community blog feature, sitting
+between the post router and the post repository layers.
+
+Responsibilities:
+- Look up a user's full name by their id and role, since posts and
+  comments only store the author id and role rather than the name
+- Create new blog posts and pass them to the repository for storage
+- Return all posts for the community feed with author name, like
+  count, and comment count included, sorted by most liked then newest
+- Return a single post with full details by id
+- Handle like and unlike logic including checking the post exists
+  and preventing the same user from liking a post twice
+- Handle comment creation including checking the post exists before
+  saving the comment
+- Return all comments for a post with author names resolved
+
+Layer:
+Backend (Service / Business Logic)
+
+Related:
+- post_repository.py (all database queries called by this service)
+- farmer_repository.py (get_farmer_by_id used to resolve author names)
+- researcher_repository.py (get_researcher_by_id used to resolve
+  author names)
+- auth_errors.py (AuthError raised when post or user is not found,
+  or when a duplicate like is attempted)
+- post_
+router.py (calls all functions in this service and handles
+  the HTTP responses)
+- schemas/post.py (shapes the data returned by this service)
+- blog.js (frontend that triggers all post, like, and comment actions)
+"""
+
 from sqlalchemy.orm import Session
 from app.repositories.post_repository import (
     create_post,

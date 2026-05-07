@@ -1,3 +1,37 @@
+"""
+File: me_router.py
+
+Purpose:
+Handles shared authentication endpoints that apply to both farmers
+and researchers, including fetching the current user's profile,
+updating profile details, and changing passwords.
+
+Responsibilities:
+- Provide a /auth/token endpoint for Swagger UI authentication
+- Return the current logged in user's profile data via /auth/me,
+  returning different fields depending on whether the user is a
+  farmer or researcher
+- Allow users to update their first name, last name, and connection
+  end date via /auth/update-profile
+- Allow users to change their password via /auth/change-password,
+  verifying the current password before saving the new one
+- Decode and validate the JWT token on every protected endpoint
+  to confirm the user is authenticated before returning any data
+
+Layer:
+Backend (Router / API)
+
+Related:
+- core/security.py (decode_access_token, hash_password, verify_password)
+- farmer_repository.py (looks up farmer by email from the token)
+- researcher_repository.py (looks up researcher by email from the token)
+- farmer_auth_service.py (used by the token endpoint for Swagger login)
+- schemas/common.py (MeResponse and TokenResponse)
+- profile.js (frontend that calls /auth/me and /auth/update-profile)
+- auth.js (frontend that uses the token returned by /auth/token)
+- main.py (registers this router with the FastAPI app)
+"""
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError

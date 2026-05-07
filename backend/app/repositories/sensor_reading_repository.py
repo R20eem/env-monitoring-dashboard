@@ -1,3 +1,37 @@
+"""
+File: sensor_reading_repository.py
+
+Purpose:
+Handles all database queries for the sensor_readings table, providing
+filtered and aggregated access to environmental sensor data for both
+the farmer and researcher dashboards.
+
+Responsibilities:
+- Return the most recent reading per site for each sensor field
+  (temperature, humidity, leaf wetness, pest count, rainfall, alerts)
+  using subqueries to avoid loading all rows into memory
+- Return status counts (normal, warning, critical) across all readings
+- Return a dashboard summary with averages and latest status per site
+- Return filtered trend data for the researcher dashboard charts
+- Return filtered data for the researcher data tables page
+- Return filtered data for CSV export with no row limit
+- Return historical alert rows for the researcher alert history view
+- Return the most recent reading per site for the farmer dashboard summary
+
+Layer:
+Backend (Repository / Data Access)
+
+Related:
+- sensor_reading.py in models (the table being queried)
+- alert_log_repository.py (separate table for logged alert events)
+- site_metadata.py (provides location and crop type context per site)
+- researcher_dashboard_router.py (calls trend, export, and summary functions)
+- dashboard_router.py (calls site summary for the farmer dashboard)
+- farmer_dashboard.js (displays site status and alerts on farmer dashboard)
+- researcher.js (displays charts, filters, and export on researcher dashboard)
+- seed_sensor_readings.py (populates this table with the initial dataset)
+"""
+
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.models.sensor_reading import SensorReading

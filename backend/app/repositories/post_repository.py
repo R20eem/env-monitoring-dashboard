@@ -1,3 +1,29 @@
+"""
+File: post_repository.py
+
+Purpose:
+Handles all database queries for posts, likes, and comments in the
+community blog feature, keeping data access logic separate from
+the router and service layers.
+
+Responsibilities:
+- Create and retrieve blog posts for the community feed
+- Handle like and unlike logic including duplicate like prevention
+- Create and retrieve comments under specific posts
+- Count likes and comments per post for display in the frontend
+
+Layer:
+Backend (Repository / Data Access)
+
+Related:
+- post.py in models (the posts table)
+- post_like.py in models (the post_likes table)
+- post_comment.py in models (the post_comments table)
+- post_service.py (calls these functions and handles business logic)
+- post_router.py (handles HTTP requests from the frontend blog page)
+- blog.js (frontend that sends requests to create posts, like, and comment)
+"""
+
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.models.post import Post

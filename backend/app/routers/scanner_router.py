@@ -1,3 +1,38 @@
+"""
+File: scanner_router.py
+
+Purpose:
+Handles all HTTP endpoints for the ML scanner feature, including
+image upload, crop disease prediction, and scan history retrieval
+for authenticated farmers.
+
+Responsibilities:
+- Accept image uploads from farmers and save them to the uploads folder
+- Run the appropriate ML model based on crop type, using Random Forest
+  for maize and orchard crops and MobileNetV2 CNN for brassica crops
+- Return a prediction, confidence score, and plain-language explanation
+  for every scan and save the result to the database
+- Return the most recent 5 scans for the logged in farmer, used to
+  display scan history on the farmer dashboard
+- Return a scan summary for the logged in farmer including total scans,
+  healthy count, pest risk count, disease risk count, and latest scan
+- Return recent scans across all farmers for the researcher view
+- Authenticate every upload and personal scan request by decoding the
+  JWT token and confirming the user is a farmer
+
+Layer:
+Backend (Router / API)
+
+Related:
+- scan_result.py in models (stores each scan result in the database)
+- core/security.py (decode_access_token used to identify the farmer)
+- farmer_repository.py (looks up the farmer from the decoded token)
+- ml_models (Random Forest .pkl files and brassica_cnn.keras model)
+- scanner.js (frontend that uploads images and displays results)
+- farmer_dashboard.js (displays the scan summary on the farmer dashboard)
+- main.py (registers this router with the FastAPI app)
+"""
+
 from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException
 from fastapi import Header
 from sqlalchemy.orm import Session
@@ -102,9 +137,9 @@ def predict_with_rf(crop_type: str, image_path: str):
         confidence = 0.75
 
     reason_map = {
-        "healthy": "model matched healthy patterns",
-        "pest_risk": "model matched pest damage patterns",
-        "disease_risk": "model matched disease patterns",
+        "healthy": "Your crop looks healthy. No signs of pest damage or disease were found in the image.",
+        "pest_risk": "The image shows signs that may indicate pest activity. Check your crops closely and consider setting more traps.",
+        "disease_risk": "The image shows patterns that may indicate disease. Monitor your crops closely and consider seeking advice.",
     }
 
     return prediction, round(confidence, 2), reason_map.get(prediction, "prediction done")
@@ -133,9 +168,9 @@ def predict_with_brassica_cnn(image_path: str):
     confidence = float(np.max(probs))
 
     reason_map = {
-        "healthy": "cnn detected healthy brassica",
-        "pest_risk": "cnn detected pest damage",
-        "disease_risk": "cnn detected disease patterns",
+        "healthy": "Your crop looks healthy. No signs of pest damage or disease were found in the image.",
+        "pest_risk": "The image shows signs that may indicate pest activity. Check your crops closely and consider setting more traps.",
+        "disease_risk": "The image shows patterns that may indicate disease. Monitor your crops closely and consider seeking advice.",
     }
 
     return prediction, round(confidence, 2), reason_map[prediction]

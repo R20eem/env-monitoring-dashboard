@@ -1,3 +1,35 @@
+"""
+File: researcher_auth_service.py
+
+Purpose:
+Handles the business logic for researcher registration and login,
+sitting between the router and the repository layers.
+
+Responsibilities:
+- Check if a researcher with the given email already exists before
+  registering, and raise AuthError if the email is taken
+- Hash the password before passing it to the repository for storage
+- Create a new researcher record in the database via the repository
+  including organisation code and connection end date
+- Verify the researcher's email, organisation code, and password
+  during login and raise AuthError if any credentials are incorrect
+- Generate and return a signed JWT token on successful login
+
+Layer:
+Backend (Service / Business Logic)
+
+Related:
+- researcher_repository.py (get_researcher_by_email and
+  create_researcher called by this service)
+- core/security.py (hash_password, verify_password, and
+  create_access_token used here)
+- auth_errors.py (AuthError raised on registration and login failure)
+- researcher_auth.py in routers (calls register_researcher and
+  login_researcher and handles the HTTP response)
+- schemas/researcher_auth.py (validates input before it reaches
+  this service)
+"""
+
 from datetime import datetime, UTC
 from sqlalchemy.orm import Session
 from app.core.security import hash_password, verify_password, create_access_token
