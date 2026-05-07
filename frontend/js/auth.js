@@ -14,13 +14,13 @@ window.onload = () => {
         if (roleSelect.value === "researcher") {
             orgCode.style.display = "block";
             connectionEnd.style.display = "block";
-
+            document.getElementById('connection_end_hint').style.display = "block";
             experience.style.display = "none";
             locationInput.style.display = "none";
         } else {
             orgCode.style.display = "none";
             connectionEnd.style.display = "none";
-
+            document.getElementById('connection_end_hint').style.display = "none";
             experience.style.display = "block";
             locationInput.style.display = "block";
         }

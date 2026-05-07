@@ -114,6 +114,50 @@
   background: var(--sh-green-100);
 }
 
+.prof-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prof-change-pass-btn {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: 1.5px solid var(--sh-border-md);
+  background: var(--sh-surface);
+  color: var(--sh-text-1);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--sh-font-body);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.prof-change-pass-btn:hover {
+  background: var(--sh-green-50);
+  border-color: var(--sh-green-400);
+}
+
+.prof-input-group .password-field {
+  width: 100%;
+}
+
+.prof-input-group .password-field .password-field-input.prof-input {
+  padding-right: 2.75rem;
+  box-sizing: border-box;
+}
+
+.prof-modal-box .password-toggle {
+  color: var(--sh-text-2);
+}
+
+.prof-modal-box .password-toggle:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--sh-text-1);
+}
+
 /* ── MODAL OVERLAY ── */
 .prof-modal-overlay {
   display: none;

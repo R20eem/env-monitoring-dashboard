@@ -21,6 +21,9 @@ passlib[bcrypt]==1.7.4
 # env variables
 python-dotenv==1.0.1
 
+# Python 3.12 and above removed distutils. TensorFlow will still expect it until setuptools is imported
+setuptools>=69.0.0
+
 # form data parsing (in case FastAPI detects form-capable endpoints)
 python-multipart==0.0.12
 

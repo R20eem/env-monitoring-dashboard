@@ -1,3 +1,32 @@
+"""
+File: sensor_reading.py
+
+Purpose:
+Defines the database model for the sensor_readings table, which stores
+environmental data collected from field monitoring sites, along with
+pre-calculated alert flags and status values.
+
+Responsibilities:
+- Map the sensor_readings table using SQLAlchemy ORM
+- Store raw environmental readings including temperature, humidity,
+  leaf wetness, pest trap count, and rainfall per site and timestamp
+- Store pre-calculated alert flags and status so the dashboard can
+  retrieve already-processed results without doing calculations at runtime
+- Support filtering by site and timestamp for researcher data analysis
+
+Layer:
+Backend (Database Model)
+
+Related:
+- alert_log.py (alert events generated from these readings)
+- site_metadata.py (links site_id to location and crop type)
+- sensor_reading_repository.py (queries and filters sensor data)
+- seed_sensor_readings.py (populates this table with initial dataset)
+- researcher_dashboard_router.py (exposes sensor data to researchers)
+- farmer_dashboard.js (displays status and alerts on the farmer dashboard)
+- researcher.js (displays trend data and filters on researcher dashboard)
+"""
+
 from sqlalchemy import String, Float
 from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base

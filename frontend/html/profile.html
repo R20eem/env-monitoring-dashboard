@@ -107,7 +107,10 @@
 
       <div class="prof-fields" id="profile-fields"></div>
 
-      <button id="edit-btn" class="prof-edit-btn" data-i18n="profile.edit_btn">Edit Profile</button>
+      <div class="prof-card-actions">
+        <button type="button" id="edit-btn" class="prof-edit-btn">Edit Profile</button>
+        <button type="button" id="change-pass-btn" class="prof-change-pass-btn">Change password</button>
+      </div>
 
     </div>
 
@@ -145,10 +148,63 @@
       </div>
     </div>
 
+    <!-- Change Password -->
+    <div id="pass-modal" class="prof-modal-overlay">
+      <div class="prof-modal-box">
+
+        <div class="prof-modal-header">
+          <h3>Change password</h3>
+          <button type="button" id="pass-close-btn" class="prof-modal-close">✕</button>
+        </div>
+
+        <div class="prof-modal-body">
+          <div class="prof-input-group">
+            <label for="pass-current">Current password</label>
+            <div class="password-field">
+              <input id="pass-current" type="password" class="prof-input password-field-input" autocomplete="current-password" placeholder="Current password">
+              <button type="button" class="password-toggle" aria-pressed="false" aria-label="Show password" aria-controls="pass-current" data-label-show="Show current password" data-label-hide="Hide current password">
+                <span class="password-toggle__show" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                <span class="password-toggle__hide" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></span>
+              </button>
+            </div>
+          </div>
+          <div class="prof-input-group">
+            <label for="pass-new">New password</label>
+            <div class="password-field">
+              <input id="pass-new" type="password" class="prof-input password-field-input" autocomplete="new-password" placeholder="At least 8 characters">
+              <button type="button" class="password-toggle" aria-pressed="false" aria-label="Show new password" aria-controls="pass-new" data-label-show="Show new password" data-label-hide="Hide new password">
+                <span class="password-toggle__show" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                <span class="password-toggle__hide" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></span>
+              </button>
+            </div>
+          </div>
+          <div class="prof-input-group">
+            <label for="pass-confirm">Confirm new password</label>
+            <div class="password-field">
+              <input id="pass-confirm" type="password" class="prof-input password-field-input" autocomplete="new-password" placeholder="Repeat new password">
+              <button type="button" class="password-toggle" aria-pressed="false" aria-label="Show confirm password" aria-controls="pass-confirm" data-label-show="Show confirm password" data-label-hide="Hide confirm password">
+                <span class="password-toggle__show" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                <span class="password-toggle__hide" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="prof-modal-footer">
+          <button type="button" id="pass-save-btn" class="prof-save-btn">Update password</button>
+          <button type="button" id="pass-cancel-btn" class="prof-cancel-btn">Cancel</button>
+        </div>
+
+        <div id="pass-feedback" class="prof-feedback"></div>
+
+      </div>
+    </div>
+
   </main>
 </div>
 
 <script src="../js/l18n.js"></script>
+<script src="../js/password-toggle.js"></script>
 <script src="../js/profile.js"></script>
 <script src="../js/shared-nav.js"></script>
 <script>

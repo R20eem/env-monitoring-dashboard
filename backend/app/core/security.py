@@ -1,3 +1,26 @@
+"""
+File: security.py
+
+Purpose:
+Handles password hashing and JWT token creation and verification
+for both farmer and researcher authentication.
+
+Responsibilities:
+- Hash plain text passwords before storing them in the database
+- Verify passwords during login
+- Create signed JWT tokens after successful login
+- Decode and validate JWT tokens on protected routes
+
+Layer:
+Backend (Security / Auth Utility)
+
+Related:
+- farmer_auth.py (router that calls create_access_token on login)
+- researcher_auth.py (same, for researcher login)
+- farmer_auth_service.py (calls hash_password and verify_password)
+- researcher_auth_service.py (same, for researcher side)
+- ui_router.py (uses decode_access_token to protect dashboard routes)
+"""
 import os
 from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
