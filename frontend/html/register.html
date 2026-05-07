@@ -61,21 +61,29 @@
             
             <input id="location" placeholder="Farm Location" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
             
-            <input id="org_code" placeholder="Organization Code (e.g. ECO-123)" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            <input id="org_code" placeholder="Organization Code (e.g. 1234)" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
             
-            <input id="connection_end" type="date" title="Connection End Date" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; color: #666;">
-            
-            <input id="password" type="password" placeholder="Create Password" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
-            
+            <input id="connection_end" type="date" title="Access Expiry Date — when your organisation access ends" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; color: #666;">
+            <p id="connection_end_hint" style="font-size:11px; color:#888; margin-top:-8px; margin-bottom:0;">Access expiry date — must be a future date</p>
+
+            <div class="password-field">
+                <input id="password" class="password-field-input" type="password" placeholder="Create Password" autocomplete="new-password" style="padding: 12px 44px 12px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 15px;">
+                <button type="button" class="password-toggle" aria-pressed="false" aria-label="Show password" aria-controls="password">
+                    <span class="password-toggle__show" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                    <span class="password-toggle__hide" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></span>
+                </button>
+            </div>
             <button onclick="register()" class="btn-primary" style="padding: 14px; font-size: 16px; margin-top: 10px; width: 100%;">Register</button>
         </div>
-        
+
         <p style="text-align: center; margin-top: 20px; font-size: 14px; color: #666;">
             Already have an account? <a href="login.html" style="color: #117a3d; font-weight: bold; text-decoration: none;">Log in</a>
         </p>
     </div>
-
+    
+    <script src="../js/password-toggle.js"></script>
     <script defer src="../js/auth.js"></script>
 
 </body>
 </html> 
+

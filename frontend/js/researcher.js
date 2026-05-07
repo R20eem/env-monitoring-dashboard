@@ -30,7 +30,7 @@
 'use strict';
 
 // ── CONFIG ──────────────────────────────────────────────────
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = "http://localhost:8000";
 const TOKEN_KEY  = 'jwt_token';
 const NASA_BASE  = 'https://power.larc.nasa.gov/api/temporal/daily/point';
 
@@ -118,7 +118,7 @@ async function loadData() {
       fetch(`${API_BASE}/api/researcher/dashboard/summary`, {
         headers: { Authorization: `Bearer ${token}` }
       }),
-      fetch(`${API_BASE}/api/researcher/dashboard/data?limit=300`, {
+      fetch(`${API_BASE}/api/researcher/dashboard/data?limit=1000`, {
         headers: { Authorization: `Bearer ${token}` }
       }),
     ]);
