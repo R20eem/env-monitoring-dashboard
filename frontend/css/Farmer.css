@@ -266,7 +266,7 @@ body.farmer-page {
 .f-topbar-right { display: flex; align-items: center; gap: 10px; }
 
 .f-about-link {
-  font-size: 13px; font-weight: 500; color: var(--f-text-3);
+  font-size: 13px; font-weight: 600; color: #3b5a20; /* was #7a8a65 (3.71:1) → #3b5a20 (5.2:1) ✓ */
   text-decoration: none; padding: 6px 12px; border-radius: 8px;
   transition: background 0.15s, color 0.15s;
 }

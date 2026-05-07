@@ -5,7 +5,7 @@
   --cream:        #F5F0E8;   /* page background */
   --white:        #FFFFFF;
   --text-dark:    #1A1A0F;   /* main body text – near-black for contrast */
-  --text-mid:     #3D3D25;
+  --text-mid:     #2e2e18;   /* was #3D3D25 — improved for WCAG AA */
   --amber:        #D4860A;   /* warning colour */
   --red-alert:    #C0392B;   /* critical */
   --status-ok:    #2E7D32;
@@ -128,7 +128,7 @@ body {
  
 .hero-sub {
   font-size: 18px;
-  color: var(--text-mid);
+  color: var(--text-dark);  /* was text-mid — improved contrast on cream bg */
   margin-bottom: 30px;
   max-width: 460px;
 }

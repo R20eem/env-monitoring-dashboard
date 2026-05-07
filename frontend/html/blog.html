@@ -191,6 +191,26 @@
 <script src="../js/l18n.js"></script>
 <script src="../js/blog.js"></script>
 <script src="../js/shared-nav.js"></script>
+<script>
+  // Hide farmer-only nav links for researchers
+  (function() {
+    if (localStorage.getItem('userRole') === 'researcher') {
+      document.querySelectorAll('.sh-nav-link').forEach(function(link) {
+        var href = link.getAttribute('href') || '';
+        if (href.includes('alerts.html') || href.includes('scanner.html')) {
+          link.style.display = 'none';
+        }
+      });
+      // Also hide from mobile bottom nav
+      document.querySelectorAll('.sh-mobile-nav a').forEach(function(link) {
+        var href = link.getAttribute('href') || '';
+        if (href.includes('alerts.html') || href.includes('scanner.html')) {
+          link.style.display = 'none';
+        }
+      });
+    }
+  })();
+</script>
 
 <!-- ✅ CONSISTENT Mobile Bottom Navigation — all 5 key pages -->
 <nav class="sh-mobile-nav">
