@@ -66,8 +66,8 @@
   --f-border-md: rgba(0,0,0,0.12);
   --f-text-1:    #111a08;
   --f-text-2:    #3d4a2a;
-  --f-text-3:    #4a5c35;
-  --f-text-4:    #5a6e48;
+  --f-text-3:    #5a6b48;
+  --f-text-4:    #a8b89a;
 
   --f-sidebar-w: 230px;
   --f-topbar-h:  64px;
@@ -149,17 +149,18 @@ body.farmer-page {
   display: block;
   font-size: 12px;
   font-weight: 400;
-  color: rgba(255,255,255,0.85);
+  color: #d4e5b8;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 1px;
 }
 .f-nav-section { padding: 20px 14px 0; }
 .f-nav-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.85);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b8d195;
   padding: 0 8px;
 }
 .f-nav-link {
@@ -168,7 +169,7 @@ body.farmer-page {
   gap: 10px;
   padding: 10px 12px;
   border-radius: var(--f-radius-sm);
-  color: rgba(255,255,255,0.85);
+  color: #ffffff;
   text-decoration: none;
   font-size: 13.5px;
   font-weight: 500;
@@ -211,19 +212,19 @@ body.farmer-page {
   font-family: var(--f-font-display);
   font-size: 12px;
   font-weight: 700;
-  color: var(--f-green-200);
+  color: #ffffff;
   flex-shrink: 0;
 }
 .f-user-info { flex: 1; min-width: 0; }
-.f-user-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.f-user-role { font-size: 12px; color: rgba(255,255,255,0.85); text-transform: uppercase; letter-spacing: 0.06em; }
+.f-user-name { font-size: 12px; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.f-user-role { font-size: 10px; color: #c0dd97; text-transform: uppercase; letter-spacing: 0.06em; }
 .f-logout-btn {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 9px 12px;
   border-radius: var(--f-radius-sm);
-  color: rgba(255,120,120,0.75);
+  color: #ff9999;
   font-size: 13px;
   cursor: pointer;
   border: none;
@@ -365,7 +366,7 @@ body.farmer-page {
   color: var(--fd-300); line-height: 1;
 }
 .f-hero-stat-label {
-  font-size: 12px; opacity: 0.9;
+  font-size: 11px; opacity: 0.85;
   text-transform: uppercase; letter-spacing: 0.07em; margin-top: 4px;
 }
 
@@ -607,9 +608,9 @@ body.farmer-page {
 
 .alerts-section-title {
   font-family: var(--f-font-mono);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--f-text-3);
   margin-bottom: 12px;
@@ -773,7 +774,7 @@ body.farmer-page {
 .alert-main-time {
   font-family: var(--f-font-mono);
   font-size: 12px;
-  color: var(--f-text-4);
+  color: #5a6b48;
 }
 
 
@@ -783,8 +784,8 @@ body.farmer-page {
 
 .badge {
   font-family: var(--f-font-mono);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   padding: 4px 12px;
@@ -889,7 +890,7 @@ body.farmer-page {
 .alert-pill-time {
   font-family: var(--f-font-mono);
   font-size: 12px;
-  color: var(--f-text-4);
+  color: #5a6b48;
   min-width: 46px;
   text-align: right;
   white-space: nowrap;
@@ -897,7 +898,7 @@ body.farmer-page {
 
 /* Arrow */
 .alert-pill-arrow {
-  color: var(--f-border-md);
+  color: #5a6b48;
   font-size: 16px;
   flex-shrink: 0;
   margin-left: 2px;
@@ -948,4 +949,16 @@ body.farmer-page {
   }
 
   .alerts-filter-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+
+
+/* On mobile, hide the farmer sidebar entirely — sh-mobile-nav handles navigation */
+@media (max-width: 860px) {
+  .farmer-page .f-sidebar {
+    display: none !important;
+  }
+
+  .farmer-page .f-main {
+    padding-bottom: 70px;
+  }
 }

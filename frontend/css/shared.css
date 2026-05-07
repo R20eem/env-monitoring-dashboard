@@ -40,9 +40,9 @@
   --sh-border:    rgba(0,0,0,0.07);
   --sh-border-md: rgba(0,0,0,0.12);
   --sh-text-1:    #111a08;
-  --sh-text-2:    #2e3a1e;
-  --sh-text-3:    #4a5c35;  /* was #7a8a65 — fails 4.5:1 on white */
-  --sh-text-4:    #5a6e48;  /* was #a8b89a — fails 4.5:1 on white */
+  --sh-text-2:    #3d4a2a;
+  --sh-text-3:    #5a6b48;
+  --sh-text-4:    #a8b89a;
   --sh-red:       #e24b4a;
   --sh-amber:     #ef9f27;
   --sh-sidebar-w: 230px;
@@ -112,7 +112,7 @@ body.sh-page {
   display: block;
   font-size: 9px;
   font-weight: 400;
-  color: rgba(255,255,255,0.65);  /* was 0.3 — invisible on dark bg */
+  color: rgba(255,255,255,0.75);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 1px;
@@ -127,11 +127,11 @@ body.sh-page {
 }
 
 .sh-nav-label {
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: rgba(255,255,255,0.7);
   padding: 8px 10px 4px;
 }
 
@@ -141,7 +141,7 @@ body.sh-page {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 8px;
-  color: rgba(255,255,255,0.85);  /* was 0.6 — fails on #173404 */
+  color: rgba(255,255,255,0.85);
   text-decoration: none;
   font-size: 13.5px;
   font-weight: 500;
@@ -189,13 +189,13 @@ body.sh-page {
   font-family: var(--sh-font-display);
   font-size: 11px;
   font-weight: 700;
-  color: var(--sh-green-200);
+  color: #ffffff;
   flex-shrink: 0;
 }
 
 .sh-user-info { flex: 1; min-width: 0; }
 .sh-user-name { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.95); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sh-user-role { font-size: 9px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.06em; }
+.sh-user-role { font-size: 9px; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.06em; }
 
 /* ── MAIN AREA ── */
 .sh-main {
@@ -267,7 +267,7 @@ body.sh-page {
 .sh-btn-primary:hover { background: var(--sh-green-800); }
 .sh-btn-outline { background: transparent; color: var(--sh-green-700); border: 1.5px solid var(--sh-green-400); }
 .sh-btn-outline:hover { background: var(--sh-green-50); }
-.sh-btn-ghost { background: transparent; color: var(--sh-text-3); border: 1px solid var(--sh-border-md); }
+.sh-btn-ghost { background: transparent; color: #2d3a1c; border: 1px solid var(--sh-border-md); }
 .sh-btn-ghost:hover { background: var(--sh-surface); }
 
 /* ── CONTENT ── */
@@ -465,13 +465,58 @@ body.sh-page.has-mobile-nav .r-content {
   .sh-hero h1 { font-size: 20px; }
   .sh-card-title { font-size: 16px; }
 
-  .sh-mobile-nav a {
-    font-size: 9px;
-    gap: 3px;
-  }
+/* Mobile bottom navigation - hidden by default */
+.sh-mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--sh-green-900);
+  z-index: 1000;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+}
 
-  .sh-mobile-nav a svg {
-    width: 18px;
-    height: 18px;
-  }
+.sh-mobile-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 11px;
+  gap: 4px;
+  border-radius: 8px;
+}
+
+.sh-mobile-nav a.active {
+  color: var(--sh-green-400);
+}
+
+.sh-mobile-nav a svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Add padding to content when mobile nav is visible */
+body.sh-page.has-mobile-nav .sh-content {
+  padding-bottom: 80px;
+}
+
+/* Visually hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

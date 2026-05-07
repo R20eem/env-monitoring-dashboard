@@ -1,3 +1,29 @@
+"""
+File: researcher_repository.py
+
+Purpose:
+Handles all database queries for the researchers table, providing
+functions to look up and create researcher accounts.
+
+Responsibilities:
+- Look up a researcher by email, used during login to verify credentials
+- Look up a researcher by id, used when loading profile or dashboard data
+- Create a new researcher record during registration and save it to
+  the database including organisation code and connection end date
+- Keep all direct database access for researchers in one place, separate
+  from the business logic in services
+
+Layer:
+Backend (Repository / Data Access)
+
+Related:
+- researcher.py in models (the table being queried)
+- researcher_auth_service.py (calls these functions during login and registration)
+- researcher_auth.py in routers (handles the HTTP requests for researcher auth)
+- schemas/researcher_auth.py (validates the data before it reaches this layer)
+- researcher_dashboard_router.py (uses researcher id to protect dashboard routes)
+"""
+
 from sqlalchemy.orm import Session
 from app.models.researcher import Researcher
 

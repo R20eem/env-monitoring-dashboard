@@ -1,3 +1,43 @@
+"""
+File: sensor_reading.py (schemas)
+
+Purpose:
+Defines all response schemas for sensor reading data returned by
+the farmer dashboard, researcher dashboard, and alert history
+endpoints.
+
+Responsibilities:
+- Provide individual response schemas for each sensor field
+  (temperature, humidity, leaf wetness, pest count, rainfall,
+  status, and all alert flags) used by the farmer dashboard
+  endpoints that return one value per site
+- Provide a combined SiteSummaryResponse schema that returns all
+  fields in a single object per site, used as the main data source
+  for the farmer dashboard
+- Provide a ResearcherDataResponse schema for the researcher data
+  tables page, including all sensor fields and alert flags
+- Provide an AlertHistoryResponse schema for the researcher alert
+  history view
+- Use from_attributes on all schemas to allow direct mapping from
+  SQLAlchemy ORM objects returned by the repository
+
+Layer:
+Backend (Schema / Data Validation)
+
+Related:
+- sensor_reading.py in models (the database model being serialised)
+- sensor_reading_repository.py (returns the ORM objects shaped by
+  these schemas)
+- dashboard_router.py (uses the individual latest value schemas and
+  SiteSummaryResponse for the farmer dashboard endpoints)
+- researcher_dashboard_router.py (uses ResearcherDataResponse and
+  AlertHistoryResponse for the researcher dashboard endpoints)
+- farmer_dashboard.js (reads SiteSummaryResponse to populate the
+  farmer dashboard status cards and alerts)
+- researcher.js (reads ResearcherDataResponse for the data tables
+  and trend charts)
+"""
+
 from pydantic import BaseModel
 
 

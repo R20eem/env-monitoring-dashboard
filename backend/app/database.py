@@ -1,3 +1,36 @@
+"""
+File: database.py
+
+Purpose:
+Sets up the database connection and session management for the
+entire backend, providing a shared engine, session factory, and
+base class for all SQLAlchemy models.
+
+Responsibilities:
+- Read the database URL from the environment variable DATABASE_URL,
+  defaulting to a local SQLite file for development
+- Create the SQLAlchemy engine with the correct connection arguments
+  depending on whether SQLite or another database is being used
+- Provide a SessionLocal factory used to create database sessions
+  throughout the application
+- Provide the Base class that all models inherit from so SQLAlchemy
+  can track and create the correct tables
+- Provide the get_db dependency function used by FastAPI routers
+  to open a database session per request and close it automatically
+  when the request finishes
+
+Layer:
+Backend (Database / Infrastructure)
+
+Related:
+- all files in models (inherit from Base defined here)
+- all files in routers (use Depends(get_db) to get a session)
+- all files in repositories (receive the session from the router)
+- seed_sensor_readings.py (uses engine and SessionLocal directly)
+- seed_blog.py (uses SessionLocal and Base to seed demo data)
+- main.py (imports Base and engine to create tables on startup)
+"""
+
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase

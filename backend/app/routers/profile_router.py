@@ -1,3 +1,32 @@
+"""
+File: profile_router.py
+
+Purpose:
+Handles the endpoint for viewing a user's public profile, allowing
+the frontend to load basic profile information when a user clicks
+on a post author's name in the community blog.
+
+Responsibilities:
+- Accept a role and user id in the URL to identify which user
+  to look up
+- Check the role first to determine which table to query, since
+  farmers and researchers are stored separately
+- Return basic public profile information including name, role,
+  and email
+- Return a 404 error if the user is not found
+
+Layer:
+Backend (Router / API)
+
+Related:
+- farmer_repository.py (looks up farmer by id)
+- researcher_repository.py (looks up researcher by id)
+- schemas/profile.py (validates the profile response shape)
+- post_router.py (blog posts that link to author profiles)
+- blog.js (frontend that calls this when a user clicks a post author)
+- main.py (registers this router with the FastAPI app)
+"""
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 

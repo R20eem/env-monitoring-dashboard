@@ -320,32 +320,84 @@ async function fetchNasaData() {
 
 async function loadScanSummary() {
   const token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
+  const card  = document.getElementById('scan-summary-card');
+  if (!card) return;
 
-  if (!token) {
-    console.log("no token → skipping scan summary");
-    return;
-  }
+  // Show skeleton while loading
+  card.innerHTML = `<div style="color:#a8b89a;font-size:13px;padding:8px 0;">Loading your scan data...</div>`;
+
+  if (!token) return;
 
   try {
     const res = await fetch(`${API_BASE}/api/scanner/my-summary`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      headers: { Authorization: `Bearer ${token}` }
     });
-
-    if (!res.ok) {
-      console.log("scan summary failed:", res.status);
-      return;
-    }
-
+    if (!res.ok) return;
     const data = await res.json();
 
-    document.getElementById('scan-total').textContent = data.total_scans ?? 0;
-    document.getElementById('scan-healthy').textContent = data.healthy_count ?? 0;
-    document.getElementById('scan-disease').textContent = data.disease_risk_count ?? 0;
-    document.getElementById('scan-pest').textContent = data.pest_risk_count ?? 0;
-    document.getElementById('scan-latest').textContent =
-      data.latest_scan?.prediction ?? '-';
+    const total   = data.total_scans ?? 0;
+    const healthy = data.healthy_count ?? 0;
+    const disease = data.disease_risk_count ?? 0;
+    const pest    = data.pest_risk_count ?? 0;
+    const latest  = data.latest_scan?.prediction ?? '-';
+    const pct     = n => total ? Math.round(n / total * 100) : 0;
+
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+        <div>
+          <div class="f-card-title">🔍 Your Plant Scans</div>
+          <div class="f-card-sub">Live results from your recent scans</div>
+        </div>
+        <a href="scanner.html" style="font-size:12px;color:#4f8730;font-weight:600;text-decoration:none;padding:6px 14px;border:1px solid #b3d996;border-radius:20px;">
+          Scan a plant →
+        </a>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+
+        <div style="grid-column:1/-1;background:linear-gradient(135deg,#1a2e10,#3d6b22);border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Total Scans</div>
+            <div style="font-size:36px;font-weight:800;color:#fff;line-height:1;">${total}</div>
+          </div>
+          <div style="font-size:48px;opacity:0.25;">🌿</div>
+        </div>
+
+        <div style="background:#eaf5d8;border:2px solid #b3d996;border-radius:12px;padding:14px 16px;">
+          <div style="font-size:11px;color:#3d6b22;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">✅ Healthy</div>
+          <div style="font-size:30px;font-weight:800;color:#3d6b22;line-height:1;">${healthy}</div>
+          <div style="margin-top:8px;height:4px;background:rgba(0,0,0,0.07);border-radius:99px;overflow:hidden;">
+            <div style="height:100%;width:${pct(healthy)}%;background:#63a33e;border-radius:99px;transition:width 0.6s;"></div>
+          </div>
+          <div style="font-size:10px;color:#89c064;margin-top:4px;">${pct(healthy)}% of scans</div>
+        </div>
+
+        <div style="background:#fdf0f0;border:2px solid #f5c0c0;border-radius:12px;padding:14px 16px;">
+          <div style="font-size:11px;color:#c94040;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">🦠 Disease Risk</div>
+          <div style="font-size:30px;font-weight:800;color:#c94040;line-height:1;">${disease}</div>
+          <div style="margin-top:8px;height:4px;background:rgba(0,0,0,0.07);border-radius:99px;overflow:hidden;">
+            <div style="height:100%;width:${pct(disease)}%;background:#c94040;border-radius:99px;transition:width 0.6s;"></div>
+          </div>
+          <div style="font-size:10px;color:#e08080;margin-top:4px;">${pct(disease)}% of scans</div>
+        </div>
+
+        <div style="background:#fdf3e3;border:2px solid #f0d898;border-radius:12px;padding:14px 16px;">
+          <div style="font-size:11px;color:#c97c1a;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">🪲 Pest Risk</div>
+          <div style="font-size:30px;font-weight:800;color:#c97c1a;line-height:1;">${pest}</div>
+          <div style="margin-top:8px;height:4px;background:rgba(0,0,0,0.07);border-radius:99px;overflow:hidden;">
+            <div style="height:100%;width:${pct(pest)}%;background:#c97c1a;border-radius:99px;transition:width 0.6s;"></div>
+          </div>
+          <div style="font-size:10px;color:#d4a840;margin-top:4px;">${pct(pest)}% of scans</div>
+        </div>
+
+        <div style="background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:14px 16px;">
+          <div style="font-size:11px;color:#a8b89a;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">🕐 Latest Result</div>
+          <div style="font-size:15px;font-weight:700;color:#111a08;font-family:monospace;">${latest}</div>
+          <a href="alerts.html" style="display:inline-block;margin-top:8px;font-size:11px;color:#4f8730;font-weight:600;text-decoration:none;">View all alerts →</a>
+        </div>
+
+      </div>
+    `;
 
   } catch (err) {
     console.error("error loading scan summary:", err);

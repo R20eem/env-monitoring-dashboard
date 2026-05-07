@@ -4,7 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alerts - Eco Leaf</title>
+  <!--
+    File: alerts.html
 
+    Purpose:
+    Main HTML template for the farmer alerts page.
+    Displays real-time crop warnings from sensor data and plant scans.
+
+    Responsibilities:
+    - Display alerts layout with sidebar navigation
+    - Render the latest alert as a featured card
+    - Show all alerts as filterable pill rows (Critical / Warning)
+    - Include role guard to redirect researchers to their own dashboard
+
+    Layer:
+    Frontend (HTML Template)
+
+    Related:
+    - alerts.js
+    - farmer.css
+    - scanner.js (saves scan results that appear here)
+-->
+
+  <!-- researchers go to their own dashboard immediately -->
   <script>
     (function () {
       var role  = localStorage.getItem('userRole');
@@ -34,16 +56,15 @@
     }
   </style>
 </head>
-<body class="farmer-page has-mobile-nav">
+<body class="farmer-page sh-page">
 
 <div class="f-layout">
 
-    <!-- ══ SIDEBAR ══ -->
-  <aside class="f-sidebar" style="width:230px;min-width:230px;background:#173404;display:flex;flex-direction:column;flex-shrink:0;position:relative;z-index:50;height:100vh;overflow-y:auto;overflow-x:hidden;">
-
-    <div class="f-sidebar-logo" style="padding:28px 24px 20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:10px;position:relative;z-index:2;">
-      <img src="../images/logo_transparent.png" alt="Eco Leaf" style="height:40px;width:auto;filter:brightness(0) invert(1);object-fit:contain;">
-      <div class="f-sidebar-brand" style="font-size:16px;font-weight:700;color:#c0dd97;line-height:1.2;position:relative;z-index:2;">
+  <!-- SIDEBAR -->
+  <aside class="f-sidebar">
+    <div class="f-sidebar-logo">
+      <img src="../images/logo_transparent.png" alt="Eco Leaf">
+      <div class="f-sidebar-brand">
         Eco Leaf
         <small data-i18n="f.brand_sub" style="display:block;font-size:10px;font-weight:400;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-top:1px;">Field Dashboard</small>
       </div>
@@ -92,7 +113,8 @@
     </div>
   </aside>
 
-  <!-- ══ MAIN ══ -->
+
+  <!--  MAIN -->
   <div class="f-main">
 
     <header class="f-topbar">
@@ -181,6 +203,10 @@
   <a href="blog.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
     <span>Blog</span>
+  </a>
+  <a href="blog.html">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+    <span data-i18n="mob.blog">Blog</span>
   </a>
   <a href="profile.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
