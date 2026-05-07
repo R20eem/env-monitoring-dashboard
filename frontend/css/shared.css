@@ -26,6 +26,18 @@
    Used by: index.html, blog.html, about.html, profile.html
    ============================================================ */
 
+/*
+  ── SYSTEM FONT STACK (no external requests — fast & fully offline) ──
+  Display / headings : "Trebuchet MS" ships on Windows XP+, macOS 10.0+,
+    iOS & Android. Bold, geometric feel — close in spirit to Syne.
+    Fallback chain adds ui-rounded (Apple SF Rounded), then safe sans.
+  Body copy          : system-ui resolves to the OS native UI font
+    (SF Pro on Apple, Segoe UI on Windows, Roboto on Android/Chrome OS).
+    Feels native, loads instantly, great at small sizes.
+  Monospace          : ui-monospace → "Cascadia Code" / "Menlo" / "Consolas"
+    depending on platform — all high-quality, zero download.
+*/
+
 :root {
   --sh-green-900: #173404;
   --sh-green-800: #27500a;
@@ -45,8 +57,8 @@
   --sh-text-4:    #a8b89a;
   --sh-red:       #e24b4a;
   --sh-amber:     #ef9f27;
-  --sh-sidebar-w: 230px;
-  --sh-topbar-h:  64px;
+  --sh-sidebar-w: 220px;
+  --sh-topbar-h:  60px;
   --sh-font-display: 'Trebuchet MS', ui-rounded, 'Arial Rounded MT Bold', Arial, sans-serif;
   --sh-font-body:    system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   --sh-font-mono:    ui-monospace, 'Cascadia Code', 'Menlo', 'Consolas', 'Courier New', monospace;
@@ -60,8 +72,7 @@ body.sh-page {
   color: var(--sh-text-1);
   min-height: 100vh;
   display: flex;
-  overflow-x: clip;
-  line-height: normal;
+  overflow-x: hidden;
 }
 
 /* ── SIDEBAR ── */
@@ -86,7 +97,7 @@ body.sh-page {
 }
 
 .sh-sidebar-logo {
-  padding: 28px 24px 20px;
+  padding: 22px 20px 18px;
   border-bottom: 1px solid rgba(255,255,255,0.07);
   display: flex;
   align-items: center;
@@ -94,7 +105,7 @@ body.sh-page {
 }
 
 .sh-sidebar-logo img {
-  height: 56px;
+  height: 40px;
   width: auto;
   filter: brightness(0) invert(1);
   object-fit: contain;
@@ -120,7 +131,7 @@ body.sh-page {
 
 .sh-nav {
   flex: 1;
-  padding: 20px 14px 0;
+  padding: 16px 12px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -166,7 +177,7 @@ body.sh-page {
 }
 
 .sh-sidebar-bottom {
-  padding: 16px 14px 20px;
+  padding: 14px 12px 18px;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 
@@ -214,7 +225,7 @@ body.sh-page {
   display: flex;
   align-items: center;
   padding: 0 28px;
-  gap: 16px;
+  gap: 12px;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -294,7 +305,7 @@ body.sh-page {
 
 .sh-hero p {
   font-size: 15px;
-  opacity: 0.92;  /* was 0.75 — fails on dark green hero bg */
+  opacity: 0.75;
   max-width: 520px;
   line-height: 1.6;
 }
@@ -328,132 +339,48 @@ body.sh-page {
 .sh-mb-16  { margin-bottom: 16px; }
 .sh-mb-24  { margin-bottom: 24px; }
 
-/* ── MOBILE BOTTOM NAV — hidden by default, shown ≤860px ── */
-/*
-  ✅ FIX: Changed from display:none → display:flex so it's always in the DOM
-  and visible on mobile. The sidebar hides itself at ≤860px, the mobile nav
-  takes over. Each page has exactly 5 identical nav items so navigation
-  is consistent across all pages.
-*/
-.sh-mobile-nav {
-  display: none;           /* hidden on desktop */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  background: rgba(23, 52, 4, 0.97);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 9999;
-  justify-content: space-around;  /* ✅ evenly space 5 items */
-  align-items: stretch;
-  padding: 0;
-  box-shadow: 0 -1px 0 rgba(255,255,255,0.06), 0 -8px 24px rgba(0,0,0,0.18);
-}
-
-.sh-mobile-nav a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 4px 10px;
-  color: rgba(255,255,255,0.75);  /* was 0.45 — fails on dark nav */
-  text-decoration: none;
-  font-size: 10px;
-  font-family: var(--sh-font-body);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
-  transition: color 0.15s, background 0.15s;
-  border-top: 2px solid transparent;
-  cursor: pointer;
-}
-
-.sh-mobile-nav a span {
-  display: block;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-.sh-mobile-nav a:hover {
-  color: rgba(255,255,255,0.75);
-  background: rgba(255,255,255,0.04);
-}
-
-.sh-mobile-nav a.active {
-  color: var(--sh-green-400);
-  border-top-color: var(--sh-green-400);
-  background: rgba(99,153,34,0.08);
-}
-
-.sh-mobile-nav a svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-/* Add bottom padding to content so it clears the nav bar */
-body.sh-page.has-mobile-nav .sh-content {
-  padding-bottom: 80px;
-}
-body.sh-page.has-mobile-nav .f-content {
-  padding-bottom: 80px;
-}
-body.sh-page.has-mobile-nav .r-content {
-  padding-bottom: 80px;
-}
-
 /* ── RESPONSIVE ── */
 @media (max-width: 860px) {
   :root { --sh-sidebar-w: 0px; }
-
   .sh-sidebar { display: none; }
   .sh-grid-2, .sh-grid-3 { grid-template-columns: 1fr; }
-
-  .sh-main {
-    width: 100%;
+  
+  /* Mobile optimizations - fix white bar issue */
+  .sh-main { 
+    width: 100%; 
     min-height: 100vh;
     margin-left: 0;
   }
-
   .sh-topbar {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px !important;
     height: auto !important;
     min-height: 56px;
-    padding: 12px 16px !important;
-    gap: 8px;
   }
-
   .sh-topbar-right {
     flex-wrap: wrap;
     gap: 8px;
+    justify-content: flex-start;
   }
-
   .sh-content {
     padding: 16px;
   }
-
   .sh-hero {
     padding: 20px 16px;
   }
-
   .sh-hero h1 {
     font-size: 24px;
   }
-
   .sh-card {
     padding: 16px;
   }
-
   .sh-grid-2, .sh-grid-3 {
     gap: 12px;
   }
-
-  /* ✅ Show the mobile nav on small screens */
+  
+  /* Mobile bottom navigation bar */
   .sh-mobile-nav {
     display: flex !important;
   }
@@ -461,9 +388,11 @@ body.sh-page.has-mobile-nav .r-content {
 
 @media (max-width: 500px) {
   .sh-topbar-title { font-size: 18px; }
+  .sh-topbar-sub { font-size: 12px; }
   .sh-btn { padding: 8px 14px; font-size: 13px; }
   .sh-hero h1 { font-size: 20px; }
   .sh-card-title { font-size: 16px; }
+}
 
 /* Mobile bottom navigation - hidden by default */
 .sh-mobile-nav {

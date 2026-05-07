@@ -36,25 +36,11 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="../css/Farmer.css">
-  <link rel="stylesheet" href="../css/farmer.css">
+
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/shared.css">
-  <style>
-    body.farmer-page { display:block !important; overflow:hidden !important; }
-    body.farmer-page .f-layout { display:flex !important; }
-  </style>
+  <link rel="stylesheet" href="../css/farmer.css">
 
-  <style>
-    /* Hide sidebar on mobile, show bottom nav instead */
-    @media (max-width: 860px) {
-      .f-sidebar { display: none !important; }
-      .sh-sidebar { display: none !important; }
-      .f-main { margin-left: 0 !important; width: 100% !important; }
-      .sh-main { margin-left: 0 !important; width: 100% !important; }
-      .f-layout { flex-direction: column !important; }
-    }
-  </style>
 </head>
 <body class="farmer-page sh-page">
 
@@ -66,48 +52,60 @@
       <img src="../images/logo_transparent.png" alt="Eco Leaf">
       <div class="f-sidebar-brand">
         Eco Leaf
-        <small data-i18n="f.brand_sub" style="display:block;font-size:10px;font-weight:400;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-top:1px;">Field Dashboard</small>
+        <small data-i18n="f.brand_sub">Field Dashboard</small>
       </div>
     </div>
 
-    <div class="f-nav-section" style="padding:20px 14px 0;position:relative;z-index:2;">
-      <div class="f-nav-label" data-i18n="nav.navigation" style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.95);padding:8px 10px 4px;display:block;">Navigation</div>
-      <a href="index.html" class="f-nav-link" id="dashboard-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
-        <span data-i18n="nav.dashboard">Dashboard</span>
-      </a>
-      <a href="alerts.html" class="f-nav-link active" id="alerts-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#ffffff;text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;background:rgba(255,255,255,0.12);position:relative;z-index:2;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
-        <span data-i18n="nav.alerts">Alerts</span>
-      </a>
-      <a href="scanner.html" class="f-nav-link" id="scanner-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
-        <span data-i18n="nav.scanner">Plant Scanner</span>
-      </a>
-      <a href="blog.html" class="f-nav-link" id="blog-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
-        <span data-i18n="nav.blog">Community Blog</span>
-      </a>
-      <a href="profile.html" class="f-nav-link" id="profile-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
-        <span data-i18n="nav.profile">Profile</span>
-      </a>
-      <!-- <a href="about.html" class="f-nav-link" id="about-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
-        <span data-i18n="nav.about">About Us</span>
-      </a> -->
-    </div>
+    <div class="f-nav-section">
+        <div class="f-nav-label" data-i18n="nav.navigation">Navigation</div>
+        <a href="index.html" class="f-nav-link">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="2" y="2" width="7" height="7" rx="1.5"/>
+            <rect x="11" y="2" width="7" height="7" rx="1.5"/>
+            <rect x="2" y="11" width="7" height="7" rx="1.5"/>
+            <rect x="11" y="11" width="7" height="7" rx="1.5"/>
+            </svg>
+            <span data-i18n="nav.dashboard">Dashboard</span>
+        </a>
+        <a href="alerts.html" class="f-nav-link active" id="alerts-link">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/>
+            </svg>
+            <span data-i18n="nav.alerts">Alerts</span>
+        </a>
+        <a href="scanner.html" class="f-nav-link">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/>
+            </svg>
+            <span data-i18n="nav.scanner">Plant Scanner</span>
+        </a>
+        <a href="blog.html" class="f-nav-link">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M3 5h14M3 9h10M3 13h12M3 17h8"/>
+            </svg>
+            <span data-i18n="nav.blog">Community Blog</span>
+        </a>
+        <a href="profile.html" class="f-nav-link">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="10" cy="7" r="3"/>
+            <path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>
+            </svg>
+            <span data-i18n="nav.profile">Profile</span>
+        </a>
+        </div>
 
-    <div class="f-sidebar-bottom" style="margin-top:auto;padding:16px 14px 20px;border-top:1px solid rgba(255,255,255,0.06);position:relative;z-index:2;">
-      <div class="f-sidebar-user" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:6px;">
-        <div class="f-avatar" id="f-avatar-initials" style="width:32px;height:32px;border-radius:50%;background:#3b6d11;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#c0dd97;flex-shrink:0;">FA</div>
-        <div class="f-user-info" style="flex:1;min-width:0;">
-          <div class="f-user-name" id="f-user-name-display" style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Farmer</div>
-          <div class="f-user-role" data-i18n="auth.farmer" style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.06em;">🌾 Farmer</div>
+    <div class="f-sidebar-bottom">
+      <div class="f-sidebar-user">
+        <div class="f-avatar" id="f-avatar-initials">FA</div>
+        <div class="f-user-info">
+          <div class="f-user-name" id="f-user-name-display">Farmer</div>
+          <div class="f-user-role" data-i18n="auth.farmer">🌾 Farmer</div>
         </div>
       </div>
-      <button class="f-logout-btn" id="f-logout-btn" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:rgba(255,120,120,0.8);font-size:13px;cursor:pointer;border:none;background:none;width:100%;">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;"><path d="M13 15l4-5-4-5M17 10H7M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3"/></svg>
+      <button class="f-logout-btn" id="f-logout-btn">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M13 15l4-5-4-5M17 10H7M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3"/>
+        </svg>
         <span data-i18n="nav.logout">Logout</span>
       </button>
     </div>
@@ -117,6 +115,7 @@
   <!--  MAIN -->
   <div class="f-main">
 
+    <!-- TOPBAR -->
     <header class="f-topbar">
       <div class="f-topbar-left">
         <div class="f-topbar-title" data-i18n="nav.alerts">Alerts</div>
@@ -131,8 +130,11 @@
       </div>
     </header>
 
+
+    <!-- ══ CONTENT ══ -->
     <main class="f-content">
 
+      <!-- GREEN HERO BANNER -->
       <div class="f-hero f-mb-24">
         <div class="f-hero-text">
           <h1 data-i18n="alerts.title">Alerts Overview</h1>
@@ -154,6 +156,7 @@
         </div>
       </div>
 
+      <!-- LATEST ALERT -->
       <div class="alerts-section">
         <div class="alerts-section-title">
           <span class="latest-dot"></span>
@@ -164,6 +167,7 @@
         </div>
       </div>
 
+      <!-- ALL ALERTS -->
       <div class="alerts-section">
         <div class="alerts-filter-row">
           <div class="alerts-section-title" data-i18n="alerts.all">All Alerts</div>
@@ -174,11 +178,12 @@
           </div>
         </div>
         <div id="alerts-list">
-          <p data-i18n="alerts.loading_alerts">Loading alerts...</p>
+        <p data-i18n="alerts.loading_alerts">Loading alerts...</p>
         </div>
       </div>
 
     </main>
+
   </div>
 </div>
 
@@ -186,23 +191,19 @@
 <script src="../js/alerts.js"></script>
 <script src="../js/shared-nav.js"></script>
 
-<!-- ✅ CONSISTENT Mobile Bottom Navigation — all 5 key pages -->
+<!-- Mobile Bottom Navigation -->
 <nav class="sh-mobile-nav">
   <a href="index.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
-    <span>Dashboard</span>
+    <span data-i18n="mob.dashboard">Dashboard</span>
   </a>
   <a href="alerts.html" class="active">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
-    <span>Alerts</span>
+    <span data-i18n="mob.alerts">Alerts</span>
   </a>
   <a href="scanner.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
-    <span>Scanner</span>
-  </a>
-  <a href="blog.html">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
-    <span>Blog</span>
+    <span data-i18n="mob.scanner">Scanner</span>
   </a>
   <a href="blog.html">
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>

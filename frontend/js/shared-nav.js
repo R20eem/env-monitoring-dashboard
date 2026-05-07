@@ -117,12 +117,11 @@
   }
 
   // ── ACTIVE NAV LINK ──────────────────────────────────────────
-  const currentPage = window.location.pathname.split('/').pop().split('?')[0].split('#')[0] || 'index.html';
-  document.querySelectorAll('.sh-nav-link, .f-nav-link, .r-nav-link, .sh-mobile-nav a').forEach(link => {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.sh-nav-link').forEach(link => {
     const href = link.getAttribute('href');
-    if (href && href !== '#') {
-      const isCurrent = href.includes(currentPage);
-      link.classList.toggle('active', isCurrent);
+    if (href && href !== '#' && href.includes(currentPage)) {
+      link.classList.add('active');
     }
   });
 
