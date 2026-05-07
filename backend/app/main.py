@@ -1,3 +1,37 @@
+"""
+File: main.py
+
+Purpose:
+The entry point for the FastAPI backend application, responsible
+for setting up the app, registering all routers, configuring
+middleware, and creating database tables on startup.
+
+Responsibilities:
+- Create the FastAPI app instance and set the API title
+- Configure CORS middleware to allow the frontend to make requests
+  to the backend from any origin during development
+- Create all database tables on startup using SQLAlchemy metadata
+  so the app is ready to use without running migrations manually
+- Register all routers with the app including farmer auth,
+  researcher auth, me, posts, profiles, dashboard, researcher
+  dashboard, and scanner
+- Serve the uploads folder as a static directory so uploaded
+  scan images can be accessed directly via URL from the browser
+- Provide a root endpoint at GET / to confirm the API is running
+
+Layer:
+Backend (Application Entry Point)
+
+Related:
+- database.py (provides Base and engine used to create tables)
+- all files in routers (registered with the app here)
+- all files in models (imported here so tables are created on startup)
+- core/security.py (used by routers registered here)
+- farmer_dashboard.js (connects to endpoints registered here)
+- researcher.js (connects to researcher dashboard endpoints)
+- scanner.js (connects to scanner endpoints and image URLs)
+"""
+
 import setuptools
 
 from fastapi import FastAPI

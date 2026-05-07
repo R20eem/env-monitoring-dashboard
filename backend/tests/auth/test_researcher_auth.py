@@ -1,3 +1,43 @@
+"""
+File: test_researcher_auth.py
+
+Purpose:
+Contains all automated tests for the researcher registration and
+login endpoints, covering both successful flows and expected failure
+cases including organisation code and connection expiry validation.
+
+Responsibilities:
+- Test that a researcher can register successfully and the correct
+  id, email, and role are returned
+- Test that registering with a duplicate email returns a 400 error
+- Test that invalid email format, org code containing letters, and
+  org code with wrong length all return 422 validation errors
+- Test that an incorrectly formatted connection end date returns
+  a 400 error with a clear message
+- Test that weak passwords missing uppercase, lowercase, number, or
+  special character all return 422 validation errors
+- Test that a registered researcher can log in successfully with
+  email, org code, and password and receive a valid JWT token
+- Test that login fails with a 401 error when the password is wrong,
+  the org code is wrong, or the email does not exist
+- Test that login with an invalid org code format returns a 422 error
+- Test that login fails with a 401 error and a clear message when
+  the researcher's connection end date has already passed
+
+Layer:
+Backend (Tests / Auth)
+
+Related:
+- researcher_auth.py in routers (the endpoints being tested)
+- researcher_auth_service.py (business logic being exercised by
+  the tests including connection expiry check)
+- researcher_repository.py (database layer used during test execution)
+- schemas/researcher_auth.py (validation rules tested by the weak
+  password, org code, and invalid input test cases)
+- conftest.py (provides the client and researcher_data fixtures
+  used across all tests in this file)
+"""
+
 def test_register_researcher_success(client, researcher_data):
     response = client.post("/auth/researchers/register", json=researcher_data)
 

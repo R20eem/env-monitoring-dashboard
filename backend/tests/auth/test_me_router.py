@@ -1,3 +1,38 @@
+"""
+File: test_me_router.py
+
+Purpose:
+Contains all automated tests for the shared authentication endpoints
+covering profile retrieval and password management for both farmers
+and researchers.
+
+Responsibilities:
+- Test that GET /auth/me returns the correct profile fields for a
+  logged in farmer including email, role, name, location and experience
+- Test that GET /auth/me returns the correct profile fields for a
+  logged in researcher including email, role, name, org code and
+  connection end date
+- Test that GET /auth/me returns a 401 or 403 error when no token
+  is provided
+- Test that GET /auth/me returns a 401 error when an invalid or
+  malformed token is sent
+- Test that a farmer can successfully change their password and that
+  the old password no longer works while the new one does
+- Test that changing a password fails with a 400 error when the
+  current password provided is incorrect
+
+Layer:
+Backend (Tests / Auth)
+
+Related:
+- me_router.py (the endpoints being tested)
+- core/security.py (token decoding tested indirectly by invalid
+  token test cases)
+- farmer_auth_service.py (login used to verify password change worked)
+- conftest.py (provides client, farmer_auth_headers, researcher_auth_headers,
+  farmer_data and researcher_data fixtures used across all tests)
+"""
+
 def test_me_returns_farmer_profile(client, farmer_auth_headers, farmer_data):
     response = client.get("/auth/me", headers=farmer_auth_headers)
 
