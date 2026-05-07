@@ -1,3 +1,34 @@
+/*
+    File: scanner.js
+
+    Purpose:
+    Handles plant scanning functionality, including image upload,
+    API communication, and displaying scan results.
+
+    Responsibilities:
+    - Handle image preview before upload
+    - Submit scan request to backend API (/api/scanner/upload)
+    - Display scan results (prediction, confidence, crop, site, reason)
+    - Apply severity classification (normal / warning / critical)
+    - Save scan results to localStorage for alerts integration
+    - Fetch and display user's scan history (/api/scanner/my-scans)
+    - Manage UI interactions (overlay, result card, error messages)
+
+    Key Features:
+    - JWT-based authentication for API requests
+    - Dynamic severity badges for scan history
+    - Auto-refresh of scan history after new scan
+    - Graceful error handling for API failures
+
+    Layer:
+    Frontend (JavaScript Logic / API Integration)
+
+    Related:
+    - scanner.html (UI structure)
+    - scanner.css (visual styling)
+    - alerts.html / alerts.js (uses saved scan results)
+*/
+
 const API_BASE = 'http://127.0.0.1:8000';
 
 const form            = document.getElementById('scanner-form');
@@ -7,6 +38,7 @@ const imagePreview    = document.getElementById('image-preview');
 const scanBtn         = document.getElementById('scan-btn');
 const errorEl         = document.getElementById('scanner-error');
 const resultCard      = document.getElementById('result-card');
+const overlay         = document.getElementById('result-overlay');
 
 const resultPrediction = document.getElementById('result-prediction');
 const resultConfidence = document.getElementById('result-confidence');
@@ -46,33 +78,22 @@ fileInput.addEventListener('change', () => {
   imagePreview.classList.remove('f-hidden');
 });
 
-/* ── get severity from prediction label ── */
+/* ── severity from prediction ── */
 function predictionSeverity(prediction) {
   if (!prediction) return 'normal';
   const p = prediction.toLowerCase();
-
   if (p.includes('healthy')) return 'normal';
-
   if (
-    p.includes('blight')    ||
-    p.includes('rust')      ||
-    p.includes('rot')       ||
-    p.includes('mosaic')    ||
-    p.includes('mildew')    ||
-    p.includes('disease')   ||
-    p.includes('infected')  ||
-    p.includes('virus')     ||
-    p.includes('bacterial') ||
-    p.includes('disease_risk')
+    p.includes('blight')    || p.includes('rust')      ||
+    p.includes('rot')       || p.includes('mosaic')    ||
+    p.includes('mildew')    || p.includes('disease')   ||
+    p.includes('infected')  || p.includes('virus')     ||
+    p.includes('bacterial') || p.includes('disease_risk')
   ) return 'critical';
-
   if (
-    p.includes('pest')      ||
-    p.includes('risk')      ||
-    p.includes('stress')    ||
-    p.includes('deficiency')
+    p.includes('pest')       || p.includes('risk') ||
+    p.includes('stress')     || p.includes('deficiency')
   ) return 'warning';
-
   return 'warning';
 }
 
@@ -84,15 +105,13 @@ function badgeClass(prediction) {
   return 'scan-badge scan-badge--normal';
 }
 
-/* ── load farmer's own recent scans ── */
+/* ── load recent scans ── */
 async function loadMyScans() {
   const token = localStorage.getItem('token') || localStorage.getItem('jwt_token');
-
   if (!token) {
     myScansContainer.innerHTML = `<p class="empty-scans-text">${t('scan.login_history', 'Log in to see your scan history')}</p>`;
     return;
   }
-
   try {
     const res   = await fetch(`${API_BASE}/api/scanner/my-scans`, {
       method: 'GET',
@@ -129,7 +148,6 @@ async function loadMyScans() {
       `;
       myScansContainer.appendChild(card);
     });
-
   } catch (err) {
     myScansContainer.innerHTML = `<p class="empty-scans-text">${t('scan.err_conn', 'Could not connect to the scanner service.')}</p>`;
   }
@@ -141,9 +159,7 @@ function formatScanDate(dateString) {
   catch { return dateString; }
 }
 
-/* ===============================
-   SAVE SCAN RESULT TO localStorage
-================================ */
+/* ── save scan to localStorage for alerts page ── */
 function saveScanAsAlert(data) {
   const alertEntry = {
     site_id:               data.site_id   || 'scanner',
@@ -158,23 +174,20 @@ function saveScanAsAlert(data) {
     relative_humidity_pct: null,
     timestamp:             new Date().toISOString(),
   };
-
   try {
     const existing = JSON.parse(localStorage.getItem('alerts') || '[]');
     const updated  = [alertEntry, ...existing].slice(0, 50);
     localStorage.setItem('alerts', JSON.stringify(updated));
-  } catch (err) {
-    // silently fail
-  }
+  } catch (err) { /* silently fail */ }
 }
 
-/* ── handle form submit ── */
+/* ── form submit ── */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   errorEl.textContent = '';
   resultCard.classList.add('f-hidden');
-  resultCard.classList.add('hidden');
+  overlay.classList.remove('active');
 
   const cropType = document.getElementById('crop_type').value;
   const siteId   = document.getElementById('site_id').value.trim();
@@ -212,7 +225,7 @@ form.addEventListener('submit', async (e) => {
       return;
     }
 
-    /* ── populate result card ── */
+    /* populate result card */
     resultPrediction.textContent = data.prediction || '-';
     resultConfidence.textContent = data.confidence != null
       ? `${Math.round(data.confidence * 100)}%` : '-';
@@ -220,34 +233,24 @@ form.addEventListener('submit', async (e) => {
     resultSite.textContent   = data.site_id   || '-';
     resultReason.textContent = data.reason    || '-';
 
-    /* ── colour the result card based on severity ── */
+    /* set severity colour */
     const sev = predictionSeverity(data.prediction);
-    resultCard.className = resultCard.className
-      .replace(/result-card--\w+/g, '')
-      .trim();
+    resultCard.classList.remove('result-card--normal', 'result-card--warning', 'result-card--critical');
     resultCard.classList.add(`result-card--${sev}`);
 
-    /* ── show result card and scroll to it ── */
+    /* show as fixed overlay */
     resultCard.classList.remove('f-hidden');
-    resultCard.classList.remove('hidden');
-    /* resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' }); */
-    const contentEl = document.querySelector('.f-content');
-    if (contentEl) {
-      contentEl.scrollTo({ top: resultCard.offsetTop - 20, behavior: 'smooth' });
-    } else {
-        const content = document.querySelector('.f-content') || document.querySelector('.sh-content');
-        if (content) {
-          content.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }    
-    }
+    overlay.classList.add('active');
 
-    /* ── save to localStorage for alerts page ── */
+    /* save to localStorage */
     saveScanAsAlert(data);
 
-    /* ── refresh recent scans after 5 seconds so result stays visible ── */
-    setTimeout(() => loadMyScans(), 30000);
+    /* auto close after 8 seconds then refresh scans */
+    setTimeout(() => {
+      resultCard.classList.add('f-hidden');
+      overlay.classList.remove('active');
+      loadMyScans();
+    }, 8000);
 
   } catch (err) {
     errorEl.textContent = t('scan.err_conn', 'Could not connect to the scanner service.');

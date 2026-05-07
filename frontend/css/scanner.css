@@ -1,3 +1,26 @@
+/*
+    File: scanner.css
+
+    Purpose:
+    Provides styling for the plant scanner page.
+
+    Responsibilities:
+    - Style scanner layout components (cards, forms, buttons)
+    - Design result card with severity-based visual states
+    - Style image preview and file upload elements
+    - Format scan history cards and grid layout
+    - Ensure responsive and clean UI consistent with farmer dashboard
+
+    Layer:
+    Frontend (CSS Styling)
+
+    Related:
+    - scanner.html
+    - scanner.js
+    - farmer.css
+    - shared.css
+*/ 
+
 .recent-scans-section {
   margin-top: 28px;
 }
@@ -51,21 +74,21 @@
   border: 0.5px solid transparent;
 }
 
-/* ── HEALTHY — green ── */
+/* show green for healthy */
 .scan-badge--normal {
   background: rgba(74,138,24,0.12);
   color: var(--fd-700, #3d6b22);
   border-color: rgba(74,138,24,0.25);
 }
 
-/* ── PEST / RISK — amber ── */
+/* show amber for pest risk and warning */
 .scan-badge--warning {
   background: rgba(201,124,26,0.12);
   color: var(--fd-amber, #c97c1a);
   border-color: rgba(201,124,26,0.25);
 }
 
-/* ── DISEASE / CRITICAL — red ── */
+/* show red for disease and critial */
 .scan-badge--critical {
   background: rgba(201,64,64,0.12);
   color: var(--fd-red, #c94040);
@@ -74,7 +97,7 @@
 
 .scan-time {
   font-size: 12px;
-  color: var(--sh-text-3);
+  color: #5a6b48;
 }
 
 .empty-scans-text {
@@ -83,7 +106,7 @@
   margin: 0;
 }
 
-/* ── RESULT CARD SEVERITY COLOURS ── */
+/* Result card */
 #result-card.result-card--normal {
   border-left: 4px solid var(--fd-500, #63a33e);
   background: var(--fd-50, #f4faea);
@@ -99,7 +122,7 @@
   background: var(--fd-red-bg, #fdf0f0);
 }
 
-/* ── FORM ── */
+
 .f-form-row {
   display: flex;
   gap: 16px;
@@ -124,14 +147,14 @@
   gap: 12px;
 }
 
-/* remove arrows in Chrome, Safari */
+/* remove arrows(increase/decrease) in chrome and safari */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* remove arrows in Firefox */
+/* remove arrows in firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }
@@ -166,4 +189,30 @@ input[type=number] {
 
 .f-file-upload input {
   display: none;
+}
+
+
+
+#result-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  width: 90%;
+  max-width: 560px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  background: white;
+}
+
+#result-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 998;
+}
+
+#result-overlay.active {
+  display: block;
 }
