@@ -20,6 +20,11 @@ Related:
 - farmer_auth_service.py (calls hash_password and verify_password)
 - researcher_auth_service.py (same, for researcher side)
 - ui_router.py (uses decode_access_token to protect dashboard routes)
+
+Refernce 
+
+used https://youtu.be/4H5b0GBfNGs?si=s0MAb_MYp5r8Zq5Q for hashing the password (accesse 24-02-26)
+chatpgt was used as well throughtout the security implemnation to explain errors.
 """
 import os
 from datetime import datetime, timedelta, timezone

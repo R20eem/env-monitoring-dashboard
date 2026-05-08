@@ -26,6 +26,19 @@ Related:
 - core/security.py (password hashing and JWT token creation)
 - auth.js (frontend that sends login and register requests)
 - main.py (registers this router with the FastAPI app)
+
+Reference:
+
+ChatGPT and Claude were used during the development of this 
+
+file to support debugging and to clarify concepts needed to implement specific 
+
+features. All code was written, reviewed, and tested by the development team.
+
+ChatGPT (2026) ChatGPT [AI assistant]. OpenAI. Available at: https://chat.openai.com (Accessed: May 2026).
+
+Claude (2026) Claude [AI assistant]. Anthropic. Available at: https://claude.ai (Accessed: May 2026).
+
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status

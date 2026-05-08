@@ -22,6 +22,11 @@ Related:
 - post_service.py (calls these functions and handles business logic)
 - post_router.py (handles HTTP requests from the frontend blog page)
 - blog.js (frontend that sends requests to create posts, like, and comment)
+
+Reference:
+general idease from https://youtu.be/7AMjmCTumuo?si=maHbe3qetjwCTtbT were used to implemnt the blog section, 
+chatgpt was also used to explain how we could implement the blog page and explain some of the errors we got 
+during devolpment as well as explining any edge cases we should take into considration
 """
 
 from sqlalchemy.orm import Session

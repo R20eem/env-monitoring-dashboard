@@ -25,6 +25,13 @@ Related:
   the farmer dashboard status cards and alerts)
 - main.py (registers this router with the FastAPI app)
 - database.py (provides the database session via get_db dependency)
+
+Reference:
+
+some ideas were taking from here https://youtu.be/3-s95QV2DFw?si=NPeJ5CzYMne9e3s7, how to start building the backend
+for the dasboard. 
+chatgpt, Claude AI were also used to explain the errors, and helped us also understand some parts of the youtube video 
+provieded above 
 """
 
 from fastapi import APIRouter, Depends

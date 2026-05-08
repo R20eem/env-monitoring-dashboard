@@ -29,6 +29,11 @@ Related:
 - post_like.py in models (the like model being serialised)
 - blog.js (frontend that sends post and comment data and renders
   the feed using the response shapes defined here)
+
+Reference:
+general idease from https://youtu.be/7AMjmCTumuo?si=maHbe3qetjwCTtbT were used to implemnt the blog section, 
+chatgpt was also used to explain how we could implement the blog page and explain some of the errors we got 
+during devolpment as well as explining any edge cases we should take into considration
 """
 
 from datetime import datetime

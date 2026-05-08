@@ -21,6 +21,11 @@ Related:
 - post_service.py (handles like and unlike logic)
 - post_router.py (exposes POST /posts/{post_id}/like endpoint)
 - blog.js (frontend updates like count after user interaction)
+
+Reference:
+general idease from https://youtu.be/7AMjmCTumuo?si=maHbe3qetjwCTtbT were used to implemnt the blog section, 
+chatgpt was also used to explain how we could implement the blog page and explain some of the errors we got 
+during devolpment as well as explining any edge cases we should take into considration
 """
 from datetime import datetime
 from sqlalchemy import String, DateTime, Integer

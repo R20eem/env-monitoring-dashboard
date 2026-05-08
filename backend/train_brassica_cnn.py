@@ -27,6 +27,19 @@ Related:
 - train_scan_models.py (trains Random Forest for maize and orchard)
 - ml_models/brassica_cnn.keras (the output model file)
 - ml_data/brassica (the image dataset used for training)
+
+Reference:
+
+ChatGPT and Claude were used during the development of this 
+
+file to support debugging and to clarify concepts needed to implement specific 
+
+features. All code was written, reviewed, and tested by the development team.
+
+ChatGPT (2026) ChatGPT [AI assistant]. OpenAI. Available at: https://chat.openai.com (Accessed: May 2026).
+
+Claude (2026) Claude [AI assistant]. Anthropic. Available at: https://claude.ai (Accessed: May 2026).
+
 """
 
 import os

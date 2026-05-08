@@ -23,6 +23,19 @@ Related:
 - me_router.py (uses MeResponse as the base for the /auth/me endpoint)
 - core/security.py (creates the JWT token stored in access_token)
 - auth.js (frontend reads the access_token from the login response)
+
+Reference:
+
+ChatGPT and Claude were used during the development of this 
+
+file to support debugging and to clarify concepts needed to implement specific 
+
+features. All code was written, reviewed, and tested by the development team.
+
+ChatGPT (2026) ChatGPT [AI assistant]. OpenAI. Available at: https://chat.openai.com (Accessed: May 2026).
+
+Claude (2026) Claude [AI assistant]. Anthropic. Available at: https://claude.ai (Accessed: May 2026).
+
 """
 
 from pydantic import BaseModel, EmailStr
