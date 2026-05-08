@@ -26,6 +26,19 @@ Related:
 - core/security.py (hash_password used to safely store demo passwords)
 - seed_sensor_readings.py (separate seed script for sensor data)
 - database.py (provides the engine and session used to run the seed)
+
+Reference:
+
+ChatGPT and Claude were used during the development of this 
+
+file to support debugging and to clarify concepts needed to implement specific 
+
+features. All code was written, reviewed, and tested by the development team.
+
+ChatGPT (2026) ChatGPT [AI assistant]. OpenAI. Available at: https://chat.openai.com (Accessed: May 2026).
+
+Claude (2026) Claude [AI assistant]. Anthropic. Available at: https://claude.ai (Accessed: May 2026).
+
 """
 
 from app.database import SessionLocal, engine, Base

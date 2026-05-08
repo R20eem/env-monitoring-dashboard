@@ -20,6 +20,11 @@ Related:
 - post_service.py (handles comment creation and retrieval logic)
 - post_router.py (exposes GET /posts/{post_id}/comments endpoint)
 - blog.js (frontend fetches and displays comments under each post)
+
+Reference:
+general idease from https://youtu.be/7AMjmCTumuo?si=maHbe3qetjwCTtbT were used to implemnt the blog section, 
+chatgpt was also used to explain how we could implement the blog page and explain some of the errors we got 
+during devolpment as well as explining any edge cases we should take into considration
 """
 from datetime import datetime
 from sqlalchemy import String, Text, DateTime, Integer

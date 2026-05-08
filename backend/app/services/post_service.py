@@ -33,6 +33,11 @@ router.py (calls all functions in this service and handles
   the HTTP responses)
 - schemas/post.py (shapes the data returned by this service)
 - blog.js (frontend that triggers all post, like, and comment actions)
+
+Reference:
+general idease from https://youtu.be/7AMjmCTumuo?si=maHbe3qetjwCTtbT were used to implemnt the blog section, 
+chatgpt was also used to explain how we could implement the blog page and explain some of the errors we got 
+during devolpment as well as explining any edge cases we should take into considration
 """
 
 from sqlalchemy.orm import Session

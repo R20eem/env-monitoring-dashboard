@@ -30,6 +30,11 @@ Related:
 - researcher_repository.py (looks up researcher from the decoded token)
 - blog.js (frontend that calls all these endpoints for the community blog)
 - main.py (registers this router with the FastAPI app)
+
+Reference:
+general idease from https://youtu.be/7AMjmCTumuo?si=maHbe3qetjwCTtbT were used to implemnt the blog section, 
+chatgpt was also used to explain how we could implement the blog page and explain some of the errors we got 
+during devolpment as well as explining any edge cases we should take into considration
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status

@@ -21,6 +21,9 @@ Related:
 - farmer_auth.py (router that handles farmer login and registration)
 - schemas/farmer_auth.py (validates farmer input and response data)
 - scan_result.py (links scan results back to a farmer via farmer_id)
+
+Reference:
+
 """
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
