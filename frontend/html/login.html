@@ -1,37 +1,39 @@
-<!--
-    File: login.html
-
-    Purpose:
-    Main HTML template for user authentication (Sign In page).
-    Allows farmers and researchers to log into the system.
-
-    Responsibilities:
-    - Provide login form (role, email, password, optional org code)
-    - Dynamically show organization code field for researchers
-    - Send login request to backend authentication endpoints
-    - Handle authentication errors and display feedback
-    - Store JWT token and user role in localStorage
-    - Redirect users to appropriate dashboard (farmer or researcher)
-
-    Layer:
-    Frontend (HTML Template + Inline JavaScript Logic)
-
-    Related:
-    - style.css (global styles and buttons)
-    - auth.css (authentication page styling)
-    - l18n.js (multi-language support)
-    - backend auth endpoints:
-        /auth/farmers/login
-        /auth/researchers/login
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - EcoLeaf</title>
-    <!-- Font: system stack via style.css — no external request needed -->
+    <!--
+        File: login.html
+
+        Purpose:
+        Main HTML template for user authentication (Sign In page).
+        Allows farmers and researchers to log into the system.
+
+        Responsibilities:
+        - Provide login form (role, email, password, optional org code)
+        - Dynamically show organization code field for researchers
+        - Send login request to backend authentication endpoints
+        - Handle authentication errors and display feedback
+        - Store JWT token and user role in localStorage
+        - Redirect users to appropriate dashboard (farmer or researcher)
+
+        Layer:
+        Frontend (HTML Template + Inline JavaScript Logic)
+
+        Related:
+        - style.css
+        - auth.css (authentication page styling)
+        - l18n.js (multi-language support)
+        - backend auth endpoints:
+            /auth/farmers/login
+            /auth/researchers/login
+
+        References:
+        AI used to help write the role-based redirect that sends farmers to index.html and researchers to researcher.html after login (lines 144-150)
+    -->
+
     <!-- Link to the main stylesheet for variables and buttons -->
     <link rel="stylesheet" href="../css/style.css">
     <!-- Link to a new, dedicated auth stylesheet -->
@@ -60,10 +62,9 @@
 
                 <div id="org_code_wrapper" class="hidden">
                     <label for="org_code" data-i18n="auth.org_label">Organization Code</label>
-                    <input id="org_code" placeholder="e.g. ECO1">
+                    <input id="org_code" placeholder="e.g. 1234">
                 </div>
 
-                <label for="password" data-i18n="auth.password_label">Password</label>
                 <div class="password-field">
                     <input id="password" class="password-field-input" type="password" placeholder="••••••••" autocomplete="current-password">
                     <button type="button" class="password-toggle" aria-pressed="false" aria-label="Show password" aria-controls="password">
@@ -71,7 +72,7 @@
                         <span class="password-toggle__hide" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></span>
                     </button>
                 </div>
-
+                
                 <span id="login-error" class="form-error"></span>
 
                 <button id="login-btn" class="btn-primary full-w" data-i18n="auth.signin_btn">Sign In</button>

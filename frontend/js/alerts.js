@@ -20,6 +20,9 @@
  * - alerts.html
  * - farmer.css
  * - scanner.js
+ * 
+ * References:
+ * AI used to help write the filter button logic that toggles between All / Critical / Warning views (lines 44-58)
  */
 const API_BASE = "http://127.0.0.1:8000";
 

@@ -509,12 +509,12 @@ body.farmer-page {
   text-transform: uppercase; color: var(--f-text-4); margin-bottom: 3px;
 }
 .f-cal-num {
-  font-family: var(--f-font-mono); font-size: 13px;
+  font-family: var(--f-font-mono); font-size: 12px;
   font-weight: 500; color: var(--f-text-1); margin-bottom: 7px;
 }
 .today .f-cal-num { color: var(--fd-600); font-weight: 700; }
 .f-cal-event {
-  font-size: 10.5px; padding: 3px 6px; border-radius: 4px;
+  font-size: 12px; padding: 3px 6px; border-radius: 4px;
   margin-bottom: 3px; line-height: 1.4; font-weight: 500;
 }
 .f-ev-danger  { background: var(--fd-red-bg);   color: #9e2e2e; }
@@ -610,6 +610,41 @@ body.farmer-page {
   .f-content   { padding: 16px; }
   .f-hero      { flex-direction: column; }
   .f-hero-right{ width: 100%; }
+  /* ─────────────────────────────
+   TOPBAR MOBILE FIX
+───────────────────────────── */
+.f-topbar {
+  height: auto;
+  padding: 14px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.f-topbar-left {
+  width: 100%;
+}
+
+.f-topbar-title {
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.f-topbar-sub {
+  font-size: 10px;
+}
+
+.f-topbar-right {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.f-topbar-right > * {
+  flex-shrink: 0;
+}
 }
 @media (max-width: 500px) {
   .f-cal-grid { grid-template-columns: repeat(2, 1fr); }

@@ -27,7 +27,10 @@
     - scanner.html (UI structure)
     - scanner.css (visual styling)
     - alerts.html / alerts.js (uses saved scan results)
-*/
+
+    References:
+    AI used to help write the predictionSeverity() function that maps disease keywords to severity levels (lines 80-94)
+ */
 
 const API_BASE = 'http://127.0.0.1:8000';
 
@@ -38,7 +41,6 @@ const imagePreview    = document.getElementById('image-preview');
 const scanBtn         = document.getElementById('scan-btn');
 const errorEl         = document.getElementById('scanner-error');
 const resultCard      = document.getElementById('result-card');
-const overlay         = document.getElementById('result-overlay');
 
 const resultPrediction = document.getElementById('result-prediction');
 const resultConfidence = document.getElementById('result-confidence');
@@ -187,7 +189,6 @@ form.addEventListener('submit', async (e) => {
 
   errorEl.textContent = '';
   resultCard.classList.add('f-hidden');
-  overlay.classList.remove('active');
 
   const cropType = document.getElementById('crop_type').value;
   const siteId   = document.getElementById('site_id').value.trim();
@@ -240,7 +241,6 @@ form.addEventListener('submit', async (e) => {
 
     /* show as fixed overlay */
     resultCard.classList.remove('f-hidden');
-    overlay.classList.add('active');
 
     /* save to localStorage */
     saveScanAsAlert(data);
@@ -248,7 +248,6 @@ form.addEventListener('submit', async (e) => {
     /* auto close after 8 seconds then refresh scans */
     setTimeout(() => {
       resultCard.classList.add('f-hidden');
-      overlay.classList.remove('active');
       loadMyScans();
     }, 8000);
 

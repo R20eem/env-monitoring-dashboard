@@ -1,4 +1,25 @@
-
+/**
+ * File: profile.css
+ *
+ * Purpose:
+ * Stylesheet for the user profile page and profile management features.
+ *
+ * Responsibilities:
+ * - Style profile cards, user information, and role badges
+ * - Provide styles for editable profile fields and actions
+ * - Handle modal overlay, form inputs, and feedback messages
+ * - Support password field interactions and profile update UI
+ * - Include responsive design for profile and modal layouts
+ *
+ * Layer:
+ * Frontend (CSS)
+ *
+ * Related:
+ * - profile.html
+ * - profile.js
+ * - style.css
+ * - shared.css
+ */
 
 /* ── CARD ── */
 .prof-card {

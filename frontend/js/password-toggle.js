@@ -1,3 +1,27 @@
+/**
+ * File: password-toggle.js
+ *
+ * Purpose:
+ * Handles password visibility toggling for password input fields.
+ *
+ * Responsibilities:
+ * - Toggle password input visibility between hidden and visible states
+ * - Update accessibility attributes for screen readers
+ * - Bind toggle functionality to password field wrappers
+ * - Prevent duplicate event bindings on toggle buttons
+ * - Initialize password toggle functionality after page load
+ *
+ * Layer:
+ * Frontend (JavaScript)
+ *
+ * Related:
+ * - auth.css
+ * - profile.css
+ * - login.html
+ * - register.html
+ * - profile.html
+ */
+
 // Password show/hide button for .password-field wrappers
 (function () {
   function syncState(input, btn) {

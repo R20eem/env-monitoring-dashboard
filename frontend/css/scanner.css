@@ -19,6 +19,9 @@
     - scanner.js
     - farmer.css
     - shared.css
+    References:
+    AI used to help write the cross-browser CSS that removes the increment/decrement arrows from number inputs (lines 153-162)
+*/
 */ 
 
 .recent-scans-section {

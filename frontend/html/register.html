@@ -5,53 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eco Leaf - Register</title>
     <!--
-    File: register.html
+        File: register.html
 
-    Purpose:
-    Main HTML template for user registration.
-    Allows new users (farmers and researchers) to create an account.
+        Purpose:
+        Registration page for creating farmer and researcher accounts.
 
-    Responsibilities:
-    - Provide registration form with role selection (farmer / researcher)
-    - Collect user details (name, email, password, experience, location)
-    - Capture role-specific data (organization code, connection end date)
-    - Submit registration data to backend via auth.js
-    - Redirect users to login page after successful registration
+        Responsibilities:
+        - Provide account registration form for different user roles
+        - Collect user details, organization data, and account credentials
+        - Support accessible form inputs and password visibility toggling
+        - Validate and submit registration data through auth.js
+        - Provide responsive and user-friendly registration layout
 
-    Layer:
-    Frontend (HTML Template)
+        Layer:
+        Frontend (HTML)
 
-    Related:
-    - auth.js (handles registration logic and API communication)
-    - style.css (global styling and layout)
-    - login.html (redirect after successful registration)
--->
+        Related:
+        - auth.js
+        - password-toggle.js
+        - auth.css
+        - style.css
+
+        References:
+        AI used to help write the screen-reader-only (.sr-only) CSS class for accessible form labels (lines 31-37)
+    -->
+
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+      .sr-only {
+        position: absolute !important;
+        width: 1px; height: 1px;
+        padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0, 0, 0, 0);
+        white-space: nowrap; border: 0;
+      }
+    </style>
 </head>
 <body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6;">
 
-    <div class="stat-card" style="width: 400px; padding: 40px; margin: 20px;">
+    <main class="stat-card" style="width: 400px; padding: 40px; margin: 20px;">
         
         <div style="text-align: center; margin-bottom: 25px;">
-            <img src="../images/logo_transparent.png" alt="Eco Leaf Logo" style="height: 60px;">
-            <h2 style="color: #117a3d; margin-top: 15px;">Create an Account</h2>
+            <img src="../images/logo_transparent.png" alt="" style="height: 60px;">
+            <h1 style="color: #0e6332; margin-top: 15px; font-size: 22px;">Create an Account</h1>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 15px;">
             
-            <select id="role" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 15px;">
+            <label for="role" class="sr-only">Select your role</label>
+            <select id="role" aria-label="Select your role" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 15px;">
                 <option value="farmer">🌾 I am a Farmer</option>
                 <option value="researcher">🔬 I am a Researcher</option>
             </select>
 
             <div style="display: flex; gap: 10px;">
-                <input id="first_name" placeholder="First Name" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
-                <input id="last_name" placeholder="Last Name" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                <label for="first_name" class="sr-only">First name</label>
+                <input id="first_name" placeholder="First Name" aria-label="First name" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+
+                <label for="last_name" class="sr-only">Last name</label>
+                <input id="last_name" placeholder="Last Name" aria-label="Last name" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
             </div>
             
-            <input id="email" placeholder="Email Address" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            <label for="email" class="sr-only">Email address</label>
+            <input id="email" type="email" placeholder="Email Address" aria-label="Email address" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
             
-            <select id="experience" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            <label for="experience" class="sr-only">Years of experience</label>
+            <select id="experience" aria-label="Years of experience" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
                 <option value="">Years of Experience</option>
                 <option value="0-1 years">0-1 years</option>
                 <option value="1-3 years">1-3 years</option>
@@ -59,23 +78,34 @@
                 <option value="5+ years">5+ years</option>
             </select>
             
-            <input id="location" placeholder="Farm Location" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            <label for="location" class="sr-only">Farm location</label>
+            <input id="location" placeholder="Farm Location" aria-label="Farm location" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
             
-            <input id="org_code" placeholder="Organization Code (e.g. ECO-123)" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+            <label for="org_code" class="sr-only">Organization code</label>
+            <input id="org_code" placeholder="Organization Code (e.g. 1234)" aria-label="Organization code" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
             
-            <input id="connection_end" type="date" title="Connection End Date" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; color: #666;">
-            
-            <input id="password" type="password" placeholder="Create Password" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
-            
+            <label for="connection_end" class="sr-only">Access expiry date</label>
+            <input id="connection_end" type="date" aria-label="Access expiry date" aria-describedby="connection_end_hint" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; color: #555;">
+            <p id="connection_end_hint" style="font-size:12px; color:#555; margin-top:-8px; margin-bottom:0;">Access expiry date — must be a future date</p>
+
+             <div class="password-field">
+                <input id="password" class="password-field-input" type="password" placeholder="Create Password" autocomplete="new-password" style="padding: 12px 44px 12px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 15px;">
+                <button type="button" class="password-toggle" aria-pressed="false" aria-label="Show password" aria-controls="password">
+                    <span class="password-toggle__show" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                    <span class="password-toggle__hide" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></span>
+                </button>
+            </div>
             <button onclick="register()" class="btn-primary" style="padding: 14px; font-size: 16px; margin-top: 10px; width: 100%;">Register</button>
         </div>
-        
-        <p style="text-align: center; margin-top: 20px; font-size: 14px; color: #666;">
-            Already have an account? <a href="login.html" style="color: #117a3d; font-weight: bold; text-decoration: none;">Log in</a>
-        </p>
-    </div>
 
+        <p style="text-align: center; margin-top: 20px; font-size: 14px; color: #555;">
+            Already have an account? <a href="login.html" style="color: #0e6332; font-weight: bold; text-decoration: none;">Log in</a>
+        </p>
+    </main>
+    
+    <script src="../js/password-toggle.js"></script>
+    <script src="../js/password-toggle.js"></script>
     <script defer src="../js/auth.js"></script>
 
 </body>
-</html> 
+</html>
