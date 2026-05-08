@@ -1,3 +1,26 @@
+/**
+ * File: auth.css
+ *
+ * Purpose:
+ * Stylesheet for the authentication pages including login and registration.
+ *
+ * Responsibilities:
+ * - Style authentication layout and card container
+ * - Provide styles for forms, inputs, labels, and buttons
+ * - Handle password field and validation message styling
+ * - Support responsive and accessible authentication UI
+ * - Define utility classes used across auth pages
+ *
+ * Layer:
+ * Frontend (CSS)
+ *
+ * Related:
+ * - login.html
+ * - register.html
+ * - auth.js
+ * - style.css
+ */
+
 body {
     display: flex;
     justify-content: center;

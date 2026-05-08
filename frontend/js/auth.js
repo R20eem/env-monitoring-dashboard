@@ -1,4 +1,35 @@
-console.log("auth.js loaded");
+/*
+    File: auth.js
+
+    Purpose:
+    Handles user registration functionality for both farmers and researchers.
+
+    Responsibilities:
+    - Dynamically show/hide form fields based on selected user role
+      (farmer vs researcher)
+    - Collect user input from registration form
+    - Build role-specific payload for backend API
+    - Send registration request to appropriate endpoint:
+        /auth/farmers/register
+        /auth/researchers/register
+    - Handle server responses (success and error)
+    - Redirect users to login page after successful registration
+    - Reset form fields after submission
+
+    Key Features:
+    - Role-based form logic (different fields for farmers and researchers)
+    - Asynchronous API communication using fetch()
+    - Basic error handling and user feedback via alerts
+    - Automatic UI update when role selection changes
+
+    Layer:
+    Frontend (JavaScript Logic / API Integration)
+
+    Related:
+    - register.html (registration form UI)
+    - login.html (redirect after successful registration)
+    - style.css (form styling)
+*/
 
 window.onload = () => {
 
@@ -14,12 +45,14 @@ window.onload = () => {
         if (roleSelect.value === "researcher") {
             orgCode.style.display = "block";
             connectionEnd.style.display = "block";
-            document.getElementById('connection_end_hint').style.display = "block";
+            
+            document.getElementById('connection_end_hint').style.display = "block";     
             experience.style.display = "none";
             locationInput.style.display = "none";
         } else {
             orgCode.style.display = "none";
             connectionEnd.style.display = "none";
+            
             document.getElementById('connection_end_hint').style.display = "none";
             experience.style.display = "block";
             locationInput.style.display = "block";

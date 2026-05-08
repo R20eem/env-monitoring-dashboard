@@ -109,12 +109,9 @@
         }
 
         /* 2. Contrast: white on #c97c1a badge = 3.29:1 FAIL → darken bg */
-        if (style.indexOf('color:#c97c1a') !== -1 || style.indexOf('color: #c97c1a') !== -1) { el.style.color = '#7a4600'; /* on white = 5.8:1 ✓ */ }
-        if (style.indexOf('rgb(168, 184, 154)') !== -1 || style.indexOf('#a8b89a') !== -1) { el.style.color = '#2e3a1e'; }
-        if (style.indexOf('rgb(137, 192, 100)') !== -1) { el.style.color = '#3d6b22'; }
-        if (style.indexOf('rgb(224, 128, 128)') !== -1) { el.style.color = '#a83030'; }
-        if (style.indexOf('rgb(212, 168, 64)') !== -1) { el.style.color = '#7a4600'; }
-        
+        if (style.indexOf('background:#c97c1a') !== -1 || style.indexOf('background: #c97c1a') !== -1) {
+          el.style.background = '#7a4600'; /* white text = 7.9:1 ✓ */
+        }
         if (style.indexOf('color:#c97c1a') !== -1 || style.indexOf('color: #c97c1a') !== -1) {
           el.style.color = '#7a4600'; /* on white = 5.8:1 ✓ */
         }
@@ -308,46 +305,9 @@
       <!-- SIMPLE VIEW -->
       <div id="f-simple-view" style="display:block;"></div>
 
-      <!-- SECTION: SCAN INSIGHTS — always visible on both simple and detailed views -->
-      <div class="f-section-label">My scan insights</div>
-
-      <div class="f-card f-mb-24" id="scan-summary-card">
-        <div class="f-card-head">
-          <div>
-            <div class="f-card-title">Youur plant scans</div>
-            <div class="f-card-sub">live results from your recent plant scans</div>
-          </div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:10px;">
-
-          <div class="f-metric-mini">
-            <div class="f-metric-mini-label">total scans</div>
-            <div class="f-metric-mini-val" id="scan-total">-</div>
-          </div>
-
-          <div class="f-metric-mini">
-            <div class="f-metric-mini-label">healthy</div>
-            <div class="f-metric-mini-val" id="scan-healthy">-</div>
-          </div>
-
-          <div class="f-metric-mini">
-            <div class="f-metric-mini-label">disease</div>
-            <div class="f-metric-mini-val" id="scan-disease">-</div>
-          </div>
-
-          <div class="f-metric-mini">
-            <div class="f-metric-mini-label">pest</div>
-            <div class="f-metric-mini-val" id="scan-pest">-</div>
-          </div>
-
-          <div class="f-metric-mini">
-            <div class="f-metric-mini-label">latest</div>
-            <div class="f-metric-mini-val" id="scan-latest">-</div>
-          </div>
-
-        </div>
-      </div>
+      <!-- SECTION: SCAN INSIGHTS — rendered by farmer_dashboard.js loadScanSummary() -->
+      <div class="f-section-label" data-i18n="f.scan_section">My scan insights</div>
+      <div class="f-card f-mb-24" id="scan-summary-card"></div>
 
       <!-- DETAILED VIEW -->
       <div id="f-detailed-view" style="display:none;">

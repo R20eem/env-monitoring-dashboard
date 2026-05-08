@@ -610,6 +610,41 @@ body.farmer-page {
   .f-content   { padding: 16px; }
   .f-hero      { flex-direction: column; }
   .f-hero-right{ width: 100%; }
+  /* ─────────────────────────────
+   TOPBAR MOBILE FIX
+───────────────────────────── */
+.f-topbar {
+  height: auto;
+  padding: 14px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.f-topbar-left {
+  width: 100%;
+}
+
+.f-topbar-title {
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.f-topbar-sub {
+  font-size: 10px;
+}
+
+.f-topbar-right {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.f-topbar-right > * {
+  flex-shrink: 0;
+}
 }
 @media (max-width: 500px) {
   .f-cal-grid { grid-template-columns: repeat(2, 1fr); }

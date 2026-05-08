@@ -1,3 +1,41 @@
+/*
+    File: profile.js
+
+    Purpose:
+    Handles user profile functionality including viewing and updating
+    account details for authenticated users.
+
+    Responsibilities:
+    - Fetch user profile data from backend (/auth/me)
+    - Render profile information dynamically in the UI
+    - Display role-specific fields (farmer vs researcher)
+    - Generate user avatar initials from name
+    - Open and close edit profile modal
+    - Pre-fill edit form with existing user data
+    - Send updated profile data to backend (/auth/update-profile)
+    - Handle success and error feedback messages
+    - Redirect unauthenticated users to login page
+
+    Key Features:
+    - Role-based UI rendering (researcher-specific fields)
+    - Modal-based editing system
+    - Date formatting for display and input fields
+    - JWT authentication using localStorage token
+    - Dynamic DOM updates without page reload
+
+    Layer:
+    Frontend (JavaScript Logic / API Integration)
+
+    Related:
+    - profile.html (UI structure)
+    - profile.css (styling and modal design)
+    - shared-nav.js (navigation and auth state)
+    - l18n.js (multi-language support)
+    - backend endpoints:
+        /auth/me
+        /auth/update-profile
+*/
+
 // GLOBAL
 let currentData = null;
 
@@ -125,7 +163,6 @@ function openEditModal() {
 function closeEditModal() {
   modal.style.display = "none";
 }
-
 function resetPassFields() {
   if (!passCurrent || !passNew || !passConfirm) return;
   passCurrent.value = "";
@@ -229,6 +266,7 @@ async function savePassword() {
     passSaveBtn.disabled = false;
   }
 }
+
 
 /* ── load profile from backend ── */
 async function loadProfile() {
