@@ -151,11 +151,12 @@ body.researcher-page {
 }
 
 .r-nav-label {
-  font-size: 9px;
+  font-family: var(--r-font-body);
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.55); /* was 0.25 — too low contrast on #173404 */
+  color: rgba(255,255,255,0.55);
   padding: 0 8px;
   margin-bottom: 6px;
 }
@@ -166,8 +167,13 @@ body.researcher-page {
   gap: 10px;
   padding: 10px 12px;
   border-radius: var(--r-radius-sm);
-  color: rgba(255,255,255,0.75); /* was 0.6 — improved contrast on #173404 */
+  color: rgba(255,255,255,0.75);
   text-decoration: none !important;
+  font-family: var(--r-font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
   transition: background 0.15s, color 0.15s;
   position: relative;
 }
@@ -213,15 +219,15 @@ body.researcher-page {
   align-items: center;
   justify-content: center;
   font-family: var(--r-font-display);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  color: var(--r-green-200);
+  color: var(--r-green-50);
   flex-shrink: 0;
 }
 
 .r-user-info { flex: 1; min-width: 0; }
-.r-user-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.r-user-role { font-size: 10px; color: rgba(255,255,255,0.60); text-transform: uppercase; letter-spacing: 0.06em; } /* was 0.35 */
+.r-user-name { font-family: var(--r-font-body); font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.r-user-role { font-family: var(--r-font-body); font-size: 13px; color: rgba(255,255,255,0.60); text-transform: uppercase; letter-spacing: 0.06em; }
 
 .r-logout-btn {
   display: flex;
@@ -229,14 +235,15 @@ body.researcher-page {
   gap: 10px;
   padding: 9px 12px;
   border-radius: var(--r-radius-sm);
-  color: rgba(255,130,130,0.95); /* was 0.75 — improved contrast on #173404 */
+  color: rgba(255,130,130,0.95);
   text-decoration: none;
-  font-size: 13px;
+  font-family: var(--r-font-body);
+  font-size: 13.5px;
+  font-weight: 500;
   cursor: pointer;
   border: none;
   background: none;
   width: 100%;
-  font-family: var(--r-font-body);
   transition: background 0.15s, color 0.15s;
 }
 .r-logout-btn:hover { background: rgba(255,80,80,0.08); color: rgba(255,120,120,1); }
@@ -325,7 +332,7 @@ body.researcher-page {
   gap: 6px;
   padding: 5px 12px;
   background: var(--r-blue-100);
-  color: var(--r-blue-500);
+  color: var(--r-blue-50);
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
@@ -483,7 +490,7 @@ body.researcher-page {
 }
 
 .r-stat-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -501,7 +508,7 @@ body.researcher-page {
 
 .r-stat-sub {
   font-size: 11px;
-  color: var(--r-text-4);
+  color: var(--r-text-5);
   margin-top: 5px;
 }
 
@@ -615,7 +622,7 @@ body.researcher-page {
 }
 
 .r-table thead th {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -660,12 +667,11 @@ body.researcher-page {
   text-transform: uppercase;
 }
 
-.r-badge-normal   { background: var(--r-green-100); color: var(--r-green-700); }
-.r-badge-warning  { background: #faeeda; color: var(--r-amber-700); }
-.r-badge-critical { background: var(--r-red-100); color: #b91c1c; } /* was --r-red-500 (#e24b4a) which fails AA on red-100 */
+.r-badge-normal   { background: var(--r-green-100); color: var(--r-green-700); font-size: 12px; }
+.r-badge-warning  { background: #faeeda; color: var(--r-amber-700); font-size: 12px; }
+.r-badge-critical { background: var(--r-red-100); color: #b91c1c; font-size: 12px; }
 .r-badge-info     { background: var(--r-blue-100); color: #1d5fa8; } /* was --r-blue-500 which is marginal on blue-100 */
 .r-badge-teal     { background: var(--r-teal-100); color: #0f6b4f; } /* was --r-teal-500 which is marginal on teal-100 */
-
 /* ── HEATMAP GRID ──────────────────────────────────────── */
 .r-heatmap-wrap {
   overflow-x: auto;
@@ -795,7 +801,7 @@ body.researcher-page {
   gap: 8px;
 }
 
-.r-nasa-sub { font-size: 11px; color: rgba(255,255,255,0.70); margin-bottom: 16px; } /* was 0.45 */
+.r-nasa-sub { font-size: 12px; color: rgba(255,255,255,0.70); margin-bottom: 16px; } /* was 0.45 */
 
 .r-nasa-grid {
   display: grid;
@@ -812,7 +818,7 @@ body.researcher-page {
 }
 
 .r-nasa-metric-label {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255,255,255,0.70); /* was 0.45 — too low contrast on dark blue */
 }
 
@@ -825,7 +831,7 @@ body.researcher-page {
 }
 
 .r-nasa-metric-unit {
-  font-size: 10px;
+  font-size: 11px;
   color: rgba(255,255,255,0.60); /* was 0.35 — too low contrast */
 }
 
