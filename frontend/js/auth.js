@@ -29,6 +29,9 @@
     - register.html (registration form UI)
     - login.html (redirect after successful registration)
     - style.css (form styling)
+
+    References:
+    https://www.w3schools.com/sql/default.asp
 */
 
 window.onload = () => {

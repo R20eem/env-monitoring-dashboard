@@ -34,6 +34,9 @@
     - backend endpoints:
         /auth/me
         /auth/update-profile
+
+    References:
+    AI used to help write the buildFields() function that renders different profile fields for farmers and researchers (lines 88-128)
 */
 
 // GLOBAL

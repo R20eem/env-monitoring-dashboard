@@ -27,7 +27,10 @@
     - scanner.html (UI structure)
     - scanner.css (visual styling)
     - alerts.html / alerts.js (uses saved scan results)
-*/
+
+    References:
+    AI used to help write the predictionSeverity() function that maps disease keywords to severity levels (lines 80-94)
+ */
 
 const API_BASE = 'http://127.0.0.1:8000';
 
