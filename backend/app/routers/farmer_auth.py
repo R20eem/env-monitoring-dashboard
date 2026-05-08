@@ -38,7 +38,7 @@ ChatGPT (2026) ChatGPT [AI assistant]. OpenAI. Available at: https://chat.openai
 
 Claude (2026) Claude [AI assistant]. Anthropic. Available at: https://claude.ai (Accessed: May 2026).
 
-"""
+
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
