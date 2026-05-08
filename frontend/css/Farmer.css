@@ -509,12 +509,12 @@ body.farmer-page {
   text-transform: uppercase; color: var(--f-text-4); margin-bottom: 3px;
 }
 .f-cal-num {
-  font-family: var(--f-font-mono); font-size: 13px;
+  font-family: var(--f-font-mono); font-size: 12px;
   font-weight: 500; color: var(--f-text-1); margin-bottom: 7px;
 }
 .today .f-cal-num { color: var(--fd-600); font-weight: 700; }
 .f-cal-event {
-  font-size: 10.5px; padding: 3px 6px; border-radius: 4px;
+  font-size: 12px; padding: 3px 6px; border-radius: 4px;
   margin-bottom: 3px; line-height: 1.4; font-weight: 500;
 }
 .f-ev-danger  { background: var(--fd-red-bg);   color: #9e2e2e; }

@@ -39,71 +39,211 @@
     })();
   </script>
 
+  <link rel="stylesheet" href="../css/Farmer.css">
   <link rel="stylesheet" href="../css/farmer.css">
   <link rel="stylesheet" href="../css/shared.css">
+  <style>
+    /* Prevent shared.css from overriding farmer layout */
+    body.farmer-page { display:block !important; overflow:hidden !important; }
+    body.farmer-page .f-layout { display:flex !important; }
+  </style>
+
+  <style>
+    /* Hide sidebar on mobile, show bottom nav instead */
+    @media (max-width: 860px) {
+      .f-sidebar { display: none !important; }
+      .sh-sidebar { display: none !important; }
+      .f-main { margin-left: 0 !important; width: 100% !important; }
+      .sh-main { margin-left: 0 !important; width: 100% !important; }
+      .f-layout { flex-direction: column !important; }
+    }
+  </style>
+
+  <style>
+    /* ── WCAG 2.1 AA: minimum font-size 12px (9pt) for all text ── */
+    .f-about-link            { font-size: 12px !important; color: #3b5a20 !important; font-weight: 600 !important; }
+    .f-topbar-sub            { font-size: 12px !important; color: #2e3a1e !important; }
+    .f-section-label         { font-size: 12px !important; font-weight: 700 !important; color: #2e3a1e !important; }
+    .f-card-sub              { font-size: 12px !important; color: #2e3a1e !important; }
+    .f-tile-site             { font-size: 12px !important; font-weight: 700 !important; color: #2e3a1e !important; }
+    .f-metric-mini-label     { font-size: 12px !important; font-weight: 600 !important; color: #2e3a1e !important; }
+    .f-cal-dow               { font-size: 12px !important; font-weight: 700 !important; color: #2e3a1e !important; }
+    .f-hero-stat-label       { font-size: 12px !important; opacity: 0.92 !important; }
+    .f-legend-item           { font-size: 12px !important; color: #2e3a1e !important; }
+    .f-legend-item span      { color: #2e3a1e !important; }
+    .f-map-legend-item       { font-size: 12px !important; color: #2e3a1e !important; }
+    .f-map-legend-item span  { color: #2e3a1e !important; }
+    .f-nav-label             { font-size: 12px !important; font-weight: 700 !important; color: rgba(255,255,255,0.9) !important; }
+    .f-user-role             { font-size: 12px !important; color: rgba(255,255,255,0.85) !important; }
+    .alerts-section-title    { font-size: 12px !important; font-weight: 600 !important; }
+    .alert-filter-btn        { font-size: 12px !important; color: #2e3a1e !important; }
+    .alert-main-site         { font-size: 12px !important; }
+    .alert-main-note         { font-size: 12px !important; }
+    .alert-main-time         { font-size: 12px !important; color: #2e3a1e !important; }
+    .alert-pill-readings     { font-size: 12px !important; color: #2e3a1e !important; }
+    .alert-pill-time         { font-size: 12px !important; color: #2e3a1e !important; }
+    .badge                   { font-size: 12px !important; }
+    .scan-time               { font-size: 12px !important; color: #2e3a1e !important; }
+
+    /* ── Inactive pest dots: ensure visible against card backgrounds ── */
+    /* JS generates: rgba(0,0,0,0.12) dots on white → ~1.3:1 FAIL         */
+    /* Override all inactive dot colours site-wide                         */
+    [class*="pest-dot"]:not([class*="active"]):not([class*="fill"]) {
+      background: #767676 !important;  /* 4.5:1 on white ✓ */
+      opacity: 1 !important;
+    }
+  </style>
+
+  <script>
+    /* ── WCAG patch for JS-injected inline styles (farmer_dashboard.js) ──
+       Fixes: contrast errors, very small text, mouse-only event handlers  */
+    (function() {
+      function fixNode(el) {
+        if (el.nodeType !== 1) return;
+
+        var style = el.getAttribute('style') || '';
+
+        /* 1. Contrast: #7a8a65 on white = 3.71:1 FAIL → fix to #2e3a1e */
+        if (style.indexOf('color:#7a8a65') !== -1 || style.indexOf('color: #7a8a65') !== -1) {
+          el.style.color = '#2e3a1e';
+        }
+
+        /* 2. Contrast: white on #c97c1a badge = 3.29:1 FAIL → darken bg */
+        if (style.indexOf('color:#c97c1a') !== -1 || style.indexOf('color: #c97c1a') !== -1) { el.style.color = '#7a4600'; /* on white = 5.8:1 ✓ */ }
+        if (style.indexOf('rgb(168, 184, 154)') !== -1 || style.indexOf('#a8b89a') !== -1) { el.style.color = '#2e3a1e'; }
+        if (style.indexOf('rgb(137, 192, 100)') !== -1) { el.style.color = '#3d6b22'; }
+        if (style.indexOf('rgb(224, 128, 128)') !== -1) { el.style.color = '#a83030'; }
+        if (style.indexOf('rgb(212, 168, 64)') !== -1) { el.style.color = '#7a4600'; }
+        
+        if (style.indexOf('color:#c97c1a') !== -1 || style.indexOf('color: #c97c1a') !== -1) {
+          el.style.color = '#7a4600'; /* on white = 5.8:1 ✓ */
+        }
+
+        /* 3. Small text: bump any inline font-size under 12px */
+        var fsMatch = style.match(/font-size:\s*(\d+)px/);
+        if (fsMatch && parseInt(fsMatch[1]) < 12) {
+          el.style.fontSize = '12px';
+        }
+
+        /* 4. Inactive pest dots: rgba(0,0,0,0.12) on white ~1.3:1 FAIL */
+        if (style.indexOf('rgba(0,0,0,0.12)') !== -1 || style.indexOf('rgba(0,0,0,0.1)') !== -1) {
+          /* Only fix if this is a dot (small, rounded element) */
+          if (el.offsetWidth <= 18 || style.indexOf('border-radius:50%') !== -1 || style.indexOf('border-radius: 50%') !== -1) {
+            el.style.background = '#767676';
+            el.style.opacity = '1';
+          }
+        }
+
+        /* 5. Device-dependent handlers: add keyboard equivalents to
+              any element that has onmouseover but no onfocus           */
+        if (el.onmouseover && !el.onfocus) {
+          el.onfocus = el.onmouseover;
+          el.onblur  = el.onmouseout || null;
+          /* Make it focusable if not already */
+          if (!el.getAttribute('tabindex') && el.tagName !== 'BUTTON' && el.tagName !== 'A') {
+            el.setAttribute('tabindex', '0');
+          }
+        }
+
+        /* Recurse into children */
+        for (var i = 0; i < el.children.length; i++) {
+          fixNode(el.children[i]);
+        }
+      }
+
+      function runFix() {
+        fixNode(document.body);
+      }
+
+      /* Run on DOMContentLoaded */
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runFix);
+      } else {
+        runFix();
+      }
+
+      /* Watch for farmer_dashboard.js injecting content dynamically */
+      document.addEventListener('DOMContentLoaded', function() {
+        var target = document.getElementById('f-simple-view') ||
+                     document.getElementById('f-detailed-view') ||
+                     document.body;
+
+        new MutationObserver(function(mutations) {
+          mutations.forEach(function(m) {
+            m.addedNodes.forEach(function(node) {
+              if (node.nodeType === 1) fixNode(node);
+            });
+          });
+        }).observe(target, { childList: true, subtree: true });
+
+        /* Fallback sweeps after JS dashboard likely renders */
+        setTimeout(runFix, 500);
+        setTimeout(runFix, 1500);
+        setTimeout(runFix, 3000);
+      });
+    })();
+  </script>
 </head>
-<body class="farmer-page  sh-page has-mobile-nav">
+<body class="farmer-page has-mobile-nav">
 
 <div class="f-layout">
 
   <!-- ══ SIDEBAR ══ -->
-  <aside class="f-sidebar">
-    <div class="f-sidebar-logo">
-      <img src="../images/logo_transparent.png" alt="Eco Leaf">
-      <div class="f-sidebar-brand">
+  <aside class="f-sidebar" style="width:230px;min-width:230px;background:#173404;display:flex;flex-direction:column;flex-shrink:0;position:relative;z-index:50;height:100vh;overflow-y:auto;overflow-x:hidden;">
+
+    <div class="f-sidebar-logo" style="padding:28px 24px 20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:10px;position:relative;z-index:2;">
+      <img src="../images/logo_transparent.png" alt="Eco Leaf" style="height:40px;width:auto;filter:brightness(0) invert(1);object-fit:contain;">
+      <div class="f-sidebar-brand" style="font-size:16px;font-weight:700;color:#c0dd97;line-height:1.2;position:relative;z-index:2;">
         Eco Leaf
-        <small data-i18n="f.brand_sub">Field Dashboard</small>
+        <small data-i18n="f.brand_sub" style="display:block;font-size:12px;font-weight:400;color:rgba(255,255,255,0.85);letter-spacing:0.08em;text-transform:uppercase;margin-top:1px;">Field Dashboard</small>
       </div>
     </div>
 
-    <div class="f-nav-section">
-      <div class="f-nav-label" data-i18n="nav.navigation">Navigation</div>
-      <a href="index.html" class="f-nav-link active">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
-          <rect x="2" y="2" width="7" height="7" rx="1.5"/>
-          <rect x="11" y="2" width="7" height="7" rx="1.5"/>
-          <rect x="2" y="11" width="7" height="7" rx="1.5"/>
-          <rect x="11" y="11" width="7" height="7" rx="1.5"/>
+    <div class="f-nav-section" style="padding:20px 14px 0;position:relative;z-index:2;">
+      <div class="f-nav-label" data-i18n="nav.navigation" style="font-size:12px;font-weight:700;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.95);padding:8px 10px 4px;display:block;">Navigation</div>
+
+      <a href="index.html" class="f-nav-link active" id="dashboard-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#ffffff;text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;background:rgba(255,255,255,0.12);position:relative;z-index:2;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;">
+          <rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/>
         </svg>
         <span data-i18n="nav.dashboard">Dashboard</span>
       </a>
-      <a href="alerts.html" class="f-nav-link">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+      <a href="alerts.html" class="f-nav-link" id="alerts-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;">
           <path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/>
         </svg>
         <span data-i18n="nav.alerts">Alerts</span>
       </a>
-      <a href="scanner.html" class="f-nav-link">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+      <a href="scanner.html" class="f-nav-link" id="scanner-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;">
           <path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/>
         </svg>
         <span data-i18n="nav.scanner">Plant Scanner</span>
       </a>
-      <a href="blog.html" class="f-nav-link">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+      <a href="blog.html" class="f-nav-link" id="blog-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;">
           <path d="M3 5h14M3 9h10M3 13h12M3 17h8"/>
         </svg>
         <span data-i18n="nav.blog">Community Blog</span>
       </a>
-      <a href="profile.html" class="f-nav-link">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
-          <circle cx="10" cy="7" r="3"/>
-          <path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>
+      <a href="profile.html" class="f-nav-link" id="profile-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.7);text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;position:relative;z-index:2;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;">
+          <circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>
         </svg>
         <span data-i18n="nav.profile">Profile</span>
       </a>
     </div>
 
-    <div class="f-sidebar-bottom">
-      <div class="f-sidebar-user">
-        <div class="f-avatar" id="f-avatar-initials">FA</div>
-        <div class="f-user-info">
-          <div class="f-user-name" id="f-user-name-display">Farmer</div>
-          <div class="f-user-role" data-i18n="auth.farmer">🌾 Farmer</div>
+    <div class="f-sidebar-bottom" style="margin-top:auto;padding:16px 14px 20px;border-top:1px solid rgba(255,255,255,0.06);position:relative;z-index:2;">
+      <div class="f-sidebar-user" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:6px;">
+        <div class="f-avatar" id="f-avatar-initials" style="width:32px;height:32px;border-radius:50%;background:#3b6d11;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#c0dd97;flex-shrink:0;">FA</div>
+        <div class="f-user-info" style="flex:1;min-width:0;">
+          <div class="f-user-name" id="f-user-name-display" style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Farmer</div>
+          <div class="f-user-role" data-i18n="auth.farmer" style="font-size:12px;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.06em;">🌾 Farmer</div>
         </div>
       </div>
-      <button class="f-logout-btn" id="f-logout-btn">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+      <button class="f-logout-btn" id="f-logout-btn" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:rgba(255,160,160,1);font-size:13px;cursor:pointer;border:none;background:none;width:100%;">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;">
           <path d="M13 15l4-5-4-5M17 10H7M7 3H4a1 1 0 00-1 1v12a1 1 0 001 1h3"/>
         </svg>
         <span data-i18n="nav.logout">Logout</span>
@@ -122,18 +262,20 @@
       </div>
       <div class="f-topbar-right">
         <div id="lang-toggle-target"></div>
+        
         <a href="about.html" class="f-about-link" data-i18n="nav.about_short">ℹ About</a>
-        <!-- NASA icon only — tooltip on hover -->
+        
         <div class="f-nasa-pill" title="NASA POWER satellite data active" style="padding:5px 8px;">
           <svg viewBox="0 0 20 20" fill="currentColor" style="width:14px;height:14px;">
             <circle cx="10" cy="10" r="3"/>
             <path fill-rule="evenodd" d="M10 0a10 10 0 100 20A10 10 0 0010 0zm0 2a8 8 0 110 16A8 8 0 0110 2z"/>
           </svg>
         </div>
-        <!-- Live dot only -->
+        
         <div class="f-live-pill" style="padding:5px 8px;gap:0;">
           <div class="f-live-dot" id="f-live-dot"></div>
         </div>
+        
         <div id="f-nav-actions" style="display:flex;gap:6px;align-items:center;"></div>
       </div>
     </header>
@@ -166,60 +308,13 @@
       <!-- SIMPLE VIEW -->
       <div id="f-simple-view" style="display:block;"></div>
 
-      <!-- DETAILED VIEW -->
-      <div id="f-detailed-view" style="display:none;">
-
-      <!-- SECTION 1: HEALTH SCORES -->
-      <div class="f-section-label" data-i18n="f.section_tiles">Field health scores — click a tile to explore that site</div>
-      <div class="f-tile-grid f-mb-24" id="f-tile-grid"></div>
-
-      <!-- SECTION 2: CHART + INSIGHT -->
-      <div class="f-section-label">Risk level — last 7 days</div>
-      <div class="f-chart-insight-row f-mb-24" style="display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:stretch;">
-
-        <div class="f-card" style="display:flex;flex-direction:column;">
-          <div class="f-card-head">
-            <div>
-              <div class="f-card-title" id="f-chart-title">Risk — Maize</div>
-            </div>
-            <div class="f-site-btns">
-              <button class="f-site-btn active" onclick="selectSite('site_maize')" data-i18n="f.btn_maize">Maize</button>
-              <button class="f-site-btn"        onclick="selectSite('site_orchard')" data-i18n="f.btn_orchard">Orchard</button>
-              <button class="f-site-btn"        onclick="selectSite('site_brassica')" data-i18n="f.btn_brassica">Brassica</button>
-            </div>
-          </div>
-
-          <div style="position:relative;width:100%;flex:1;min-height:220px;">
-            <canvas id="f-risk-chart"
-                    role="img"
-                    aria-label="Line chart showing risk level and temperature over the last 7 days.">
-            </canvas>
-          </div>
-
-          <div class="f-chart-legend" style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.05);display:flex;gap:20px;flex-wrap:wrap;">
-            <div class="f-legend-item" style="display:flex;align-items:center;gap:6px;">
-              <div style="width:18px;height:3px;background:#c94040;border-radius:2px;"></div>
-              <span style="font-size:12px;color:#7a8a65;">Risk &nbsp;<span style="color:#63a33e;">●</span> low &nbsp;<span style="color:#c97c1a;">●</span> mid &nbsp;<span style="color:#c94040;">●</span> high</span>
-            </div>
-            <div class="f-legend-item" style="display:flex;align-items:center;gap:6px;">
-              <div style="width:18px;height:0;border-top:2px dashed #3d6b22;"></div>
-              <span style="font-size:12px;color:#7a8a65;">Temperature (right axis)</span>
-            </div>
-          </div>
-        </div>
-
-        <div id="f-insight-panel" style="min-height:0;"></div>
-
-      </div>
-
-      </div><!-- end detailed view -->
-       <!-- SECTION: SCAN INSIGHTS -->
-      <div class="f-section-label">my scan insights</div>
+      <!-- SECTION: SCAN INSIGHTS — always visible on both simple and detailed views -->
+      <div class="f-section-label">My scan insights</div>
 
       <div class="f-card f-mb-24" id="scan-summary-card">
         <div class="f-card-head">
           <div>
-            <div class="f-card-title">your plant scans</div>
+            <div class="f-card-title">Youur plant scans</div>
             <div class="f-card-sub">live results from your recent plant scans</div>
           </div>
         </div>
@@ -254,6 +349,52 @@
         </div>
       </div>
 
+      <!-- DETAILED VIEW -->
+      <div id="f-detailed-view" style="display:none;">
+
+      <!-- SECTION 1: HEALTH SCORES -->
+      <div class="f-section-label" data-i18n="f.section_tiles">Field health scores — click a tile to explore that site</div>
+      <div class="f-tile-grid f-mb-24" id="f-tile-grid"></div>
+
+      <!-- SECTION 2: CHART + INSIGHT -->
+      <div class="f-section-label">Risk level — last 7 days</div>
+      <div class="f-chart-insight-row f-mb-24" style="display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:stretch;">
+
+        <div class="f-card" style="display:flex;flex-direction:column;">
+          <div class="f-card-head">
+            <div>
+              <div class="f-card-title" id="f-chart-title">Risk — Maize</div>
+            </div>
+            <div class="f-site-btns">
+              <button class="f-site-btn active" onclick="selectSite('site_maize')" data-i18n="f.btn_maize">Maize</button>
+              <button class="f-site-btn"        onclick="selectSite('site_orchard')" data-i18n="f.btn_orchard">Orchard</button>
+              <button class="f-site-btn"        onclick="selectSite('site_brassica')" data-i18n="f.btn_brassica">Brassica</button>
+            </div>
+          </div>
+
+          <div style="position:relative;width:100%;flex:1;min-height:220px;">
+            <canvas id="f-risk-chart"
+                    role="img"
+                    aria-label="Line chart showing risk level and temperature over the last 7 days.">
+            </canvas>
+          </div>
+
+          <div class="f-chart-legend" style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.05);display:flex;gap:20px;flex-wrap:wrap;">
+            <div class="f-legend-item" style="display:flex;align-items:center;gap:6px;">
+              <div style="width:18px;height:3px;background:#c94040;border-radius:2px;"></div>
+              <span style="font-size:12px;color:#2e3a1e;">Risk &nbsp;<span style="color:#63a33e;">●</span> low &nbsp;<span style="color:#c97c1a;">●</span> mid &nbsp;<span style="color:#c94040;">●</span> high</span>
+            </div>
+            <div class="f-legend-item" style="display:flex;align-items:center;gap:6px;">
+              <div style="width:18px;height:0;border-top:2px dashed #3d6b22;"></div>
+              <span style="font-size:12px;color:#2e3a1e;">Temperature (right axis)</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="f-insight-panel" style="min-height:0;"></div>
+
+      </div>
+
       <!-- SECTION 3: MAP -->
       <div class="f-section-label" data-i18n="f.section_map">Satellite scouting map — click a dot to explore a site</div>
       <div class="f-card f-mb-24">
@@ -263,22 +404,26 @@
             <div class="f-card-sub" data-i18n="f.map_sub">Pulsing dot = elevated pest or alert risk · Dashed ellipse = NASA low soil-moisture zone</div>
           </div>
         </div>
-        <div class="f-map-area">
+        <div class="f-map-area" style="background-color: #f0f4eb; background-image: linear-gradient(rgba(141, 178, 114, 0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(141, 178, 114, 0.25) 1px, transparent 1px); background-size: 20px 20px; border-radius: 12px; position: relative; overflow: hidden; min-height: 280px; border: 2px solid #dbe6d1; box-shadow: inset 0 0 20px rgba(141, 178, 114, 0.1);">
           <div class="f-map-tooltip" id="f-map-tooltip"></div>
           <svg class="f-map-svg" id="f-farm-map" viewBox="0 0 600 250"
-               aria-label="Farm site map showing Maize, Orchard and Brassica with health status dots"></svg>
+               aria-label="Farm site map showing Maize, Orchard and Brassica with health status dots" style="position: relative; z-index: 1; width: 100%; height: 100%;"></svg>
         </div>
-        <div class="f-map-legend">
-          <div class="f-map-legend-item"><div class="f-map-dot" style="background:#63a33e;"></div><span data-i18n="f.map_good">Good (80+)</span></div>
-          <div class="f-map-legend-item"><div class="f-map-dot" style="background:#c97c1a;"></div><span data-i18n="f.map_attention">Attention (65–79)</span></div>
-          <div class="f-map-legend-item"><div class="f-map-dot" style="background:#c94040;"></div><span data-i18n="f.map_critical">Critical / alert active</span></div>
-          <div class="f-map-legend-item"><div class="f-map-dot" style="background:#aaa;opacity:0.5;"></div><span data-i18n="f.map_nasa">Low soil moisture (NASA)</span></div>
+        <div class="f-map-legend" style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; padding: 0;">
+          <div class="f-map-legend-item" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><div class="f-map-dot" style="background:#63a33e; width: 10px; height: 10px; border-radius: 50%;"></div><span data-i18n="f.map_good" style="font-size: 13px; color: #1a2e10; font-weight: 500;">Good (80+)</span></div>
+          <div class="f-map-legend-item" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><div class="f-map-dot" style="background:#c97c1a; width: 10px; height: 10px; border-radius: 50%;"></div><span data-i18n="f.map_attention" style="font-size: 13px; color: #1a2e10; font-weight: 500;">Attention (65–79)</span></div>
+          <div class="f-map-legend-item" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><div class="f-map-dot" style="background:#c94040; width: 10px; height: 10px; border-radius: 50%;"></div><span data-i18n="f.map_critical" style="font-size: 13px; color: #1a2e10; font-weight: 500;">Critical / alert active</span></div>
+          <div class="f-map-legend-item" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: white; border: 1px solid #e0e0e0; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><div class="f-map-dot" style="background:transparent; border: 2px dashed #888; width: 12px; height: 12px; border-radius: 50%;"></div><span data-i18n="f.map_nasa" style="font-size: 13px; color: #1a2e10; font-weight: 500;">Low soil moisture (NASA)</span></div>
         </div>
       </div>
 
       <!-- SECTION 4: CALENDAR -->
       <div class="f-section-label" data-i18n="f.section_cal">Smart action calendar — Dec 25 to Dec 31</div>
-      <div class="f-cal-grid f-mb-24" id="f-cal-grid"></div>
+      <div class="f-card f-mb-24">
+        <div class="f-cal-grid" id="f-cal-grid"></div>
+      </div>
+
+      </div><!-- end detailed view -->
 
     </main>
   </div>
