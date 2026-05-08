@@ -4,69 +4,63 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Community Blog — Eco Leaf</title>
-  <!--
-    File: blog.html
-    
-    Purpose:
-    HTML template for the community blog page.
-    Provides post creation, viewing, and social interaction features.
-    
-    Responsibilities:
-    - Display blog layout with sidebar navigation
-    - Render post feed with filtering by user role
-    - Show post creation form for authenticated users
-    - Include modal for post details and comments
-    - Integrate l18n.js for internationalization support
-    
-    Layer:
-    Frontend (HTML Template)
-    
-    Related:
-    - blog.js
-    - blog.css
-    - shared.css
-    - l18n.js
-  -->
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/shared.css">
   <link rel="stylesheet" href="../css/blog.css">
+  <style>
+    body.sh-page { overflow-x:hidden; }
+    .sh-sidebar::before { z-index:0 !important; }
+    .sh-sidebar > * { position:relative; z-index:1; }
+  </style>
+
+  <style>
+    /* Hide sidebar on mobile, show bottom nav instead */
+    @media (max-width: 860px) {
+      .f-sidebar { display: none !important; }
+      .sh-sidebar { display: none !important; }
+      .f-main { margin-left: 0 !important; width: 100% !important; }
+      .sh-main { margin-left: 0 !important; width: 100% !important; }
+      .f-layout { flex-direction: column !important; }
+    }
+  </style>
 </head>
 <body class="sh-page has-mobile-nav">
 
-<!-- ═══════════════════════════════════════════════════════
-     SIDEBAR — identical structure to about.html / index.html
-     ═══════════════════════════════════════════════════════ -->
-<aside class="sh-sidebar">
-  <div class="sh-sidebar-logo">
-    <img src="../images/logo_transparent.png" alt="Eco Leaf">
-    <div class="sh-brand">Eco Leaf<small>Environmental Monitor</small></div>
+<aside class="sh-sidebar" style="width:230px;min-width:230px;background:#173404;display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;z-index:100;height:100vh;overflow:hidden;">
+  <div class="sh-sidebar-logo" style="padding:28px 24px 20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:10px;position:relative;z-index:2;">
+    <img src="../images/logo_transparent.png" alt="Eco Leaf" style="height:40px;width:auto;filter:brightness(0) invert(1);object-fit:contain;">
+    <div class="sh-brand" style="font-size:15px;font-weight:700;color:#c0dd97;line-height:1.2;position:relative;z-index:2;">Eco Leaf<small>Environmental Monitor</small></div>
   </div>
 
-  <nav class="sh-nav">
-    <div class="sh-nav-label" data-i18n="nav.navigation">Navigation</div>
-    <a href="index.html" class="sh-nav-link sh-dash-link">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+  <nav class="sh-nav" style="flex:1;padding:20px 14px 0;display:flex;flex-direction:column;gap:2px;position:relative;z-index:2;">
+    <div class="sh-nav-label" data-i18n="nav.navigation" style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.95);padding:8px 10px 4px;display:block;">Navigation</div>
+    <a href="index.html" class="sh-nav-link sh-dash-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13.5px;font-weight:500;position:relative;z-index:2;">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
       <span data-i18n="nav.dashboard">Dashboard</span>
     </a>
-    <a href="alerts.html" class="sh-nav-link">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
+    <a href="alerts.html" class="sh-nav-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13.5px;font-weight:500;position:relative;z-index:2;">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
       <span data-i18n="nav.alerts">Alerts</span>
     </a>
-    <a href="scanner.html" class="sh-nav-link">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
-      <span>Plant Scanner</span>
+    <a href="scanner.html" class="sh-nav-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13.5px;font-weight:500;position:relative;z-index:2;">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
+      <span data-i18n="nav.scanner">Plant Scanner</span>
     </a>
-    <a href="blog.html" class="sh-nav-link active">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
+    <a href="blog.html" class="sh-nav-link active" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#ffffff;text-decoration:none;font-size:13.5px;font-weight:500;background:rgba(255,255,255,0.12);position:relative;z-index:2;">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
       <span data-i18n="nav.blog">Community Blog</span>
     </a>
-    <a href="profile.html" class="sh-nav-link">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+    <a href="profile.html" class="sh-nav-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13.5px;font-weight:500;position:relative;z-index:2;">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
       <span data-i18n="nav.profile">Profile</span>
     </a>
+    <!-- <a href="about.html" class="sh-nav-link" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13.5px;font-weight:500;position:relative;z-index:2;">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" style="width:16px;height:16px;flex-shrink:0;"><circle cx="10" cy="10" r="8"/><path d="M10 6v4M10 14v2"/></svg>
+      <span data-i18n="nav.about">About Us</span>
+    </a> -->
   </nav>
 
-  <div class="sh-sidebar-bottom">
+  <div class="sh-sidebar-bottom" style="padding:16px 14px 20px;border-top:1px solid rgba(255,255,255,0.06);position:relative;z-index:2;">
     <div class="sh-user-row sh-hidden" id="sh-user-row">
       <div class="sh-avatar" id="sh-avatar">?</div>
       <div class="sh-user-info">
@@ -85,17 +79,12 @@
   </div>
 </aside>
 
-<!-- ═══════════════════════════════════════════════════════
-     MAIN AREA
-     ═══════════════════════════════════════════════════════ -->
 <div class="sh-main">
 
-  <!-- TOP BAR -->
   <header class="sh-topbar">
     <div class="sh-topbar-title" data-i18n="blog.title">Community Blog</div>
     <div class="sh-topbar-right">
       <a href="about.html" class="sh-about-link" data-i18n="nav.about">ℹ About Us</a>
-      <div id="sh-nav-actions"></div>
     </div>
   </header>
 
@@ -146,13 +135,7 @@
               <option value="researcher" data-i18n="auth.researcher">🔬 Researcher</option>
             </select>
             <input type="email" id="login-email" data-i18n-ph="auth.email_ph" placeholder="Email" />
-            <div class="password-field">
-              <input type="password" id="login-password" class="password-field-input" data-i18n-ph="auth.password_label" placeholder="Password" autocomplete="current-password" />
-              <button type="button" class="password-toggle" aria-pressed="false" aria-label="Show password" aria-controls="login-password">
-                <span class="password-toggle__show" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
-                <span class="password-toggle__hide" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></span>
-              </button>
-            </div>
+            <input type="password" id="login-password" data-i18n-ph="auth.password_label" placeholder="Password" />
             <input type="text" id="login-orgcode" data-i18n-ph="auth.org_ph" placeholder="Org code (researchers only)" class="hidden" />
             <span id="login-error" class="form-error"></span>
             <button class="sh-btn sh-btn-primary full-w" id="login-btn" data-i18n="blog.login_btn">Sign In</button>
@@ -206,46 +189,39 @@
 </div>
 
 <script src="../js/l18n.js"></script>
-<script src="../js/password-toggle.js"></script>
 <script src="../js/blog.js"></script>
 <script src="../js/shared-nav.js"></script>
-
-<!-- Mobile Bottom Navigation -->
-<nav class="sh-mobile-nav">
-  <a href="index.html">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
-    <span data-i18n="mob.dashboard">Dashboard</span>
-  </a>
-  <a href="alerts.html">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/></svg>
-    <span data-i18n="mob.alerts">Alerts</span>
-  </a>
-  <a href="scanner.html">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/></svg>
-    <span data-i18n="mob.scanner">Scanner</span>
-  </a>
-  <a href="blog.html" class="active">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 9h10M3 13h12M3 17h8"/></svg>
-    <span data-i18n="mob.blog">Blog</span>
-  </a>
-  <a href="profile.html">
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
-    <span data-i18n="mob.profile">Profile</span>
-  </a>
-</nav>
+<!-- Mobile Bottom Navigation — role-aware -->
+<nav class="sh-mobile-nav" id="sh-mobile-nav"></nav>
+<script>
+  (function() {
+    var isResearcher = localStorage.getItem('userRole') === 'researcher';
+    var dashHref = isResearcher ? 'researcher.html' : 'index.html';
+    var links = isResearcher ? [
+      { href: dashHref, label: 'Dashboard', icon: '<rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/>' },
+      { href: 'blog.html', label: 'Blog', active: true, icon: '<path d="M3 5h14M3 9h10M3 13h12M3 17h8"/>' },
+      { href: 'profile.html', label: 'Profile', icon: '<circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>' }
+    ] : [
+      { href: 'index.html', label: 'Dashboard', icon: '<rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/>' },
+      { href: 'alerts.html', label: 'Alerts', icon: '<path d="M10 3v8M10 15h.01M4 17h12l-6-14-6 14z"/>' },
+      { href: 'scanner.html', label: 'Scanner', icon: '<path d="M4 4h4v2H6v2H4V4zm12 0v4h-2V6h-2V4h4zM4 16v-4h2v2h2v2H4zm12-4v4h-4v-2h2v-2h2z"/>' },
+      { href: 'blog.html', label: 'Blog', active: true, icon: '<path d="M3 5h14M3 9h10M3 13h12M3 17h8"/>' },
+      { href: 'profile.html', label: 'Profile', icon: '<circle cx="10" cy="7" r="3"/><path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6"/>' }
+    ];
+    var nav = document.getElementById('sh-mobile-nav');
+    nav.innerHTML = links.map(function(l) {
+      return '<a href="' + l.href + '"' + (l.active ? ' class="active"' : '') + '>'
+        + '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">' + l.icon + '</svg>'
+        + '<span>' + l.label + '</span></a>';
+    }).join('');
+  })();
+</script>
 
 <script>
-  // Add mobile nav class to body on small screens
   (function() {
-    if (window.innerWidth <= 860) {
-      document.body.classList.add('has-mobile-nav');
-    }
+    if (window.innerWidth <= 860) document.body.classList.add('has-mobile-nav');
     window.addEventListener('resize', function() {
-      if (window.innerWidth <= 860) {
-        document.body.classList.add('has-mobile-nav');
-      } else {
-        document.body.classList.remove('has-mobile-nav');
-      }
+      document.body.classList.toggle('has-mobile-nav', window.innerWidth <= 860);
     });
   })();
 </script>

@@ -662,8 +662,6 @@ body.dashboard-layout {
         align-items: flex-start;
         gap: 15px;
     }
-<<<<<<< HEAD
-=======
 }
 
 
@@ -801,5 +799,4 @@ body.dashboard-layout {
 
 .password-toggle[aria-pressed="true"] .password-toggle__hide {
   display: inline-flex;
->>>>>>> e4cfb8311340d7ce3a83ffa98abc4abc900301dc
 }
